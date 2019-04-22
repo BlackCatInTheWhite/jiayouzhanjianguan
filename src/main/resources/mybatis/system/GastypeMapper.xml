@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.project.system.gastype.mapper.GastypeMapper">
+    
+    <resultMap type="Gastype" id="GastypeResult">
+        <result property="gastypeId"    column="gastype_id"    />
+        <result property="gastypeName"    column="gastype_name"    />
+    </resultMap>
+	
+	<sql id="selectGastypeVo">
+        select gastype_id, gastype_name from jyz_gastype
+    </sql>
+	
+    <select id="selectGastypeList" parameterType="Gastype" resultMap="GastypeResult">
+        <include refid="selectGastypeVo"/>
+        <where>  
+            <if test="gastypeId != null "> and gastype_id = #{gastypeId}</if>
+             <if test="gastypeName != null  and gastypeName != '' "> and gastype_name = #{gastypeName}</if>
+         </where>
+    </select>
+    
+    <select id="selectGastypeById" parameterType="Integer" resultMap="GastypeResult">
+        <include refid="selectGastypeVo"/>
+        where gastype_id = #{gastypeId}
+    </select>
+        
+    <insert id="insertGastype" parameterType="Gastype">
+        insert into jyz_gastype
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="gastypeId != null  ">gastype_id,</if>
+			<if test="gastypeName != null  and gastypeName != ''  ">gastype_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="gastypeId != null  ">#{gastypeId},</if>
+			<if test="gastypeName != null  and gastypeName != ''  ">#{gastypeName},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateGastype" parameterType="Gastype">
+        update jyz_gastype
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="gastypeName != null  and gastypeName != ''  ">gastype_name = #{gastypeName},</if>
+        </trim>
+        where gastype_id = #{gastypeId}
+    </update>
+
+	<delete id="deleteGastypeById" parameterType="Integer">
+        delete from jyz_gastype where gastype_id = #{gastypeId}
+    </delete>
+	
+    <delete id="deleteGastypeByIds" parameterType="String">
+        delete from jyz_gastype where gastype_id in 
+        <foreach item="gastypeId" collection="array" open="(" separator="," close=")">
+            #{gastypeId}
+        </foreach>
+    </delete>
+    
+</mapper>

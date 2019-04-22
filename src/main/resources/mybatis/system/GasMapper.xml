@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.project.system.gas.mapper.GasMapper">
+    
+    <resultMap type="Gas" id="GasResult">
+        <result property="gasId"    column="gas_id"    />
+        <result property="gasName"    column="gas_name"    />
+        <result property="gasAddress"    column="gas_address"    />
+        <result property="gasLongitude"    column="gas_longitude"    />
+        <result property="gasLatitude"    column="gas_latitude"    />
+        <result property="lpoliceId"    column="lpolice_id"    />
+        <result property="staffNumber"    column="staff_number"    />
+        <result property="machineNumber"    column="machine_number"    />
+        <result property="gasType"    column="gas_type"    />
+        <result property="principalName"    column="principal_name"    />
+        <result property="principalCard"    column="principal_card"    />
+        <result property="principalPhone"    column="principal_phone"    />
+        <result property="principalUsername"    column="principal_username"    />
+        <result property="principalPassword"    column="principal_password"    />
+        <result property="gasstatusId"    column="gasstatus_id"    />
+        <association property="lpoliceName" column="lpolice_id" select="com.aaa.project.system.lpolice.mapper.LpoliceMapper.selectLpoliceById"></association>
+        <association property="gastypeName" column="gas_type" select="com.aaa.project.system.gastype.mapper.GastypeMapper.selectGastypeById"></association>
+        <association property="gasstatusName" column="gasstatus_id" select="com.aaa.project.system.gasstatus.mapper.GasstatusMapper.selectGasstatusById"></association>
+    </resultMap>
+
+	<sql id="selectGasVo">
+        select gas_id, gas_name, gas_address, gas_longitude, gas_latitude, lpolice_id, staff_number, machine_number, gas_type, principal_name, principal_card, principal_phone, principal_username, principal_password, gasstatus_id from jyz_gas
+    </sql>
+	
+    <select id="selectGasList" parameterType="Gas" resultMap="GasResult">
+        <include refid="selectGasVo"/>
+        <where>
+            <if test="gasId != null "> and gas_id = #{gasId}</if>
+             <if test="gasName != null  and gasName != '' "> and gas_name = #{gasName}</if>
+             <if test="gasAddress != null  and gasAddress != '' "> and gas_address = #{gasAddress}</if>
+             <if test="gasLongitude != null "> and gas_longitude = #{gasLongitude}</if>
+             <if test="gasLatitude != null "> and gas_latitude = #{gasLatitude}</if>
+             <if test="lpoliceId != null "> and lpolice_id = #{lpoliceId}</if>
+             <if test="staffNumber != null "> and staff_number = #{staffNumber}</if>
+             <if test="machineNumber != null "> and machine_number = #{machineNumber}</if>
+             <if test="gasType != null "> and gas_type = #{gasType}</if>
+             <if test="principalName != null  and principalName != '' "> and principal_name = #{principalName}</if>
+             <if test="principalCard != null  and principalCard != '' "> and principal_card = #{principalCard}</if>
+             <if test="principalPhone != null  and principalPhone != '' "> and principal_phone = #{principalPhone}</if>
+             <if test="principalUsername != null  and principalUsername != '' "> and principal_username = #{principalUsername}</if>
+             <if test="principalPassword != null  and principalPassword != '' "> and principal_password = #{principalPassword}</if>
+             <if test="gasstatusId != null "> and gasstatus_id = #{gasstatusId}</if>
+         </where>
+    </select>
+
+    <select id="selectGasById" parameterType="Integer" resultMap="GasResult">
+        <include refid="selectGasVo"/>
+        where gas_id = #{gasId}
+    </select>
+        
+    <insert id="insertGas" parameterType="Gas">
+        insert into jyz_gas
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="gasId != null  ">gas_id,</if>
+			<if test="gasName != null  and gasName != ''  ">gas_name,</if>
+			<if test="gasAddress != null  and gasAddress != ''  ">gas_address,</if>
+			<if test="gasLongitude != null  ">gas_longitude,</if>
+			<if test="gasLatitude != null  ">gas_latitude,</if>
+			<if test="lpoliceId != null  ">lpolice_id,</if>
+			<if test="staffNumber != null  ">staff_number,</if>
+			<if test="machineNumber != null  ">machine_number,</if>
+			<if test="gasType != null  ">gas_type,</if>
+			<if test="principalName != null  and principalName != ''  ">principal_name,</if>
+			<if test="principalCard != null  and principalCard != ''  ">principal_card,</if>
+			<if test="principalPhone != null  and principalPhone != ''  ">principal_phone,</if>
+			<if test="principalUsername != null  and principalUsername != ''  ">principal_username,</if>
+			<if test="principalPassword != null  and principalPassword != ''  ">principal_password,</if>
+			<if test="gasstatusId != null  ">gasstatus_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="gasId != null  ">#{gasId},</if>
+			<if test="gasName != null  and gasName != ''  ">#{gasName},</if>
+			<if test="gasAddress != null  and gasAddress != ''  ">#{gasAddress},</if>
+			<if test="gasLongitude != null  ">#{gasLongitude},</if>
+			<if test="gasLatitude != null  ">#{gasLatitude},</if>
+			<if test="lpoliceId != null  ">#{lpoliceId},</if>
+			<if test="staffNumber != null  ">#{staffNumber},</if>
+			<if test="machineNumber != null  ">#{machineNumber},</if>
+			<if test="gasType != null  ">#{gasType},</if>
+			<if test="principalName != null  and principalName != ''  ">#{principalName},</if>
+			<if test="principalCard != null  and principalCard != ''  ">#{principalCard},</if>
+			<if test="principalPhone != null  and principalPhone != ''  ">#{principalPhone},</if>
+			<if test="principalUsername != null  and principalUsername != ''  ">#{principalUsername},</if>
+			<if test="principalPassword != null  and principalPassword != ''  ">#{principalPassword},</if>
+			<if test="gasstatusId != null  ">#{gasstatusId},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateGas" parameterType="Gas">
+        update jyz_gas
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="gasName != null  and gasName != ''  ">gas_name = #{gasName},</if>
+            <if test="gasAddress != null  and gasAddress != ''  ">gas_address = #{gasAddress},</if>
+            <if test="gasLongitude != null  ">gas_longitude = #{gasLongitude},</if>
+            <if test="gasLatitude != null  ">gas_latitude = #{gasLatitude},</if>
+            <if test="lpoliceId != null  ">lpolice_id = #{lpoliceId},</if>
+            <if test="staffNumber != null  ">staff_number = #{staffNumber},</if>
+            <if test="machineNumber != null  ">machine_number = #{machineNumber},</if>
+            <if test="gasType != null  ">gas_type = #{gasType},</if>
+            <if test="principalName != null  and principalName != ''  ">principal_name = #{principalName},</if>
+            <if test="principalCard != null  and principalCard != ''  ">principal_card = #{principalCard},</if>
+            <if test="principalPhone != null  and principalPhone != ''  ">principal_phone = #{principalPhone},</if>
+            <if test="principalUsername != null  and principalUsername != ''  ">principal_username = #{principalUsername},</if>
+            <if test="principalPassword != null  and principalPassword != ''  ">principal_password = #{principalPassword},</if>
+            <if test="gasstatusId != null  ">gasstatus_id = #{gasstatusId},</if>
+        </trim>
+        where gas_id = #{gasId}
+    </update>
+
+	<delete id="deleteGasById" parameterType="Integer">
+        delete from jyz_gas where gas_id = #{gasId}
+    </delete>
+	
+    <delete id="deleteGasByIds" parameterType="String">
+        delete from jyz_gas where gas_id in 
+        <foreach item="gasId" collection="array" open="(" separator="," close=")">
+            #{gasId}
+        </foreach>
+    </delete>
+    
+</mapper>

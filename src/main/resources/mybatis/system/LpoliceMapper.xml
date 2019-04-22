@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.project.system.lpolice.mapper.LpoliceMapper">
+    
+    <resultMap type="Lpolice" id="LpoliceResult">
+        <result property="lpoliceId"    column="lpolice_id"    />
+        <result property="fpoliceId"    column="fpolice_id"    />
+        <result property="lpoliceName"    column="lpolice_name"    />
+    </resultMap>
+	
+	<sql id="selectLpoliceVo">
+        select lpolice_id, fpolice_id, lpolice_name from jyz_lpolice
+    </sql>
+	
+    <select id="selectLpoliceList" parameterType="Lpolice" resultMap="LpoliceResult">
+        <include refid="selectLpoliceVo"/>
+        <where>  
+            <if test="lpoliceId != null "> and lpolice_id = #{lpoliceId}</if>
+             <if test="fpoliceId != null "> and fpolice_id = #{fpoliceId}</if>
+             <if test="lpoliceName != null  and lpoliceName != '' "> and lpolice_name = #{lpoliceName}</if>
+         </where>
+    </select>
+    
+    <select id="selectLpoliceById" parameterType="Integer" resultMap="LpoliceResult">
+        <include refid="selectLpoliceVo"/>
+        where lpolice_id = #{lpoliceId}
+    </select>
+        
+    <insert id="insertLpolice" parameterType="Lpolice">
+        insert into jyz_lpolice
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="lpoliceId != null  ">lpolice_id,</if>
+			<if test="fpoliceId != null  ">fpolice_id,</if>
+			<if test="lpoliceName != null  and lpoliceName != ''  ">lpolice_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="lpoliceId != null  ">#{lpoliceId},</if>
+			<if test="fpoliceId != null  ">#{fpoliceId},</if>
+			<if test="lpoliceName != null  and lpoliceName != ''  ">#{lpoliceName},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateLpolice" parameterType="Lpolice">
+        update jyz_lpolice
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="fpoliceId != null  ">fpolice_id = #{fpoliceId},</if>
+            <if test="lpoliceName != null  and lpoliceName != ''  ">lpolice_name = #{lpoliceName},</if>
+        </trim>
+        where lpolice_id = #{lpoliceId}
+    </update>
+
+	<delete id="deleteLpoliceById" parameterType="Integer">
+        delete from jyz_lpolice where lpolice_id = #{lpoliceId}
+    </delete>
+	
+    <delete id="deleteLpoliceByIds" parameterType="String">
+        delete from jyz_lpolice where lpolice_id in 
+        <foreach item="lpoliceId" collection="array" open="(" separator="," close=")">
+            #{lpoliceId}
+        </foreach>
+    </delete>
+    
+</mapper>

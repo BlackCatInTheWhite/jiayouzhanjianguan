@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.project.system.area.mapper.AreaMapper">
+    
+    <resultMap type="Area" id="AreaResult">
+        <result property="areaId"    column="area_id"    />
+        <result property="areaName"    column="area_name"    />
+    </resultMap>
+	
+	<sql id="selectAreaVo">
+        select area_id, area_name from jyz_area
+    </sql>
+	
+    <select id="selectAreaList" parameterType="Area" resultMap="AreaResult">
+        <include refid="selectAreaVo"/>
+        <where>  
+            <if test="areaId != null "> and area_id = #{areaId}</if>
+             <if test="areaName != null  and areaName != '' "> and area_name = #{areaName}</if>
+         </where>
+    </select>
+    
+    <select id="selectAreaById" parameterType="Integer" resultMap="AreaResult">
+        <include refid="selectAreaVo"/>
+        where area_id = #{areaId}
+    </select>
+        
+    <insert id="insertArea" parameterType="Area">
+        insert into jyz_area
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="areaId != null  ">area_id,</if>
+			<if test="areaName != null  and areaName != ''  ">area_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="areaId != null  ">#{areaId},</if>
+			<if test="areaName != null  and areaName != ''  ">#{areaName},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateArea" parameterType="Area">
+        update jyz_area
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="areaName != null  and areaName != ''  ">area_name = #{areaName},</if>
+        </trim>
+        where area_id = #{areaId}
+    </update>
+
+	<delete id="deleteAreaById" parameterType="Integer">
+        delete from jyz_area where area_id = #{areaId}
+    </delete>
+	
+    <delete id="deleteAreaByIds" parameterType="String">
+        delete from jyz_area where area_id in 
+        <foreach item="areaId" collection="array" open="(" separator="," close=")">
+            #{areaId}
+        </foreach>
+    </delete>
+    
+</mapper>

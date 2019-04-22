@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.project.system.policeman.mapper.PolicemanMapper">
+    
+    <resultMap type="Policeman" id="PolicemanResult">
+        <result property="policemanId"    column="policeman_id"    />
+        <result property="lpoliceId"    column="lpolice_id"    />
+        <result property="policemanName"    column="policeman_name"    />
+        <result property="policemanAge"    column="policeman_age"    />
+        <result property="policemanPost"    column="policeman_post"    />
+        <result property="policemanCard"    column="policeman_card"    />
+        <result property="policemanPhone"    column="policeman_phone"    />
+        <result property="policemanPassword"    column="policeman_password"    />
+    </resultMap>
+	
+	<sql id="selectPolicemanVo">
+        select policeman_id, lpolice_id, policeman_name, policeman_age, policeman_post, policeman_card, policeman_phone, policeman_password from jyz_policeman
+    </sql>
+	
+    <select id="selectPolicemanList" parameterType="Policeman" resultMap="PolicemanResult">
+        <include refid="selectPolicemanVo"/>
+        <where>  
+            <if test="policemanId != null "> and policeman_id = #{policemanId}</if>
+             <if test="lpoliceId != null "> and lpolice_id = #{lpoliceId}</if>
+             <if test="policemanName != null  and policemanName != '' "> and policeman_name = #{policemanName}</if>
+             <if test="policemanAge != null "> and policeman_age = #{policemanAge}</if>
+             <if test="policemanPost != null  and policemanPost != '' "> and policeman_post = #{policemanPost}</if>
+             <if test="policemanCard != null  and policemanCard != '' "> and policeman_card = #{policemanCard}</if>
+             <if test="policemanPhone != null  and policemanPhone != '' "> and policeman_phone = #{policemanPhone}</if>
+             <if test="policemanPassword != null  and policemanPassword != '' "> and policeman_password = #{policemanPassword}</if>
+         </where>
+    </select>
+    
+    <select id="selectPolicemanById" parameterType="Integer" resultMap="PolicemanResult">
+        <include refid="selectPolicemanVo"/>
+        where policeman_id = #{policemanId}
+    </select>
+        
+    <insert id="insertPoliceman" parameterType="Policeman">
+        insert into jyz_policeman
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="policemanId != null  ">policeman_id,</if>
+			<if test="lpoliceId != null  ">lpolice_id,</if>
+			<if test="policemanName != null  and policemanName != ''  ">policeman_name,</if>
+			<if test="policemanAge != null  ">policeman_age,</if>
+			<if test="policemanPost != null  and policemanPost != ''  ">policeman_post,</if>
+			<if test="policemanCard != null  and policemanCard != ''  ">policeman_card,</if>
+			<if test="policemanPhone != null  and policemanPhone != ''  ">policeman_phone,</if>
+			<if test="policemanPassword != null  and policemanPassword != ''  ">policeman_password,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="policemanId != null  ">#{policemanId},</if>
+			<if test="lpoliceId != null  ">#{lpoliceId},</if>
+			<if test="policemanName != null  and policemanName != ''  ">#{policemanName},</if>
+			<if test="policemanAge != null  ">#{policemanAge},</if>
+			<if test="policemanPost != null  and policemanPost != ''  ">#{policemanPost},</if>
+			<if test="policemanCard != null  and policemanCard != ''  ">#{policemanCard},</if>
+			<if test="policemanPhone != null  and policemanPhone != ''  ">#{policemanPhone},</if>
+			<if test="policemanPassword != null  and policemanPassword != ''  ">#{policemanPassword},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updatePoliceman" parameterType="Policeman">
+        update jyz_policeman
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="lpoliceId != null  ">lpolice_id = #{lpoliceId},</if>
+            <if test="policemanName != null  and policemanName != ''  ">policeman_name = #{policemanName},</if>
+            <if test="policemanAge != null  ">policeman_age = #{policemanAge},</if>
+            <if test="policemanPost != null  and policemanPost != ''  ">policeman_post = #{policemanPost},</if>
+            <if test="policemanCard != null  and policemanCard != ''  ">policeman_card = #{policemanCard},</if>
+            <if test="policemanPhone != null  and policemanPhone != ''  ">policeman_phone = #{policemanPhone},</if>
+            <if test="policemanPassword != null  and policemanPassword != ''  ">policeman_password = #{policemanPassword},</if>
+        </trim>
+        where policeman_id = #{policemanId}
+    </update>
+
+	<delete id="deletePolicemanById" parameterType="Integer">
+        delete from jyz_policeman where policeman_id = #{policemanId}
+    </delete>
+	
+    <delete id="deletePolicemanByIds" parameterType="String">
+        delete from jyz_policeman where policeman_id in 
+        <foreach item="policemanId" collection="array" open="(" separator="," close=")">
+            #{policemanId}
+        </foreach>
+    </delete>
+    
+</mapper>

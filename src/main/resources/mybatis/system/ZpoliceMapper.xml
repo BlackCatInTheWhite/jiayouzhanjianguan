@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.project.system.zpolice.mapper.ZpoliceMapper">
+    
+    <resultMap type="Zpolice" id="ZpoliceResult">
+        <result property="zpoliceId"    column="zpolice_id"    />
+        <result property="areaId"    column="area_id"    />
+        <result property="zpoliceName"    column="zpolice_name"    />
+    </resultMap>
+	
+	<sql id="selectZpoliceVo">
+        select zpolice_id, area_id, zpolice_name from jyz_zpolice
+    </sql>
+	
+    <select id="selectZpoliceList" parameterType="Zpolice" resultMap="ZpoliceResult">
+        <include refid="selectZpoliceVo"/>
+        <where>  
+            <if test="zpoliceId != null "> and zpolice_id = #{zpoliceId}</if>
+             <if test="areaId != null "> and area_id = #{areaId}</if>
+             <if test="zpoliceName != null  and zpoliceName != '' "> and zpolice_name = #{zpoliceName}</if>
+         </where>
+    </select>
+    
+    <select id="selectZpoliceById" parameterType="Integer" resultMap="ZpoliceResult">
+        <include refid="selectZpoliceVo"/>
+        where zpolice_id = #{zpoliceId}
+    </select>
+        
+    <insert id="insertZpolice" parameterType="Zpolice">
+        insert into jyz_zpolice
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="zpoliceId != null  ">zpolice_id,</if>
+			<if test="areaId != null  ">area_id,</if>
+			<if test="zpoliceName != null  and zpoliceName != ''  ">zpolice_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="zpoliceId != null  ">#{zpoliceId},</if>
+			<if test="areaId != null  ">#{areaId},</if>
+			<if test="zpoliceName != null  and zpoliceName != ''  ">#{zpoliceName},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateZpolice" parameterType="Zpolice">
+        update jyz_zpolice
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="areaId != null  ">area_id = #{areaId},</if>
+            <if test="zpoliceName != null  and zpoliceName != ''  ">zpolice_name = #{zpoliceName},</if>
+        </trim>
+        where zpolice_id = #{zpoliceId}
+    </update>
+
+	<delete id="deleteZpoliceById" parameterType="Integer">
+        delete from jyz_zpolice where zpolice_id = #{zpoliceId}
+    </delete>
+	
+    <delete id="deleteZpoliceByIds" parameterType="String">
+        delete from jyz_zpolice where zpolice_id in 
+        <foreach item="zpoliceId" collection="array" open="(" separator="," close=")">
+            #{zpoliceId}
+        </foreach>
+    </delete>
+    
+</mapper>

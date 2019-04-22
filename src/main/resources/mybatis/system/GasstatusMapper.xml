@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.project.system.gasstatus.mapper.GasstatusMapper">
+    
+    <resultMap type="Gasstatus" id="GasstatusResult">
+        <result property="gasstatusId"    column="gasstatus_id"    />
+        <result property="gasstatusName"    column="gasstatus_name"    />
+    </resultMap>
+	
+	<sql id="selectGasstatusVo">
+        select gasstatus_id, gasstatus_name from jyz_gasstatus
+    </sql>
+	
+    <select id="selectGasstatusList" parameterType="Gasstatus" resultMap="GasstatusResult">
+        <include refid="selectGasstatusVo"/>
+        <where>  
+            <if test="gasstatusId != null "> and gasstatus_id = #{gasstatusId}</if>
+             <if test="gasstatusName != null  and gasstatusName != '' "> and gasstatus_name = #{gasstatusName}</if>
+         </where>
+    </select>
+    
+    <select id="selectGasstatusById" parameterType="Integer" resultMap="GasstatusResult">
+        <include refid="selectGasstatusVo"/>
+        where gasstatus_id = #{gasstatusId}
+    </select>
+        
+    <insert id="insertGasstatus" parameterType="Gasstatus">
+        insert into jyz_gasstatus
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="gasstatusId != null  ">gasstatus_id,</if>
+			<if test="gasstatusName != null  and gasstatusName != ''  ">gasstatus_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="gasstatusId != null  ">#{gasstatusId},</if>
+			<if test="gasstatusName != null  and gasstatusName != ''  ">#{gasstatusName},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateGasstatus" parameterType="Gasstatus">
+        update jyz_gasstatus
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="gasstatusName != null  and gasstatusName != ''  ">gasstatus_name = #{gasstatusName},</if>
+        </trim>
+        where gasstatus_id = #{gasstatusId}
+    </update>
+
+	<delete id="deleteGasstatusById" parameterType="Integer">
+        delete from jyz_gasstatus where gasstatus_id = #{gasstatusId}
+    </delete>
+	
+    <delete id="deleteGasstatusByIds" parameterType="String">
+        delete from jyz_gasstatus where gasstatus_id in 
+        <foreach item="gasstatusId" collection="array" open="(" separator="," close=")">
+            #{gasstatusId}
+        </foreach>
+    </delete>
+    
+</mapper>

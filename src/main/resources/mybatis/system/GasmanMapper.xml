@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.project.system.gasman.mapper.GasmanMapper">
+    
+    <resultMap type="Gasman" id="GasmanResult">
+        <result property="gasmanId"    column="gasman_id"    />
+        <result property="gasmanName"    column="gasman_name"    />
+        <result property="gasmanGender"    column="gasman_gender"    />
+        <result property="gasmanCard"    column="gasman_card"    />
+        <result property="gasmanBirthday"    column="gasman_birthday"    />
+        <result property="gasmanEthnic"    column="gasman_ethnic"    />
+        <result property="gasmanBirtharea"    column="gasman_birtharea"    />
+        <result property="gasmanBirthplace"    column="gasman_birthplace"    />
+        <result property="gasmanHomearea"    column="gasman_homearea"    />
+        <result property="gasmanPhone"    column="gasman_phone"    />
+        <result property="gasId"    column="gas_id"    />
+    </resultMap>
+	
+	<sql id="selectGasmanVo">
+        select gasman_id, gasman_name, gasman_gender, gasman_card, gasman_birthday, gasman_ethnic, gasman_birtharea, gasman_birthplace, gasman_homearea, gasman_phone, gas_id from jyz_gasman
+    </sql>
+	
+    <select id="selectGasmanList" parameterType="Gasman" resultMap="GasmanResult">
+        <include refid="selectGasmanVo"/>
+        <where>  
+            <if test="gasmanId != null "> and gasman_id = #{gasmanId}</if>
+             <if test="gasmanName != null  and gasmanName != '' "> and gasman_name = #{gasmanName}</if>
+             <if test="gasmanGender != null "> and gasman_gender = #{gasmanGender}</if>
+             <if test="gasmanCard != null  and gasmanCard != '' "> and gasman_card = #{gasmanCard}</if>
+             <if test="gasmanBirthday != null "> and gasman_birthday = #{gasmanBirthday}</if>
+             <if test="gasmanEthnic != null  and gasmanEthnic != '' "> and gasman_ethnic = #{gasmanEthnic}</if>
+             <if test="gasmanBirtharea != null "> and gasman_birtharea = #{gasmanBirtharea}</if>
+             <if test="gasmanBirthplace != null  and gasmanBirthplace != '' "> and gasman_birthplace = #{gasmanBirthplace}</if>
+             <if test="gasmanHomearea != null "> and gasman_homearea = #{gasmanHomearea}</if>
+             <if test="gasmanPhone != null  and gasmanPhone != '' "> and gasman_phone = #{gasmanPhone}</if>
+             <if test="gasId != null "> and gas_id = #{gasId}</if>
+         </where>
+    </select>
+    
+    <select id="selectGasmanById" parameterType="Integer" resultMap="GasmanResult">
+        <include refid="selectGasmanVo"/>
+        where gasman_id = #{gasmanId}
+    </select>
+        
+    <insert id="insertGasman" parameterType="Gasman">
+        insert into jyz_gasman
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="gasmanId != null  ">gasman_id,</if>
+			<if test="gasmanName != null  and gasmanName != ''  ">gasman_name,</if>
+			<if test="gasmanGender != null  ">gasman_gender,</if>
+			<if test="gasmanCard != null  and gasmanCard != ''  ">gasman_card,</if>
+			<if test="gasmanBirthday != null  ">gasman_birthday,</if>
+			<if test="gasmanEthnic != null  and gasmanEthnic != ''  ">gasman_ethnic,</if>
+			<if test="gasmanBirtharea != null  ">gasman_birtharea,</if>
+			<if test="gasmanBirthplace != null  and gasmanBirthplace != ''  ">gasman_birthplace,</if>
+			<if test="gasmanHomearea != null  ">gasman_homearea,</if>
+			<if test="gasmanPhone != null  and gasmanPhone != ''  ">gasman_phone,</if>
+			<if test="gasId != null  ">gas_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="gasmanId != null  ">#{gasmanId},</if>
+			<if test="gasmanName != null  and gasmanName != ''  ">#{gasmanName},</if>
+			<if test="gasmanGender != null  ">#{gasmanGender},</if>
+			<if test="gasmanCard != null  and gasmanCard != ''  ">#{gasmanCard},</if>
+			<if test="gasmanBirthday != null  ">#{gasmanBirthday},</if>
+			<if test="gasmanEthnic != null  and gasmanEthnic != ''  ">#{gasmanEthnic},</if>
+			<if test="gasmanBirtharea != null  ">#{gasmanBirtharea},</if>
+			<if test="gasmanBirthplace != null  and gasmanBirthplace != ''  ">#{gasmanBirthplace},</if>
+			<if test="gasmanHomearea != null  ">#{gasmanHomearea},</if>
+			<if test="gasmanPhone != null  and gasmanPhone != ''  ">#{gasmanPhone},</if>
+			<if test="gasId != null  ">#{gasId},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateGasman" parameterType="Gasman">
+        update jyz_gasman
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="gasmanName != null  and gasmanName != ''  ">gasman_name = #{gasmanName},</if>
+            <if test="gasmanGender != null  ">gasman_gender = #{gasmanGender},</if>
+            <if test="gasmanCard != null  and gasmanCard != ''  ">gasman_card = #{gasmanCard},</if>
+            <if test="gasmanBirthday != null  ">gasman_birthday = #{gasmanBirthday},</if>
+            <if test="gasmanEthnic != null  and gasmanEthnic != ''  ">gasman_ethnic = #{gasmanEthnic},</if>
+            <if test="gasmanBirtharea != null  ">gasman_birtharea = #{gasmanBirtharea},</if>
+            <if test="gasmanBirthplace != null  and gasmanBirthplace != ''  ">gasman_birthplace = #{gasmanBirthplace},</if>
+            <if test="gasmanHomearea != null  ">gasman_homearea = #{gasmanHomearea},</if>
+            <if test="gasmanPhone != null  and gasmanPhone != ''  ">gasman_phone = #{gasmanPhone},</if>
+            <if test="gasId != null  ">gas_id = #{gasId},</if>
+        </trim>
+        where gasman_id = #{gasmanId}
+    </update>
+
+	<delete id="deleteGasmanById" parameterType="Integer">
+        delete from jyz_gasman where gasman_id = #{gasmanId}
+    </delete>
+	
+    <delete id="deleteGasmanByIds" parameterType="String">
+        delete from jyz_gasman where gasman_id in 
+        <foreach item="gasmanId" collection="array" open="(" separator="," close=")">
+            #{gasmanId}
+        </foreach>
+    </delete>
+    
+</mapper>
