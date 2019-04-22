@@ -77,7 +77,13 @@ public class GasController extends BaseController {
      * 新增加油站
      */
     @GetMapping("/add")
-    public String add() {
+    public String add(ModelMap mmap) {
+        List<Lpolice> lpoliceList = lpoliceService.selectLpoliceList(new Lpolice());
+        List<Gastype> gastypeList = gastypeService.selectGastypeList(new Gastype());
+        List<Gasstatus> gasstatusList = gasstatusService.selectGasstatusList(new Gasstatus());
+        mmap.put("lpoliceList", lpoliceList);
+        mmap.put("gastypeList", gastypeList);
+        mmap.put("gasstatusList", gasstatusList);
         return prefix + "/add";
     }
 

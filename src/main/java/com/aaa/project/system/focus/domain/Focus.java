@@ -1,5 +1,7 @@
 package com.aaa.project.system.focus.domain;
 
+import com.aaa.project.system.freason.domain.Freason;
+import com.aaa.project.system.gasman.domain.Gasman;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.aaa.framework.web.domain.BaseEntity;
@@ -20,8 +22,28 @@ public class Focus extends BaseEntity
 	private String focusCard;
 	/** 原因序号 */
 	private Integer freasonId;
+	/** 原因名称 */
+	private Freason freasonName;
+	/** 人员信息 */
+	private Gasman gasman;
 
-	public void setFocusId(Integer focusId) 
+	public Freason getFreasonName() {
+		return freasonName;
+	}
+
+	public void setFreasonName(Freason freasonName) {
+		this.freasonName = freasonName;
+	}
+
+	public Gasman getGasman() {
+		return gasman;
+	}
+
+	public void setGasman(Gasman gasman) {
+		this.gasman = gasman;
+	}
+
+	public void setFocusId(Integer focusId)
 	{
 		this.focusId = focusId;
 	}
@@ -53,7 +75,7 @@ public class Focus extends BaseEntity
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("focusId", getFocusId())
             .append("focusCard", getFocusCard())
-            .append("freasonId", getFreasonId())
+            .append("freasonId", getFreasonId()).append("freasonName",getFreasonName()).append("gasman",getGasman())
             .toString();
     }
 }

@@ -18,6 +18,14 @@ public interface IGasmanService
      * @return 加油站员工信息
      */
 	public Gasman selectGasmanById(Integer gasmanId);
+
+	/**
+	 * 查询加油站员工信息
+	 *
+	 * @param gasmanCard 加油站员工ID
+	 * @return 加油站员工信息
+	 */
+	public Gasman selectGasmanByCard(String gasmanCard);
 	
 	/**
      * 查询加油站员工列表

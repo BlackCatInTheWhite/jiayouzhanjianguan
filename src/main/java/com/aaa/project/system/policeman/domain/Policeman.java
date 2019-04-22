@@ -1,5 +1,6 @@
 package com.aaa.project.system.policeman.domain;
 
+import com.aaa.project.system.lpolice.domain.Lpolice;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.aaa.framework.web.domain.BaseEntity;
@@ -30,8 +31,18 @@ public class Policeman extends BaseEntity
 	private String policemanPhone;
 	/** 登录密码 */
 	private String policemanPassword;
+	/** 所属派出所 */
+	private Lpolice lpoliceName;
 
-	public void setPolicemanId(Integer policemanId) 
+	public Lpolice getLpoliceName() {
+		return lpoliceName;
+	}
+
+	public void setLpoliceName(Lpolice lpoliceName) {
+		this.lpoliceName = lpoliceName;
+	}
+
+	public void setPolicemanId(Integer policemanId)
 	{
 		this.policemanId = policemanId;
 	}
@@ -113,7 +124,7 @@ public class Policeman extends BaseEntity
             .append("policemanPost", getPolicemanPost())
             .append("policemanCard", getPolicemanCard())
             .append("policemanPhone", getPolicemanPhone())
-            .append("policemanPassword", getPolicemanPassword())
+            .append("policemanPassword", getPolicemanPassword()).append("lpoliceName",getLpoliceName())
             .toString();
     }
 }

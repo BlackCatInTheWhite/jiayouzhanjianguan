@@ -1,12 +1,12 @@
 package com.aaa.project.system.gasman.service;
 
-import java.util.List;
+import com.aaa.common.support.Convert;
+import com.aaa.project.system.gasman.domain.Gasman;
+import com.aaa.project.system.gasman.mapper.GasmanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.aaa.project.system.gasman.mapper.GasmanMapper;
-import com.aaa.project.system.gasman.domain.Gasman;
-import com.aaa.project.system.gasman.service.IGasmanService;
-import com.aaa.common.support.Convert;
+
+import java.util.List;
 
 /**
  * 加油站员工 服务层实现
@@ -22,7 +22,7 @@ public class GasmanServiceImpl implements IGasmanService
 
 	/**
      * 查询加油站员工信息
-     * 
+     *
      * @param gasmanId 加油站员工ID
      * @return 加油站员工信息
      */
@@ -30,6 +30,17 @@ public class GasmanServiceImpl implements IGasmanService
 	public Gasman selectGasmanById(Integer gasmanId)
 	{
 	    return gasmanMapper.selectGasmanById(gasmanId);
+	}
+	/**
+	 * 查询加油站员工身份证
+	 *
+	 * @param gasmanCard 加油站员工ID
+	 * @return 加油站员工信息
+	 */
+	@Override
+	public Gasman selectGasmanByCard(String gasmanCard)
+	{
+		return gasmanMapper.selectGasmanByCard(gasmanCard);
 	}
 	
 	/**

@@ -13,6 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="policemanCard"    column="policeman_card"    />
         <result property="policemanPhone"    column="policeman_phone"    />
         <result property="policemanPassword"    column="policeman_password"    />
+        <association property="lpoliceName" column="lpolice_id" select="com.aaa.project.system.lpolice.mapper.LpoliceMapper.selectLpoliceById"></association>
     </resultMap>
 	
 	<sql id="selectPolicemanVo">

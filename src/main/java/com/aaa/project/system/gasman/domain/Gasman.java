@@ -1,5 +1,8 @@
 package com.aaa.project.system.gasman.domain;
 
+import com.aaa.project.system.area.domain.Area;
+import com.aaa.project.system.focus.domain.Focus;
+import com.aaa.project.system.gas.domain.Gas;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.aaa.framework.web.domain.BaseEntity;
@@ -37,8 +40,40 @@ public class Gasman extends BaseEntity
 	private String gasmanPhone;
 	/** 加油站序号 */
 	private Integer gasId;
+	/** 户籍所属县区名称 */
+	private Area birthareaName;
+	/** 现居住地所属县区名称 */
+	private Area homeareaName;
+	/** 加油站序号 */
+	private Gas gasName;
+	/** 重点观察 */
+	private Focus focusName;
 
-	public void setGasmanId(Integer gasmanId) 
+	public Area getBirthareaName() {
+		return birthareaName;
+	}
+
+	public void setBirthareaName(Area birthareaName) {
+		this.birthareaName = birthareaName;
+	}
+
+	public Area getHomeareaName() {
+		return homeareaName;
+	}
+
+	public void setHomeareaName(Area homeareaName) {
+		this.homeareaName = homeareaName;
+	}
+
+	public Gas getGasName() {
+		return gasName;
+	}
+
+	public void setGasName(Gas gasName) {
+		this.gasName = gasName;
+	}
+
+	public void setGasmanId(Integer gasmanId)
 	{
 		this.gasmanId = gasmanId;
 	}
@@ -150,7 +185,7 @@ public class Gasman extends BaseEntity
             .append("gasmanBirthplace", getGasmanBirthplace())
             .append("gasmanHomearea", getGasmanHomearea())
             .append("gasmanPhone", getGasmanPhone())
-            .append("gasId", getGasId())
+            .append("gasId", getGasId()).append("birthareaName",getBirthareaName()).append("homeareaName",getHomeareaName()).append("gasName",getGasName())
             .toString();
     }
 }
