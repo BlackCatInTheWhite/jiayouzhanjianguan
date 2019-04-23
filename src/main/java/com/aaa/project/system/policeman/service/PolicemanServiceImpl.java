@@ -1,12 +1,12 @@
 package com.aaa.project.system.policeman.service;
 
-import java.util.List;
+import com.aaa.common.support.Convert;
+import com.aaa.project.system.policeman.domain.Policeman;
+import com.aaa.project.system.policeman.mapper.PolicemanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.aaa.project.system.policeman.mapper.PolicemanMapper;
-import com.aaa.project.system.policeman.domain.Policeman;
-import com.aaa.project.system.policeman.service.IPolicemanService;
-import com.aaa.common.support.Convert;
+
+import java.util.List;
 
 /**
  * 派出所人员 服务层实现
@@ -43,7 +43,24 @@ public class PolicemanServiceImpl implements IPolicemanService
 	{
 	    return policemanMapper.selectPolicemanList(policeman);
 	}
-	
+
+	/***
+	 * 查询巡查人员负责的加油站
+	 * @param policeman
+	 * @return
+	 */
+	public Policeman selectJYZByPolicemanId(Integer policeman){
+		return policemanMapper.selectJYZByPolicemanId(policeman);
+	}
+
+	/**
+	 *  根据登录信息查询公安人员
+	 *
+	 * @return
+	 */
+	public Policeman selectByLogin(Policeman policeman){
+		return policemanMapper.selectByLogin(policeman);
+	}
     /**
      * 新增派出所人员
      * 

@@ -18,7 +18,13 @@ public interface PolicemanMapper
      * @return 派出所人员信息
      */
 	public Policeman selectPolicemanById(Integer policemanId);
-	
+
+	/**
+	 *  根据登录信息查询公安人员
+	 *
+	 * @return
+	 */
+	public Policeman selectByLogin(Policeman policeman);
 	/**
      * 查询派出所人员列表
      * 
@@ -26,7 +32,13 @@ public interface PolicemanMapper
      * @return 派出所人员集合
      */
 	public List<Policeman> selectPolicemanList(Policeman policeman);
-	
+
+	/***
+	 * 查询巡查人员负责的加油站
+	 * @param policeman
+	 * @return
+	 */
+	public Policeman selectJYZByPolicemanId(Integer policeman);
 	/**
      * 新增派出所人员
      * 

@@ -14,10 +14,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="policemanPhone"    column="policeman_phone"    />
         <result property="policemanPassword"    column="policeman_password"    />
     </resultMap>
-	
+
+    <resultMap type="Policeman" id="PolicemanAndJYZResult">
+        <result property="policemanId"    column="policeman_id"    />
+        <result property="lpoliceId"    column="lpolice_id"    />
+        <result property="policemanName"    column="policeman_name"    />
+        <result property="policemanAge"    column="policeman_age"    />
+        <result property="policemanPost"    column="policeman_post"    />
+        <result property="policemanCard"    column="policeman_card"    />
+        <result property="policemanPhone"    column="policeman_phone"    />
+        <result property="policemanPassword"    column="policeman_password"    />
+        <collection property="gas" ofType="com.aaa.project.system.gas.domain.Gas">
+            <id property="gasId" column="gas_id"/>
+            <id property="gasName" column="gas_name"/>
+            <id property="gasAddress" column="gas_address"/>
+            <id property="gasLongitude" column="gas_longitude"/>
+            <id property="gasLatitude" column="gas_latitude"/>
+        </collection>
+    </resultMap>
 	<sql id="selectPolicemanVo">
         select policeman_id, lpolice_id, policeman_name, policeman_age, policeman_post, policeman_card, policeman_phone, policeman_password from jyz_policeman
     </sql>
+    <sql id="selectPolicemanJYZ">
+        select policeman_id, jyz_policeman.lpolice_id, policeman_name, policeman_age, policeman_post, policeman_card, policeman_phone, policeman_password,jyz_gas.gas_id,gas_name,gas_address,gas_longitude,gas_latitude
+        FROM jyz_gas,jyz_policeman,jyz_zmission
+</sql>
 	
     <select id="selectPolicemanList" parameterType="Policeman" resultMap="PolicemanResult">
         <include refid="selectPolicemanVo"/>
@@ -33,11 +54,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </where>
     </select>
     
+    <select id="selectJYZByPolicemanId" parameterType="Integer" resultMap="PolicemanAndJYZResult">
+        <include refid="selectPolicemanJYZ"/>
+        where policeman_id = #{policemanId} and jyz_zmission.gas_id=jyz_gas.gas_id and
+        jyz_policeman.policeman_id = jyz_zmission.police_manid
+    </select>
+
     <select id="selectPolicemanById" parameterType="Integer" resultMap="PolicemanResult">
         <include refid="selectPolicemanVo"/>
         where policeman_id = #{policemanId}
     </select>
-        
+    <select id="selectByLogin" parameterType="Policeman" resultMap="PolicemanResult">
+        <include refid="selectPolicemanVo"/>
+        where policeman_phone = #{policemanPhone} and policeman_password=#{policemanPassword}
+    </select>
     <insert id="insertPoliceman" parameterType="Policeman">
         insert into jyz_policeman
 		<trim prefix="(" suffix=")" suffixOverrides=",">
