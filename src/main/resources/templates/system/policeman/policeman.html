@@ -1,0 +1,143 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+    
+     <div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+							<li>
+								所属派出所：<input type="text" name="lpoliceName.lpoliceName"/>
+							</li>
+
+							<li>
+								姓名：<input type="text" name="policemanName"/>
+							</li>
+
+							<li>
+								年龄：<input type="text" name="policemanAge"/>
+							</li>
+
+							<li>
+								职位：<input type="text" name="policemanPost"/>
+							</li>
+
+							<li>
+								身份证号：<input type="text" name="policemanCard"/>
+							</li>
+
+							<li>
+								手机号：<input type="text" name="policemanPhone"/>
+							</li>
+
+							<li>
+								登录密码：<input type="text" name="policemanPassword"/>
+							</li>
+
+							<li>
+								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			
+	        <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
+				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:policeman:add">
+					<i class="fa fa-plus"></i> 添加
+				</a>
+				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="system:policeman:edit">
+					<i class="fa fa-edit"></i> 修改
+				</a>
+				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:policeman:remove">
+					<i class="fa fa-remove"></i> 删除
+				</a>
+				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:policeman:export">
+						<i class="fa fa-download"></i> 导出
+				 </a>
+			</div>
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table" data-mobile-responsive="true"></table>
+			</div>
+		</div>
+	</div>
+    <div th:include="include :: footer"></div>
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:policeman:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:policeman:remove')}]];
+        var prefix = ctx + "system/policeman";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+				exportUrl: prefix + "/export",
+                modalName: "派出所人员",
+				search: false,
+		        showExport: true,
+                columns: [{
+		            checkbox: true
+		        },
+				{
+					field : 'policemanId', 
+					title : '派出人员序号',
+					visible: false
+				},
+				{
+					field : 'lpoliceName.lpoliceName',
+					title : '所属派出所',
+					sortable: true
+				},
+				{
+					field : 'policemanName', 
+					title : '姓名',
+					sortable: true
+				},
+				{
+					field : 'policemanAge', 
+					title : '年龄',
+					sortable: true
+				},
+				{
+					field : 'policemanPost', 
+					title : '职位',
+					sortable: true
+				},
+				{
+					field : 'policemanCard', 
+					title : '身份证号',
+					sortable: true
+				},
+				{
+					field : 'policemanPhone', 
+					title : '手机号',
+					sortable: true
+				},
+				{
+					field : 'policemanPassword', 
+					title : '登录密码',
+					sortable: true
+				},
+		        {
+		            title: '操作',
+		            align: 'center',
+		            formatter: function(value, row, index) {
+		            	var actions = [];
+		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.policemanId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.policemanId + '\')"><i class="fa fa-remove"></i>删除</a>');
+						return actions.join('');
+		            }
+		        }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

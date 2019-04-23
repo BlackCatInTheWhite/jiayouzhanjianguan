@@ -1,9 +1,10 @@
 package com.aaa.project.system.policeman.domain;
 
+import com.aaa.framework.web.domain.BaseEntity;
 import com.aaa.project.system.gas.domain.Gas;
+import com.aaa.project.system.lpolice.domain.Lpolice;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import com.aaa.framework.web.domain.BaseEntity;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ import java.util.List;
  * @author aaa
  * @date 2019-04-22
  */
+
 public class Policeman extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
@@ -52,6 +54,8 @@ public class Policeman extends BaseEntity {
      * 任务加油站信息
      */
     private List<Gas> gas;
+    /** 所属派出所 */
+    private Lpolice lpoliceName;
 
     public List<Gas> getGas() {
         return gas;
@@ -75,6 +79,14 @@ public class Policeman extends BaseEntity {
 
     public Integer getLpoliceId() {
         return lpoliceId;
+    }
+
+    public Lpolice getLpoliceName() {
+        return lpoliceName;
+    }
+
+    public void setLpoliceName(Lpolice lpoliceName) {
+        this.lpoliceName = lpoliceName;
     }
 
     public void setPolicemanName(String policemanName) {
@@ -136,5 +148,7 @@ public class Policeman extends BaseEntity {
                 .append("policemanPhone", getPolicemanPhone())
                 .append("policemanPassword", getPolicemanPassword())
                 .toString();
-    }
+
+
+}
 }

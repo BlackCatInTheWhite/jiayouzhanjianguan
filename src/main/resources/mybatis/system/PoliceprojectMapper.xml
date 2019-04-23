@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.project.system.policeproject.mapper.PoliceprojectMapper">
+    
+    <resultMap type="Policeproject" id="PoliceprojectResult">
+        <result property="projectId"    column="project_id"    />
+        <result property="projectKindid"    column="project_kindid"    />
+        <result property="projectName"    column="project_name"    />
+        <result property="point"    column="point"    />
+        <association property="projectkindName" column="project_kindid" select="com.aaa.project.system.projectkind.mapper.ProjectkindMapper.selectProjectkindById"></association>
+    </resultMap>
+	
+	<sql id="selectPoliceprojectVo">
+        select project_id, project_kindid, project_name, point from jyz_policeproject
+    </sql>
+	
+    <select id="selectPoliceprojectList" parameterType="Policeproject" resultMap="PoliceprojectResult">
+        <include refid="selectPoliceprojectVo"/>
+        <where>  
+            <if test="projectId != null "> and project_id = #{projectId}</if>
+             <if test="projectKindid != null "> and project_kindid = #{projectKindid}</if>
+             <if test="projectName != null  and projectName != '' "> and project_name = #{projectName}</if>
+             <if test="point != null "> and point = #{point}</if>
+         </where>
+    </select>
+    
+    <select id="selectPoliceprojectById" parameterType="Integer" resultMap="PoliceprojectResult">
+        <include refid="selectPoliceprojectVo"/>
+        where project_id = #{projectId}
+    </select>
+        
+    <insert id="insertPoliceproject" parameterType="Policeproject">
+        insert into jyz_policeproject
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="projectId != null  ">project_id,</if>
+			<if test="projectKindid != null  ">project_kindid,</if>
+			<if test="projectName != null  and projectName != ''  ">project_name,</if>
+			<if test="point != null  ">point,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="projectId != null  ">#{projectId},</if>
+			<if test="projectKindid != null  ">#{projectKindid},</if>
+			<if test="projectName != null  and projectName != ''  ">#{projectName},</if>
+			<if test="point != null  ">#{point},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updatePoliceproject" parameterType="Policeproject">
+        update jyz_policeproject
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="projectKindid != null  ">project_kindid = #{projectKindid},</if>
+            <if test="projectName != null  and projectName != ''  ">project_name = #{projectName},</if>
+            <if test="point != null  ">point = #{point},</if>
+        </trim>
+        where project_id = #{projectId}
+    </update>
+
+	<delete id="deletePoliceprojectById" parameterType="Integer">
+        delete from jyz_policeproject where project_id = #{projectId}
+    </delete>
+	
+    <delete id="deletePoliceprojectByIds" parameterType="String">
+        delete from jyz_policeproject where project_id in 
+        <foreach item="projectId" collection="array" open="(" separator="," close=")">
+            #{projectId}
+        </foreach>
+    </delete>
+    
+</mapper>

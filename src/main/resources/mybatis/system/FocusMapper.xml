@@ -8,6 +8,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="focusId"    column="focus_id"    />
         <result property="focusCard"    column="focus_card"    />
         <result property="freasonId"    column="freason_id"    />
+        <association property="freasonName" column="freason_id" select="com.aaa.project.system.freason.mapper.FreasonMapper.selectFreasonById"></association>
+        <association property="gasman" column="focus_card" select="com.aaa.project.system.gasman.mapper.GasmanMapper.selectGasmanByCard"></association>
     </resultMap>
 	
 	<sql id="selectFocusVo">

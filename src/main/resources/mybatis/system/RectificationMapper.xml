@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.project.system.rectification.mapper.RectificationMapper">
+    
+    <resultMap type="Rectification" id="RectificationResult">
+        <result property="rectificationId"    column="rectification_id"    />
+        <result property="gasId"    column="gas_id"    />
+        <result property="fmissionId"    column="fmission_id"    />
+        <result property="rectificationDes"    column="rectification_des"    />
+        <result property="rectificationPolicemanid"    column="rectification_policemanid"    />
+        <result property="rectificationState"    column="rectification_state"    />
+        <result property="rectificationTime"    column="rectification_time"    />
+        <result property="rectificationBegin"    column="rectification_begin"    />
+        <association property="gasName" column="gas_id" select="com.aaa.project.system.gas.mapper.GasMapper.selectGasById"></association>
+        <association property="policemanName" column="rectification_policemanid" select="com.aaa.project.system.policeman.mapper.PolicemanMapper.selectPolicemanById"></association>
+        <association property="gasstatusName" column="rectification_state" select="com.aaa.project.system.gasstatus.mapper.GasstatusMapper.selectGasstatusById"></association>
+    </resultMap>
+	
+	<sql id="selectRectificationVo">
+        select rectification_id, gas_id, fmission_id, rectification_des, rectification_policemanid, rectification_state, rectification_time, rectification_begin from jyz_rectification
+    </sql>
+	
+    <select id="selectRectificationList" parameterType="Rectification" resultMap="RectificationResult">
+        <include refid="selectRectificationVo"/>
+        <where>  
+            <if test="rectificationId != null "> and rectification_id = #{rectificationId}</if>
+             <if test="gasId != null "> and gas_id = #{gasId}</if>
+             <if test="fmissionId != null "> and fmission_id = #{fmissionId}</if>
+             <if test="rectificationDes != null  and rectificationDes != '' "> and rectification_des = #{rectificationDes}</if>
+             <if test="rectificationPolicemanid != null "> and rectification_policemanid = #{rectificationPolicemanid}</if>
+             <if test="rectificationState != null "> and rectification_state = #{rectificationState}</if>
+             <if test="rectificationTime != null "> and rectification_time = #{rectificationTime}</if>
+             <if test="rectificationBegin != null "> and rectification_begin = #{rectificationBegin}</if>
+         </where>
+    </select>
+    
+    <select id="selectRectificationById" parameterType="Integer" resultMap="RectificationResult">
+        <include refid="selectRectificationVo"/>
+        where rectification_id = #{rectificationId}
+    </select>
+        
+    <insert id="insertRectification" parameterType="Rectification">
+        insert into jyz_rectification
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="rectificationId != null  ">rectification_id,</if>
+			<if test="gasId != null  ">gas_id,</if>
+			<if test="fmissionId != null  ">fmission_id,</if>
+			<if test="rectificationDes != null  and rectificationDes != ''  ">rectification_des,</if>
+			<if test="rectificationPolicemanid != null  ">rectification_policemanid,</if>
+			<if test="rectificationState != null  ">rectification_state,</if>
+			<if test="rectificationTime != null  ">rectification_time,</if>
+			<if test="rectificationBegin != null  ">rectification_begin,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="rectificationId != null  ">#{rectificationId},</if>
+			<if test="gasId != null  ">#{gasId},</if>
+			<if test="fmissionId != null  ">#{fmissionId},</if>
+			<if test="rectificationDes != null  and rectificationDes != ''  ">#{rectificationDes},</if>
+			<if test="rectificationPolicemanid != null  ">#{rectificationPolicemanid},</if>
+			<if test="rectificationState != null  ">#{rectificationState},</if>
+			<if test="rectificationTime != null  ">#{rectificationTime},</if>
+			<if test="rectificationBegin != null  ">#{rectificationBegin},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateRectification" parameterType="Rectification">
+        update jyz_rectification
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="gasId != null  ">gas_id = #{gasId},</if>
+            <if test="fmissionId != null  ">fmission_id = #{fmissionId},</if>
+            <if test="rectificationDes != null  and rectificationDes != ''  ">rectification_des = #{rectificationDes},</if>
+            <if test="rectificationPolicemanid != null  ">rectification_policemanid = #{rectificationPolicemanid},</if>
+            <if test="rectificationState != null  ">rectification_state = #{rectificationState},</if>
+            <if test="rectificationTime != null  ">rectification_time = #{rectificationTime},</if>
+            <if test="rectificationBegin != null  ">rectification_begin = #{rectificationBegin},</if>
+        </trim>
+        where rectification_id = #{rectificationId}
+    </update>
+
+	<delete id="deleteRectificationById" parameterType="Integer">
+        delete from jyz_rectification where rectification_id = #{rectificationId}
+    </delete>
+	
+    <delete id="deleteRectificationByIds" parameterType="String">
+        delete from jyz_rectification where rectification_id in 
+        <foreach item="rectificationId" collection="array" open="(" separator="," close=")">
+            #{rectificationId}
+        </foreach>
+    </delete>
+    
+</mapper>

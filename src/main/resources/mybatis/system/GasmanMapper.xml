@@ -16,6 +16,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="gasmanHomearea"    column="gasman_homearea"    />
         <result property="gasmanPhone"    column="gasman_phone"    />
         <result property="gasId"    column="gas_id"    />
+        <association property="birthareaName" column="gasman_birtharea" select="com.aaa.project.system.area.mapper.AreaMapper.selectAreaById"></association>
+        <association property="homeareaName" column="gasman_homearea" select="com.aaa.project.system.area.mapper.AreaMapper.selectAreaById"></association>
+        <association property="gasName" column="gas_id" select="com.aaa.project.system.gas.mapper.GasMapper.selectGasById"></association>
     </resultMap>
 	
 	<sql id="selectGasmanVo">
@@ -42,6 +45,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectGasmanById" parameterType="Integer" resultMap="GasmanResult">
         <include refid="selectGasmanVo"/>
         where gasman_id = #{gasmanId}
+    </select>
+    <select id="selectGasmanByCard" parameterType="String" resultMap="GasmanResult">
+        <include refid="selectGasmanVo"/>
+        where gasman_card = #{gasmanCard}
     </select>
         
     <insert id="insertGasman" parameterType="Gasman">

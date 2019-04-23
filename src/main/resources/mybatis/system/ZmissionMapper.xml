@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.project.system.zmission.mapper.ZmissionMapper">
+    
+    <resultMap type="Zmission" id="ZmissionResult">
+        <result property="missionId"    column="mission_id"    />
+        <result property="gasId"    column="gas_id"    />
+        <result property="policeManid"    column="police_manid"    />
+        <result property="missionBegin"    column="mission_begin"    />
+        <result property="missionEnd"    column="mission_end"    />
+        <result property="missionLastcommit"    column="mission_lastcommit"    />
+        <result property="missionTimes"    column="mission_times"    />
+        <association property="gasName" column="gas_id" select="com.aaa.project.system.gas.mapper.GasMapper.selectGasById"></association>
+        <association property="policemanName" column="police_manid" select="com.aaa.project.system.policeman.mapper.PolicemanMapper.selectPolicemanById"></association>
+    </resultMap>
+	
+	<sql id="selectZmissionVo">
+        select mission_id, gas_id, police_manid, mission_begin, mission_end, mission_lastcommit, mission_times from jyz_zmission
+    </sql>
+	
+    <select id="selectZmissionList" parameterType="Zmission" resultMap="ZmissionResult">
+        <include refid="selectZmissionVo"/>
+        <where>  
+            <if test="missionId != null "> and mission_id = #{missionId}</if>
+             <if test="gasId != null "> and gas_id = #{gasId}</if>
+             <if test="policeManid != null "> and police_manid = #{policeManid}</if>
+             <if test="missionBegin != null "> and mission_begin = #{missionBegin}</if>
+             <if test="missionEnd != null "> and mission_end = #{missionEnd}</if>
+             <if test="missionLastcommit != null "> and mission_lastcommit = #{missionLastcommit}</if>
+             <if test="missionTimes != null "> and mission_times = #{missionTimes}</if>
+         </where>
+    </select>
+    
+    <select id="selectZmissionById" parameterType="Integer" resultMap="ZmissionResult">
+        <include refid="selectZmissionVo"/>
+        where mission_id = #{missionId}
+    </select>
+        
+    <insert id="insertZmission" parameterType="Zmission">
+        insert into jyz_zmission
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="missionId != null  ">mission_id,</if>
+			<if test="gasId != null  ">gas_id,</if>
+			<if test="policeManid != null  ">police_manid,</if>
+			<if test="missionBegin != null  ">mission_begin,</if>
+			<if test="missionEnd != null  ">mission_end,</if>
+			<if test="missionLastcommit != null  ">mission_lastcommit,</if>
+			<if test="missionTimes != null  ">mission_times,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="missionId != null  ">#{missionId},</if>
+			<if test="gasId != null  ">#{gasId},</if>
+			<if test="policeManid != null  ">#{policeManid},</if>
+			<if test="missionBegin != null  ">#{missionBegin},</if>
+			<if test="missionEnd != null  ">#{missionEnd},</if>
+			<if test="missionLastcommit != null  ">#{missionLastcommit},</if>
+			<if test="missionTimes != null  ">#{missionTimes},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateZmission" parameterType="Zmission">
+        update jyz_zmission
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="gasId != null  ">gas_id = #{gasId},</if>
+            <if test="policeManid != null  ">police_manid = #{policeManid},</if>
+            <if test="missionBegin != null  ">mission_begin = #{missionBegin},</if>
+            <if test="missionEnd != null  ">mission_end = #{missionEnd},</if>
+            <if test="missionLastcommit != null  ">mission_lastcommit = #{missionLastcommit},</if>
+            <if test="missionTimes != null  ">mission_times = #{missionTimes},</if>
+        </trim>
+        where mission_id = #{missionId}
+    </update>
+
+	<delete id="deleteZmissionById" parameterType="Integer">
+        delete from jyz_zmission where mission_id = #{missionId}
+    </delete>
+	
+    <delete id="deleteZmissionByIds" parameterType="String">
+        delete from jyz_zmission where mission_id in 
+        <foreach item="missionId" collection="array" open="(" separator="," close=")">
+            #{missionId}
+        </foreach>
+    </delete>
+    
+</mapper>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.project.system.oilkind.mapper.OilkindMapper">
+    
+    <resultMap type="Oilkind" id="OilkindResult">
+        <result property="oilKindid"    column="oil_kindid"    />
+        <result property="oilKindname"    column="oil_kindname"    />
+    </resultMap>
+	
+	<sql id="selectOilkindVo">
+        select oil_kindid, oil_kindname from jyz_oilkind
+    </sql>
+	
+    <select id="selectOilkindList" parameterType="Oilkind" resultMap="OilkindResult">
+        <include refid="selectOilkindVo"/>
+        <where>  
+            <if test="oilKindid != null "> and oil_kindid = #{oilKindid}</if>
+             <if test="oilKindname != null  and oilKindname != '' "> and oil_kindname = #{oilKindname}</if>
+         </where>
+    </select>
+    
+    <select id="selectOilkindById" parameterType="Integer" resultMap="OilkindResult">
+        <include refid="selectOilkindVo"/>
+        where oil_kindid = #{oilKindid}
+    </select>
+        
+    <insert id="insertOilkind" parameterType="Oilkind">
+        insert into jyz_oilkind
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="oilKindid != null  ">oil_kindid,</if>
+			<if test="oilKindname != null  and oilKindname != ''  ">oil_kindname,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="oilKindid != null  ">#{oilKindid},</if>
+			<if test="oilKindname != null  and oilKindname != ''  ">#{oilKindname},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateOilkind" parameterType="Oilkind">
+        update jyz_oilkind
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="oilKindname != null  and oilKindname != ''  ">oil_kindname = #{oilKindname},</if>
+        </trim>
+        where oil_kindid = #{oilKindid}
+    </update>
+
+	<delete id="deleteOilkindById" parameterType="Integer">
+        delete from jyz_oilkind where oil_kindid = #{oilKindid}
+    </delete>
+	
+    <delete id="deleteOilkindByIds" parameterType="String">
+        delete from jyz_oilkind where oil_kindid in 
+        <foreach item="oilKindid" collection="array" open="(" separator="," close=")">
+            #{oilKindid}
+        </foreach>
+    </delete>
+    
+</mapper>

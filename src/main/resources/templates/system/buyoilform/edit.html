@@ -1,0 +1,120 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<link th:href="@{/ajax/libs/datapicker/bootstrap-datetimepicker.min.css}" rel="stylesheet"/>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-buyoilform-edit" th:object="${buyoilform}">
+            <input id="id" name="id" th:field="*{id}"  type="hidden">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">购买人姓名：</label>
+				<div class="col-sm-8">
+					<input id="name" name="name" th:field="*{name}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">性别：</label>
+				<div class="col-sm-8">
+					<select id="sex" name="sex" class="form-control" th:field="*{sex}">
+						<option value="0">女</option>
+						<option value="1">男</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">身份证：</label>
+				<div class="col-sm-8">
+					<input id="idcard" name="idcard" th:field="*{idcard}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">民族：</label>
+				<div class="col-sm-8">
+					<input id="nation" name="nation" th:field="*{nation}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">购买日期：</label>
+				<div class="col-sm-8">
+					<div class="input-group date">
+						<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+						<input id="date" name="date" th:value="${#dates.format(buyoilform.date,'yyyy-MM-dd HH:mm')}" class="form-control" type="text">
+					</div>
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">购买数量：</label>
+				<div class="col-sm-8">
+					<input id="num" name="num" th:field="*{num}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">油品类型：</label>
+				<div class="col-sm-8">
+					<select id="oilkindId" name="oilkindId" class="form-control">
+						<option th:each="kind:${oilkindList}" th:value="${kind.oilKindid}" th:text="${kind.oilKindname}" th:field="*{oilkindId}"></option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">油瓶类型：</label>
+				<div class="col-sm-8">
+					<select id="oiltypeId" name="oiltypeId" class="form-control">
+						<option th:each="type:${oiltypeList}" th:value="${type.oilId}" th:text="${type.oilName}" th:field="*{oiltypeId}"></option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">所属加油站：</label>
+				<div class="col-sm-8">
+					<select id="gasId" name="gasId" class="form-control">
+						<option th:each="gas:${gasList}" th:value="${gas.gasId}" th:text="${gas.gasName}" th:field="*{gasId}"></option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">购买人住址：</label>
+				<div class="col-sm-8">
+					<input id="adress" name="adress" th:field="*{adress}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">购买用途：</label>
+				<div class="col-sm-8">
+					<input id="usefor" name="usefor" th:field="*{usefor}" class="form-control" type="text">
+				</div>
+			</div>
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+	<script th:src="@{/ajax/libs//datapicker/bootstrap-datetimepicker.min.js}"></script>
+	<script th:src="@{/ajax/libs//datapicker/bootstrap-datetimepicker.zh-CN.js}"></script>
+    <script type="text/javascript">
+		var prefix = ctx + "system/buyoilform"
+		$("#form-buyoilform-edit").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			}
+		});
+		var date = new Date();
+		$(".input-group.date").datetimepicker({
+			format: 'yyyy-mm-dd hh:ii',//限制时间格式
+			weekStart: 1,//时间从周1开始
+			endDate: date,//时间不能超过今天
+			todayBtn: true,//在下方显示当天按钮
+			language:'zh-CN',
+			autoclose: true,//选择完后关闭
+			todayHighlight: true,//当天日期高亮
+			startView: 3,//打开的视图为年视图,选月
+		});
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/edit", $('#form-buyoilform-edit').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

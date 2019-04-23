@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.project.system.fmission.mapper.FmissionMapper">
+    
+    <resultMap type="Fmission" id="FmissionResult">
+        <result property="fmissionId"    column="fmission_id"    />
+        <result property="zmissionId"    column="zmission_id"    />
+        <result property="fmissionCommit"    column="fmission_commit"    />
+        <result property="fmissionState"    column="fmission_state"    />
+        <result property="point"    column="point"    />
+        <association property="missionstateName" column="fmission_state" select="com.aaa.project.system.missionstate.mapper.MissionstateMapper.selectMissionstateById"></association>
+    </resultMap>
+	
+	<sql id="selectFmissionVo">
+        select fmission_id, zmission_id, fmission_commit, fmission_state, point from jyz_fmission
+    </sql>
+	
+    <select id="selectFmissionList" parameterType="Fmission" resultMap="FmissionResult">
+        <include refid="selectFmissionVo"/>
+        <where>  
+            <if test="fmissionId != null "> and fmission_id = #{fmissionId}</if>
+             <if test="zmissionId != null "> and zmission_id = #{zmissionId}</if>
+             <if test="fmissionCommit != null "> and fmission_commit = #{fmissionCommit}</if>
+             <if test="fmissionState != null "> and fmission_state = #{fmissionState}</if>
+             <if test="point != null "> and point = #{point}</if>
+         </where>
+    </select>
+    
+    <select id="selectFmissionById" parameterType="Integer" resultMap="FmissionResult">
+        <include refid="selectFmissionVo"/>
+        where fmission_id = #{fmissionId}
+    </select>
+        
+    <insert id="insertFmission" parameterType="Fmission">
+        insert into jyz_fmission
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="fmissionId != null  ">fmission_id,</if>
+			<if test="zmissionId != null  ">zmission_id,</if>
+			<if test="fmissionCommit != null  ">fmission_commit,</if>
+			<if test="fmissionState != null  ">fmission_state,</if>
+			<if test="point != null  ">point,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="fmissionId != null  ">#{fmissionId},</if>
+			<if test="zmissionId != null  ">#{zmissionId},</if>
+			<if test="fmissionCommit != null  ">#{fmissionCommit},</if>
+			<if test="fmissionState != null  ">#{fmissionState},</if>
+			<if test="point != null  ">#{point},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateFmission" parameterType="Fmission">
+        update jyz_fmission
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="zmissionId != null  ">zmission_id = #{zmissionId},</if>
+            <if test="fmissionCommit != null  ">fmission_commit = #{fmissionCommit},</if>
+            <if test="fmissionState != null  ">fmission_state = #{fmissionState},</if>
+            <if test="point != null  ">point = #{point},</if>
+        </trim>
+        where fmission_id = #{fmissionId}
+    </update>
+
+	<delete id="deleteFmissionById" parameterType="Integer">
+        delete from jyz_fmission where fmission_id = #{fmissionId}
+    </delete>
+	
+    <delete id="deleteFmissionByIds" parameterType="String">
+        delete from jyz_fmission where fmission_id in 
+        <foreach item="fmissionId" collection="array" open="(" separator="," close=")">
+            #{fmissionId}
+        </foreach>
+    </delete>
+    
+</mapper>

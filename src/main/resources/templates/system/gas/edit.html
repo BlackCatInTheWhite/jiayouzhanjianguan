@@ -91,7 +91,9 @@
 			<div class="form-group">	
 				<label class="col-sm-3 control-label">状态：</label>
 				<div class="col-sm-8">
-
+					<select id="gasstatusId" name="gasstatusId" class="form-control">
+						<option th:each="status:${gasstatusList}" th:value="${status.gasstatusId}" th:text="${status.gasstatusName}" th:field="*{gasstatusId}"></option>
+					</select>
 				</div>
 			</div>
 		</form>
