@@ -9,6 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="noticeTitle"    column="notice_title"    />
         <result property="noticeTime"    column="notice_time"    />
         <result property="noticePlicemanid"    column="notice_plicemanid"    />
+        <association property="policemanName" column="notice_plicemanid" select="com.aaa.project.system.policeman.mapper.PolicemanMapper.selectPolicemanById"></association>
     </resultMap>
 	
 	<sql id="selectPolicenoticeVo">

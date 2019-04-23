@@ -1,8 +1,12 @@
 package com.aaa.project.system.rectification.domain;
 
+import com.aaa.framework.web.domain.BaseEntity;
+import com.aaa.project.system.gas.domain.Gas;
+import com.aaa.project.system.gasstatus.domain.Gasstatus;
+import com.aaa.project.system.policeman.domain.Policeman;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import com.aaa.framework.web.domain.BaseEntity;
+
 import java.util.Date;
 
 /**
@@ -31,8 +35,38 @@ public class Rectification extends BaseEntity
 	private Integer rectificationTime;
 	/** 整改开始时间 */
 	private Date rectificationBegin;
+	/** 加油站 */
+	private Gas gasName;
+	/** 巡检人员 */
+	private Policeman policemanName;
+	/** 加油站状态 */
+	private Gasstatus gasstatusName;
 
-	public void setRectificationId(Integer rectificationId) 
+	public Gas getGasName() {
+		return gasName;
+	}
+
+	public void setGasName(Gas gasName) {
+		this.gasName = gasName;
+	}
+
+	public Policeman getPolicemanName() {
+		return policemanName;
+	}
+
+	public void setPolicemanName(Policeman policemanName) {
+		this.policemanName = policemanName;
+	}
+
+	public Gasstatus getGasstatusName() {
+		return gasstatusName;
+	}
+
+	public void setGasstatusName(Gasstatus gasstatusName) {
+		this.gasstatusName = gasstatusName;
+	}
+
+	public void setRectificationId(Integer rectificationId)
 	{
 		this.rectificationId = rectificationId;
 	}
@@ -114,7 +148,7 @@ public class Rectification extends BaseEntity
             .append("rectificationPolicemanid", getRectificationPolicemanid())
             .append("rectificationState", getRectificationState())
             .append("rectificationTime", getRectificationTime())
-            .append("rectificationBegin", getRectificationBegin())
+            .append("rectificationBegin", getRectificationBegin()).append("gasName",getGasName()).append("policemanName",getPolicemanName()).append("gasstatusName",getGasstatusName())
             .toString();
     }
 }

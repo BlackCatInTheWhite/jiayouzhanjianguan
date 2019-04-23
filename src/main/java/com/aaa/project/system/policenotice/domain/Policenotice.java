@@ -1,5 +1,6 @@
 package com.aaa.project.system.policenotice.domain;
 
+import com.aaa.project.system.policeman.domain.Policeman;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.aaa.framework.web.domain.BaseEntity;
@@ -23,8 +24,18 @@ public class Policenotice extends BaseEntity
 	private Date noticeTime;
 	/** 公告发布人 */
 	private Integer noticePlicemanid;
+	/** 公告发布人姓名 */
+	private Policeman policemanName;
 
-	public void setNoticeId(Integer noticeId) 
+	public Policeman getPolicemanName() {
+		return policemanName;
+	}
+
+	public void setPolicemanName(Policeman policemanName) {
+		this.policemanName = policemanName;
+	}
+
+	public void setNoticeId(Integer noticeId)
 	{
 		this.noticeId = noticeId;
 	}
@@ -66,7 +77,7 @@ public class Policenotice extends BaseEntity
             .append("noticeId", getNoticeId())
             .append("noticeTitle", getNoticeTitle())
             .append("noticeTime", getNoticeTime())
-            .append("noticePlicemanid", getNoticePlicemanid())
+            .append("noticePlicemanid", getNoticePlicemanid()).append("policemanName",getPolicemanName())
             .toString();
     }
 }

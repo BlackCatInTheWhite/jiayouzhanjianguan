@@ -7,9 +7,11 @@
         <form class="form-horizontal m" id="form-rectification-edit" th:object="${rectification}">
             <input id="rectificationId" name="rectificationId" th:field="*{rectificationId}"  type="hidden">
 			<div class="form-group">	
-				<label class="col-sm-3 control-label">加油站序号：</label>
+				<label class="col-sm-3 control-label">加油站：</label>
 				<div class="col-sm-8">
-					<input id="gasId" name="gasId" th:field="*{gasId}" class="form-control" type="text">
+					<select id="gasId" name="gasId" class="form-control">
+						<option th:each="gas:${gasList}" th:value="${gas.gasId}" th:text="${gas.gasName}" th:field="*{gasId}"></option>
+					</select>
 				</div>
 			</div>
 			<div class="form-group">	
@@ -25,15 +27,19 @@
 				</div>
 			</div>
 			<div class="form-group">	
-				<label class="col-sm-3 control-label">整改负责人序号：</label>
+				<label class="col-sm-3 control-label">整改负责人：</label>
 				<div class="col-sm-8">
-					<input id="rectificationPolicemanid" name="rectificationPolicemanid" th:field="*{rectificationPolicemanid}" class="form-control" type="text">
+					<select id="rectificationPolicemanid" name="rectificationPolicemanid" class="form-control">
+						<option th:each="policeman:${policemanList}" th:value="${policeman.policemanId}" th:text="${policeman.policemanName}" th:field="*{rectificationPolicemanid}"></option>
+					</select>
 				</div>
 			</div>
 			<div class="form-group">	
 				<label class="col-sm-3 control-label">状态：</label>
 				<div class="col-sm-8">
-					<input id="rectificationState" name="rectificationState" th:field="*{rectificationState}" class="form-control" type="text">
+					<select id="rectificationState" name="rectificationState" class="form-control">
+						<option th:each="status:${gasstatusList}" th:value="${status.gasstatusId}" th:text="${status.gasstatusName}" th:field="*{rectificationState}"></option>
+					</select>
 				</div>
 			</div>
 			<div class="form-group">	

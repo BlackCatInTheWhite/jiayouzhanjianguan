@@ -11,27 +11,19 @@
 					<div class="select-list">
 						<ul>
 							<li>
-								加油站：<input type="text" name="gasName.gasName"/>
+								总任务序号：<input type="text" name="zmissionId"/>
 							</li>
 
 							<li>
-								巡查人员：<input type="text" name="policemanName.policemanName"/>
+								提交时间：<input type="text" name="fmissionCommit"/>
 							</li>
 
 							<li>
-								任务开始时间：<input type="text" name="missionBegin"/>
+								任务审核状态：<input type="text" name="fmissionState"/>
 							</li>
 
 							<li>
-								任务结束时间：<input type="text" name="missionEnd"/>
-							</li>
-
-							<li>
-								上次提交时间：<input type="text" name="missionLastcommit"/>
-							</li>
-
-							<li>
-								任务频次：<input type="text" name="missionTimes"/>
+								分数：<input type="text" name="point"/>
 							</li>
 
 							<li>
@@ -44,16 +36,16 @@
 			</div>
 			
 	        <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
-				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:zmission:add">
+				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:fmission:add">
 					<i class="fa fa-plus"></i> 添加
 				</a>
-				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="system:zmission:edit">
+				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="system:fmission:edit">
 					<i class="fa fa-edit"></i> 修改
 				</a>
-				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:zmission:remove">
+				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:fmission:remove">
 					<i class="fa fa-remove"></i> 删除
 				</a>
-				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:zmission:export">
+				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:fmission:export">
 						<i class="fa fa-download"></i> 导出
 				 </a>
 			</div>
@@ -64,9 +56,9 @@
 	</div>
     <div th:include="include :: footer"></div>
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('system:zmission:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('system:zmission:remove')}]];
-        var prefix = ctx + "system/zmission";
+        var editFlag = [[${@permission.hasPermi('system:fmission:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:fmission:remove')}]];
+        var prefix = ctx + "system/fmission";
 
         $(function() {
             var options = {
@@ -75,45 +67,35 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
 				exportUrl: prefix + "/export",
-                modalName: "巡查总任务分排",
+                modalName: "分任务记录",
 				search: false,
 		        showExport: true,
                 columns: [{
 		            checkbox: true
 		        },
 				{
-					field : 'missionId', 
-					title : '任务序号',
+					field : 'fmissionId', 
+					title : '任务记录序号',
 					visible: true
 				},
 				{
-					field : 'gasName.gasName',
-					title : '加油站',
+					field : 'zmissionId', 
+					title : '总任务序号',
 					sortable: true
 				},
 				{
-					field : 'policemanName.policemanName',
-					title : '巡查人员',
+					field : 'fmissionCommit', 
+					title : '提交时间',
 					sortable: true
 				},
 				{
-					field : 'missionBegin', 
-					title : '任务开始时间',
+					field : 'fmissionState', 
+					title : '任务审核状态',
 					sortable: true
 				},
 				{
-					field : 'missionEnd', 
-					title : '任务结束时间',
-					sortable: true
-				},
-				{
-					field : 'missionLastcommit', 
-					title : '上次提交时间',
-					sortable: true
-				},
-				{
-					field : 'missionTimes', 
-					title : '任务频次',
+					field : 'point', 
+					title : '分数',
 					sortable: true
 				},
 		        {
@@ -121,8 +103,8 @@
 		            align: 'center',
 		            formatter: function(value, row, index) {
 		            	var actions = [];
-		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.missionId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.missionId + '\')"><i class="fa fa-remove"></i>删除</a>');
+		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.fmissionId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.fmissionId + '\')"><i class="fa fa-remove"></i>删除</a>');
 						return actions.join('');
 		            }
 		        }]

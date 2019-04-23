@@ -1,23 +1,22 @@
 package com.aaa.project.system.policenotice.controller;
 
-import java.util.List;
+import com.aaa.common.utils.poi.ExcelUtil;
+import com.aaa.framework.aspectj.lang.annotation.Log;
+import com.aaa.framework.aspectj.lang.enums.BusinessType;
+import com.aaa.framework.web.controller.BaseController;
+import com.aaa.framework.web.domain.AjaxResult;
+import com.aaa.framework.web.page.TableDataInfo;
+import com.aaa.project.system.policeman.domain.Policeman;
+import com.aaa.project.system.policeman.service.IPolicemanService;
+import com.aaa.project.system.policenotice.domain.Policenotice;
+import com.aaa.project.system.policenotice.service.IPolicenoticeService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import com.aaa.framework.aspectj.lang.annotation.Log;
-import com.aaa.framework.aspectj.lang.enums.BusinessType;
-import com.aaa.project.system.policenotice.domain.Policenotice;
-import com.aaa.project.system.policenotice.service.IPolicenoticeService;
-import com.aaa.framework.web.controller.BaseController;
-import com.aaa.framework.web.page.TableDataInfo;
-import com.aaa.framework.web.domain.AjaxResult;
-import com.aaa.common.utils.poi.ExcelUtil;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 公告 信息操作处理
@@ -33,6 +32,8 @@ public class PolicenoticeController extends BaseController
 	
 	@Autowired
 	private IPolicenoticeService policenoticeService;
+	@Autowired
+	private IPolicemanService policemanService;
 	
 	@RequiresPermissions("system:policenotice:view")
 	@GetMapping()
@@ -72,8 +73,10 @@ public class PolicenoticeController extends BaseController
 	 * 新增公告
 	 */
 	@GetMapping("/add")
-	public String add()
+	public String add( ModelMap mmap)
 	{
+		List<Policeman> policemanList = policemanService.selectPolicemanList(new Policeman());
+		mmap.put("policemanList", policemanList);
 	    return prefix + "/add";
 	}
 	
@@ -96,6 +99,8 @@ public class PolicenoticeController extends BaseController
 	public String edit(@PathVariable("noticeId") Integer noticeId, ModelMap mmap)
 	{
 		Policenotice policenotice = policenoticeService.selectPolicenoticeById(noticeId);
+		List<Policeman> policemanList = policemanService.selectPolicemanList(new Policeman());
+		mmap.put("policemanList", policemanList);
 		mmap.put("policenotice", policenotice);
 	    return prefix + "/edit";
 	}

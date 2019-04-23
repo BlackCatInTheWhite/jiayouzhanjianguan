@@ -13,6 +13,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="rectificationState"    column="rectification_state"    />
         <result property="rectificationTime"    column="rectification_time"    />
         <result property="rectificationBegin"    column="rectification_begin"    />
+        <association property="gasName" column="gas_id" select="com.aaa.project.system.gas.mapper.GasMapper.selectGasById"></association>
+        <association property="policemanName" column="rectification_policemanid" select="com.aaa.project.system.policeman.mapper.PolicemanMapper.selectPolicemanById"></association>
+        <association property="gasstatusName" column="rectification_state" select="com.aaa.project.system.gasstatus.mapper.GasstatusMapper.selectGasstatusById"></association>
     </resultMap>
 	
 	<sql id="selectRectificationVo">

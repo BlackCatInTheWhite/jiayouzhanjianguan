@@ -1,8 +1,9 @@
 package com.aaa.project.system.fmission.domain;
 
+import com.aaa.framework.web.domain.BaseEntity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import com.aaa.framework.web.domain.BaseEntity;
+
 import java.util.Date;
 
 /**

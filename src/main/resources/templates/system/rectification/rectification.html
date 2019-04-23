@@ -11,7 +11,7 @@
 					<div class="select-list">
 						<ul>
 							<li>
-								加油站序号：<input type="text" name="gasId"/>
+								加油站：<input type="text" name="gasName.gasName"/>
 							</li>
 
 							<li>
@@ -23,11 +23,11 @@
 							</li>
 
 							<li>
-								整改负责人序号：<input type="text" name="rectificationPolicemanid"/>
+								整改负责人：<input type="text" name="policemanName.policemanName"/>
 							</li>
 
 							<li>
-								状态：<input type="text" name="rectificationState"/>
+								状态：<input type="text" name="gasstatusName.gasstatusName"/>
 							</li>
 
 							<li>
@@ -91,8 +91,8 @@
 					visible: false
 				},
 				{
-					field : 'gasId', 
-					title : '加油站序号',
+					field : 'gasName.gasName',
+					title : '加油站',
 					sortable: true
 				},
 				{
@@ -106,12 +106,12 @@
 					sortable: true
 				},
 				{
-					field : 'rectificationPolicemanid', 
-					title : '整改负责人序号',
+					field : 'policemanName.policemanName',
+					title : '整改负责人',
 					sortable: true
 				},
 				{
-					field : 'rectificationState', 
+					field : 'gasstatusName.gasstatusName',
 					title : '状态',
 					sortable: true
 				},
