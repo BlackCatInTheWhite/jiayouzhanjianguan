@@ -1,5 +1,7 @@
 package com.aaa.project.system.zmission.domain;
 
+import com.aaa.project.system.gas.domain.Gas;
+import com.aaa.project.system.policeman.domain.Policeman;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.aaa.framework.web.domain.BaseEntity;
@@ -29,8 +31,28 @@ public class Zmission extends BaseEntity
 	private Date missionLastcommit;
 	/** 任务频次 */
 	private Integer missionTimes;
+	/** 所属加油站 */
+	private Gas gasName;
+	/** 巡查人员 */
+	private Policeman policemanName;
 
-	public void setMissionId(Integer missionId) 
+	public Gas getGasName() {
+		return gasName;
+	}
+
+	public void setGasName(Gas gasName) {
+		this.gasName = gasName;
+	}
+
+	public Policeman getPolicemanName() {
+		return policemanName;
+	}
+
+	public void setPolicemanName(Policeman policemanName) {
+		this.policemanName = policemanName;
+	}
+
+	public void setMissionId(Integer missionId)
 	{
 		this.missionId = missionId;
 	}
@@ -102,7 +124,7 @@ public class Zmission extends BaseEntity
             .append("missionBegin", getMissionBegin())
             .append("missionEnd", getMissionEnd())
             .append("missionLastcommit", getMissionLastcommit())
-            .append("missionTimes", getMissionTimes())
+            .append("missionTimes", getMissionTimes()).append("gasName",getGasName()).append("policemanName",getPolicemanName())
             .toString();
     }
 }

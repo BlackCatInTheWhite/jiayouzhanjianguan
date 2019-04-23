@@ -8,6 +8,12 @@ import com.aaa.framework.web.domain.AjaxResult;
 import com.aaa.framework.web.page.TableDataInfo;
 import com.aaa.project.system.buyoilform.domain.Buyoilform;
 import com.aaa.project.system.buyoilform.service.IBuyoilformService;
+import com.aaa.project.system.gas.domain.Gas;
+import com.aaa.project.system.gas.service.IGasService;
+import com.aaa.project.system.oilkind.domain.Oilkind;
+import com.aaa.project.system.oilkind.service.IOilkindService;
+import com.aaa.project.system.oiltype.domain.Oiltype;
+import com.aaa.project.system.oiltype.service.IOiltypeService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,6 +36,12 @@ public class BuyoilformController extends BaseController
 	
 	@Autowired
 	private IBuyoilformService buyoilformService;
+	@Autowired
+	private IOilkindService oilkindService;
+	@Autowired
+	private IOiltypeService oiltypeService;
+	@Autowired
+	private IGasService gasService;
 	
 	@RequiresPermissions("system:buyoilform:view")
 	@GetMapping()
@@ -69,9 +81,15 @@ public class BuyoilformController extends BaseController
 	 * 新增散装油登记
 	 */
 	@GetMapping("/add")
-	public String add()
+	public String add( ModelMap mmap)
 	{
-	    return prefix + "/add";
+		List<Oilkind> oilkindList = oilkindService.selectOilkindList(new Oilkind());
+		List<Oiltype> oiltypeList = oiltypeService.selectOiltypeList(new Oiltype());
+		List<Gas> gasList = gasService.selectGasList(new Gas());
+		mmap.put("oilkindList", oilkindList);
+		mmap.put("oiltypeList", oiltypeList);
+		mmap.put("gasList", gasList);
+		return prefix + "/add";
 	}
 	
 	/**
@@ -93,6 +111,12 @@ public class BuyoilformController extends BaseController
 	public String edit(@PathVariable("id") Integer id, ModelMap mmap)
 	{
 		Buyoilform buyoilform = buyoilformService.selectBuyoilformById(id);
+		List<Oilkind> oilkindList = oilkindService.selectOilkindList(new Oilkind());
+		List<Oiltype> oiltypeList = oiltypeService.selectOiltypeList(new Oiltype());
+		List<Gas> gasList = gasService.selectGasList(new Gas());
+		mmap.put("oilkindList", oilkindList);
+		mmap.put("oiltypeList", oiltypeList);
+		mmap.put("gasList", gasList);
 		mmap.put("buyoilform", buyoilform);
 	    return prefix + "/edit";
 	}

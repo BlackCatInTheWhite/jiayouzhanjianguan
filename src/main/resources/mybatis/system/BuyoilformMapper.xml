@@ -17,6 +17,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="gasId"    column="gas_id"    />
         <result property="adress"    column="adress"    />
         <result property="usefor"    column="usefor"    />
+        <association property="oilkindName" column="oilkind_id" select="com.aaa.project.system.oilkind.mapper.OilkindMapper.selectOilkindById"></association>
+        <association property="oiltypeName" column="oiltype_id" select="com.aaa.project.system.oiltype.mapper.OiltypeMapper.selectOiltypeById"></association>
+        <association property="gasName" column="gas_id" select="com.aaa.project.system.gas.mapper.GasMapper.selectGasById"></association>
     </resultMap>
 	
 	<sql id="selectBuyoilformVo">
