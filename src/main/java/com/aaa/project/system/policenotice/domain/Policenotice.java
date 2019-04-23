@@ -24,6 +24,8 @@ public class Policenotice extends BaseEntity
 	private Date noticeTime;
 	/** 公告发布人 */
 	private Integer noticePlicemanid;
+	/** 公告内容 */
+	private String noticeContent;
 	/** 公告发布人姓名 */
 	private Policeman policemanName;
 
@@ -71,13 +73,23 @@ public class Policenotice extends BaseEntity
 	{
 		return noticePlicemanid;
 	}
+	public void setNoticeContent(String noticeContent) 
+	{
+		this.noticeContent = noticeContent;
+	}
+
+	public String getNoticeContent() 
+	{
+		return noticeContent;
+	}
 
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("noticeId", getNoticeId())
             .append("noticeTitle", getNoticeTitle())
             .append("noticeTime", getNoticeTime())
-            .append("noticePlicemanid", getNoticePlicemanid()).append("policemanName",getPolicemanName())
+            .append("noticePlicemanid", getNoticePlicemanid())
+            .append("noticeContent", getNoticeContent()).append("policemanName",getPolicemanName())
             .toString();
     }
 }

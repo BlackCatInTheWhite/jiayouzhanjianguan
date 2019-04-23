@@ -23,6 +23,10 @@
 							</li>
 
 							<li>
+								公告内容：<input type="text" name="noticeContent"/>
+							</li>
+
+							<li>
 								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
 								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
 							</li>
@@ -72,7 +76,7 @@
 				{
 					field : 'noticeId', 
 					title : '公告序号',
-					visible: false
+					visible: true
 				},
 				{
 					field : 'noticeTitle', 
@@ -87,6 +91,11 @@
 				{
 					field : 'policemanName.policemanName',
 					title : '公告发布人',
+					sortable: true
+				},
+				{
+					field : 'noticeContent', 
+					title : '公告内容',
 					sortable: true
 				},
 		        {

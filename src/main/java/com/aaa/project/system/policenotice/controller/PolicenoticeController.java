@@ -73,11 +73,11 @@ public class PolicenoticeController extends BaseController
 	 * 新增公告
 	 */
 	@GetMapping("/add")
-	public String add( ModelMap mmap)
+	public String add(ModelMap mmap)
 	{
 		List<Policeman> policemanList = policemanService.selectPolicemanList(new Policeman());
 		mmap.put("policemanList", policemanList);
-	    return prefix + "/add";
+		return prefix + "/add";
 	}
 	
 	/**

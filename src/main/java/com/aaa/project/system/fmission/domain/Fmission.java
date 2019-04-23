@@ -1,6 +1,7 @@
 package com.aaa.project.system.fmission.domain;
 
 import com.aaa.framework.web.domain.BaseEntity;
+import com.aaa.project.system.missionstate.domain.Missionstate;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -22,12 +23,22 @@ public class Fmission extends BaseEntity
 	private Integer zmissionId;
 	/** 提交时间 */
 	private Date fmissionCommit;
-	/** 任务审核状态 */
+	/** 任务审核状态序号 */
 	private Integer fmissionState;
 	/** 分数 */
 	private Integer point;
+	/** 任务审核状态 */
+	private Missionstate missionstateName;
 
-	public void setFmissionId(Integer fmissionId) 
+	public Missionstate getMissionstateName() {
+		return missionstateName;
+	}
+
+	public void setMissionstateName(Missionstate missionstateName) {
+		this.missionstateName = missionstateName;
+	}
+
+	public void setFmissionId(Integer fmissionId)
 	{
 		this.fmissionId = fmissionId;
 	}
@@ -79,7 +90,7 @@ public class Fmission extends BaseEntity
             .append("zmissionId", getZmissionId())
             .append("fmissionCommit", getFmissionCommit())
             .append("fmissionState", getFmissionState())
-            .append("point", getPoint())
+            .append("point", getPoint()).append("missionstateName",getMissionstateName())
             .toString();
     }
 }

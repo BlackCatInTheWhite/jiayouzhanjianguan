@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.project.system.missionstate.mapper.MissionstateMapper">
+    
+    <resultMap type="Missionstate" id="MissionstateResult">
+        <result property="missionStateid"    column="mission_stateid"    />
+        <result property="missionStatename"    column="mission_statename"    />
+    </resultMap>
+	
+	<sql id="selectMissionstateVo">
+        select mission_stateid, mission_statename from jyz_missionstate
+    </sql>
+	
+    <select id="selectMissionstateList" parameterType="Missionstate" resultMap="MissionstateResult">
+        <include refid="selectMissionstateVo"/>
+        <where>  
+            <if test="missionStateid != null "> and mission_stateid = #{missionStateid}</if>
+             <if test="missionStatename != null  and missionStatename != '' "> and mission_statename = #{missionStatename}</if>
+         </where>
+    </select>
+    
+    <select id="selectMissionstateById" parameterType="Integer" resultMap="MissionstateResult">
+        <include refid="selectMissionstateVo"/>
+        where mission_stateid = #{missionStateid}
+    </select>
+        
+    <insert id="insertMissionstate" parameterType="Missionstate">
+        insert into jyz_missionstate
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="missionStateid != null  ">mission_stateid,</if>
+			<if test="missionStatename != null  and missionStatename != ''  ">mission_statename,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="missionStateid != null  ">#{missionStateid},</if>
+			<if test="missionStatename != null  and missionStatename != ''  ">#{missionStatename},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateMissionstate" parameterType="Missionstate">
+        update jyz_missionstate
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="missionStatename != null  and missionStatename != ''  ">mission_statename = #{missionStatename},</if>
+        </trim>
+        where mission_stateid = #{missionStateid}
+    </update>
+
+	<delete id="deleteMissionstateById" parameterType="Integer">
+        delete from jyz_missionstate where mission_stateid = #{missionStateid}
+    </delete>
+	
+    <delete id="deleteMissionstateByIds" parameterType="String">
+        delete from jyz_missionstate where mission_stateid in 
+        <foreach item="missionStateid" collection="array" open="(" separator="," close=")">
+            #{missionStateid}
+        </foreach>
+    </delete>
+    
+</mapper>

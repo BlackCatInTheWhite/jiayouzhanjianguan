@@ -10,6 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="fmissionCommit"    column="fmission_commit"    />
         <result property="fmissionState"    column="fmission_state"    />
         <result property="point"    column="point"    />
+        <association property="missionstateName" column="fmission_state" select="com.aaa.project.system.missionstate.mapper.MissionstateMapper.selectMissionstateById"></association>
     </resultMap>
 	
 	<sql id="selectFmissionVo">
