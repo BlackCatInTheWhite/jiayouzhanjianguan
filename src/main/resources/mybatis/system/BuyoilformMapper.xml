@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.project.system.buyoilform.mapper.BuyoilformMapper">
+    
+    <resultMap type="Buyoilform" id="BuyoilformResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="sex"    column="sex"    />
+        <result property="idcard"    column="idcard"    />
+        <result property="nation"    column="nation"    />
+        <result property="date"    column="date"    />
+        <result property="num"    column="num"    />
+        <result property="oilkindId"    column="oilkind_id"    />
+        <result property="oiltypeId"    column="oiltype_id"    />
+        <result property="gasId"    column="gas_id"    />
+        <result property="adress"    column="adress"    />
+        <result property="usefor"    column="usefor"    />
+    </resultMap>
+	
+	<sql id="selectBuyoilformVo">
+        select id, name, sex, idcard, nation, date, num, oilkind_id, oiltype_id, gas_id, adress, usefor from jyz_buyoilform
+    </sql>
+	
+    <select id="selectBuyoilformList" parameterType="Buyoilform" resultMap="BuyoilformResult">
+        <include refid="selectBuyoilformVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="name != null  and name != '' "> and name = #{name}</if>
+             <if test="sex != null "> and sex = #{sex}</if>
+             <if test="idcard != null  and idcard != '' "> and idcard = #{idcard}</if>
+             <if test="nation != null  and nation != '' "> and nation = #{nation}</if>
+             <if test="date != null "> and date = #{date}</if>
+             <if test="num != null "> and num = #{num}</if>
+             <if test="oilkindId != null "> and oilkind_id = #{oilkindId}</if>
+             <if test="oiltypeId != null "> and oiltype_id = #{oiltypeId}</if>
+             <if test="gasId != null "> and gas_id = #{gasId}</if>
+             <if test="adress != null  and adress != '' "> and adress = #{adress}</if>
+             <if test="usefor != null  and usefor != '' "> and usefor = #{usefor}</if>
+         </where>
+    </select>
+    
+    <select id="selectBuyoilformById" parameterType="Integer" resultMap="BuyoilformResult">
+        <include refid="selectBuyoilformVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertBuyoilform" parameterType="Buyoilform">
+        insert into jyz_buyoilform
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="name != null  and name != ''  ">name,</if>
+			<if test="sex != null  ">sex,</if>
+			<if test="idcard != null  and idcard != ''  ">idcard,</if>
+			<if test="nation != null  and nation != ''  ">nation,</if>
+			<if test="date != null  ">date,</if>
+			<if test="num != null  ">num,</if>
+			<if test="oilkindId != null  ">oilkind_id,</if>
+			<if test="oiltypeId != null  ">oiltype_id,</if>
+			<if test="gasId != null  ">gas_id,</if>
+			<if test="adress != null  and adress != ''  ">adress,</if>
+			<if test="usefor != null  and usefor != ''  ">usefor,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="name != null  and name != ''  ">#{name},</if>
+			<if test="sex != null  ">#{sex},</if>
+			<if test="idcard != null  and idcard != ''  ">#{idcard},</if>
+			<if test="nation != null  and nation != ''  ">#{nation},</if>
+			<if test="date != null  ">#{date},</if>
+			<if test="num != null  ">#{num},</if>
+			<if test="oilkindId != null  ">#{oilkindId},</if>
+			<if test="oiltypeId != null  ">#{oiltypeId},</if>
+			<if test="gasId != null  ">#{gasId},</if>
+			<if test="adress != null  and adress != ''  ">#{adress},</if>
+			<if test="usefor != null  and usefor != ''  ">#{usefor},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateBuyoilform" parameterType="Buyoilform">
+        update jyz_buyoilform
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null  and name != ''  ">name = #{name},</if>
+            <if test="sex != null  ">sex = #{sex},</if>
+            <if test="idcard != null  and idcard != ''  ">idcard = #{idcard},</if>
+            <if test="nation != null  and nation != ''  ">nation = #{nation},</if>
+            <if test="date != null  ">date = #{date},</if>
+            <if test="num != null  ">num = #{num},</if>
+            <if test="oilkindId != null  ">oilkind_id = #{oilkindId},</if>
+            <if test="oiltypeId != null  ">oiltype_id = #{oiltypeId},</if>
+            <if test="gasId != null  ">gas_id = #{gasId},</if>
+            <if test="adress != null  and adress != ''  ">adress = #{adress},</if>
+            <if test="usefor != null  and usefor != ''  ">usefor = #{usefor},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteBuyoilformById" parameterType="Integer">
+        delete from jyz_buyoilform where id = #{id}
+    </delete>
+	
+    <delete id="deleteBuyoilformByIds" parameterType="String">
+        delete from jyz_buyoilform where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

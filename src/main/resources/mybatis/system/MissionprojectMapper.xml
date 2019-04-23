@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.project.system.missionproject.mapper.MissionprojectMapper">
+    
+    <resultMap type="Missionproject" id="MissionprojectResult">
+        <result property="missionId"    column="mission_id"    />
+        <result property="projectId"    column="project_id"    />
+    </resultMap>
+	
+	<sql id="selectMissionprojectVo">
+        select mission_id, project_id from jyz_missionproject
+    </sql>
+	
+    <select id="selectMissionprojectList" parameterType="Missionproject" resultMap="MissionprojectResult">
+        <include refid="selectMissionprojectVo"/>
+        <where>  
+            <if test="missionId != null "> and mission_id = #{missionId}</if>
+             <if test="projectId != null "> and project_id = #{projectId}</if>
+         </where>
+    </select>
+    
+    <select id="selectMissionprojectById" parameterType="Integer" resultMap="MissionprojectResult">
+        <include refid="selectMissionprojectVo"/>
+        where mission_id = #{missionId}
+    </select>
+        
+    <insert id="insertMissionproject" parameterType="Missionproject">
+        insert into jyz_missionproject
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="missionId != null  ">mission_id,</if>
+			<if test="projectId != null  ">project_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="missionId != null  ">#{missionId},</if>
+			<if test="projectId != null  ">#{projectId},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateMissionproject" parameterType="Missionproject">
+        update jyz_missionproject
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="projectId != null  ">project_id = #{projectId},</if>
+        </trim>
+        where mission_id = #{missionId}
+    </update>
+
+	<delete id="deleteMissionprojectById" parameterType="Integer">
+        delete from jyz_missionproject where mission_id = #{missionId}
+    </delete>
+	
+    <delete id="deleteMissionprojectByIds" parameterType="String">
+        delete from jyz_missionproject where mission_id in 
+        <foreach item="missionId" collection="array" open="(" separator="," close=")">
+            #{missionId}
+        </foreach>
+    </delete>
+    
+</mapper>

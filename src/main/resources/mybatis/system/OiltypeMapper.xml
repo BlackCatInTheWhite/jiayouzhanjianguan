@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.project.system.oiltype.mapper.OiltypeMapper">
+    
+    <resultMap type="Oiltype" id="OiltypeResult">
+        <result property="oilId"    column="oil_id"    />
+        <result property="oilName"    column="oil_name"    />
+        <result property="oilThreshold"    column="oil_threshold"    />
+    </resultMap>
+	
+	<sql id="selectOiltypeVo">
+        select oil_id, oil_name, oil_threshold from jyz_oiltype
+    </sql>
+	
+    <select id="selectOiltypeList" parameterType="Oiltype" resultMap="OiltypeResult">
+        <include refid="selectOiltypeVo"/>
+        <where>  
+            <if test="oilId != null "> and oil_id = #{oilId}</if>
+             <if test="oilName != null  and oilName != '' "> and oil_name = #{oilName}</if>
+             <if test="oilThreshold != null "> and oil_threshold = #{oilThreshold}</if>
+         </where>
+    </select>
+    
+    <select id="selectOiltypeById" parameterType="Integer" resultMap="OiltypeResult">
+        <include refid="selectOiltypeVo"/>
+        where oil_id = #{oilId}
+    </select>
+        
+    <insert id="insertOiltype" parameterType="Oiltype">
+        insert into jyz_oiltype
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="oilId != null  ">oil_id,</if>
+			<if test="oilName != null  and oilName != ''  ">oil_name,</if>
+			<if test="oilThreshold != null  ">oil_threshold,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="oilId != null  ">#{oilId},</if>
+			<if test="oilName != null  and oilName != ''  ">#{oilName},</if>
+			<if test="oilThreshold != null  ">#{oilThreshold},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateOiltype" parameterType="Oiltype">
+        update jyz_oiltype
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="oilName != null  and oilName != ''  ">oil_name = #{oilName},</if>
+            <if test="oilThreshold != null  ">oil_threshold = #{oilThreshold},</if>
+        </trim>
+        where oil_id = #{oilId}
+    </update>
+
+	<delete id="deleteOiltypeById" parameterType="Integer">
+        delete from jyz_oiltype where oil_id = #{oilId}
+    </delete>
+	
+    <delete id="deleteOiltypeByIds" parameterType="String">
+        delete from jyz_oiltype where oil_id in 
+        <foreach item="oilId" collection="array" open="(" separator="," close=")">
+            #{oilId}
+        </foreach>
+    </delete>
+    
+</mapper>
