@@ -2,6 +2,7 @@
 <html  lang="zh" xmlns:th="http://www.thymeleaf.org">
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
+<link th:href="@{/ajax/libs/datapicker/bootstrap-datetimepicker.min.css}" rel="stylesheet"/>
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
         <form class="form-horizontal m" id="form-policenotice-edit" th:object="${policenotice}">
@@ -15,7 +16,10 @@
 			<div class="form-group">	
 				<label class="col-sm-3 control-label">公告时间：</label>
 				<div class="col-sm-8">
-					<input id="noticeTime" name="noticeTime" th:field="*{noticeTime}" class="form-control" type="text">
+					<div class="input-group date">
+						<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+						<input id="noticeTime" name="noticeTime" th:value="${#dates.format(policenotice.noticeTime,'yyyy-MM-dd HH:mm')}" class="form-control" type="text">
+					</div>
 				</div>
 			</div>
 			<div class="form-group">	
@@ -35,6 +39,8 @@
 		</form>
     </div>
     <div th:include="include::footer"></div>
+	<script th:src="@{/ajax/libs//datapicker/bootstrap-datetimepicker.min.js}"></script>
+	<script th:src="@{/ajax/libs//datapicker/bootstrap-datetimepicker.zh-CN.js}"></script>
     <script type="text/javascript">
 		var prefix = ctx + "system/policenotice"
 		$("#form-policenotice-edit").validate({
@@ -44,7 +50,17 @@
 				},
 			}
 		});
-		
+		var date = new Date();
+		$(".input-group.date").datetimepicker({
+			format: 'yyyy-mm-dd hh:ii',//限制时间格式
+			weekStart: 1,//时间从周1开始
+			endDate: date,//时间不能超过今天
+			todayBtn: true,//在下方显示当天按钮
+			language:'zh-CN',
+			autoclose: true,//选择完后关闭
+			todayHighlight: true,//当天日期高亮
+			startView: 3,//打开的视图为年视图,选月
+		});
 		function submitHandler() {
 	        if ($.validate.form()) {
 	            $.operate.save(prefix + "/edit", $('#form-policenotice-edit').serialize());

@@ -1,9 +1,12 @@
 package com.aaa.project.system.policenotice.domain;
 
+import com.aaa.framework.web.domain.BaseEntity;
 import com.aaa.project.system.policeman.domain.Policeman;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import com.aaa.framework.web.domain.BaseEntity;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 /**
@@ -21,6 +24,8 @@ public class Policenotice extends BaseEntity
 	/** 公告标题 */
 	private String noticeTitle;
 	/** 公告时间 */
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+8")
 	private Date noticeTime;
 	/** 公告发布人 */
 	private Integer noticePlicemanid;

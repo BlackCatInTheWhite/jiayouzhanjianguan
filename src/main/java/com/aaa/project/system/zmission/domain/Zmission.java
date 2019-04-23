@@ -1,10 +1,13 @@
 package com.aaa.project.system.zmission.domain;
 
+import com.aaa.framework.web.domain.BaseEntity;
 import com.aaa.project.system.gas.domain.Gas;
 import com.aaa.project.system.policeman.domain.Policeman;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import com.aaa.framework.web.domain.BaseEntity;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 /**
@@ -24,10 +27,16 @@ public class Zmission extends BaseEntity
 	/** 巡查人员序号 */
 	private Integer policeManid;
 	/** 任务开始时间 */
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
 	private Date missionBegin;
 	/** 任务结束时间 */
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
 	private Date missionEnd;
 	/** 上次提交时间 */
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
 	private Date missionLastcommit;
 	/** 任务频次 */
 	private Integer missionTimes;

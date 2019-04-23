@@ -30,7 +30,10 @@
 			<div class="form-group">	
 				<label class="col-sm-3 control-label">出生日期：</label>
 				<div class="col-sm-8">
-					<input id="gasmanBirthday" name="gasmanBirthday" th:field="*{gasmanBirthday}" class="form-control" type="text">
+					<div class="input-group date">
+						<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+						<input id="gasmanBirthday" name="gasmanBirthday" th:value="${#dates.format(gasman.gasmanBirthday,'yyyy-MM-dd')}" class="form-control" type="text">
+					</div>
 				</div>
 			</div>
 			<div class="form-group">	
@@ -70,14 +73,15 @@
 			<div class="form-group">	
 				<label class="col-sm-3 control-label">所属加油站：</label>
 				<div class="col-sm-8">
-					<select id="freasonId" name="freasonId" class="form-control">
-						<option th:each="gas:${gasList}" th:value="${gas.gasId}" th:text="${gas.gasName}" th:field="*{freasonId}"></option>
+					<select id="gasId" name="gasId" class="form-control">
+						<option th:each="gas:${gasList}" th:value="${gas.gasId}" th:text="${gas.gasName}" th:field="*{gasId}"></option>
 					</select>
 				</div>
 			</div>
 		</form>
     </div>
     <div th:include="include::footer"></div>
+	<script th:src="@{/ajax/libs//datapicker/bootstrap-datepicker.js}"></script>
     <script type="text/javascript">
 		var prefix = ctx + "system/gasman"
 		$("#form-gasman-edit").validate({
@@ -87,7 +91,15 @@
 				},
 			}
 		});
-		
+		var date = new Date();
+		$(".input-group.date").datepicker({
+			todayBtn: "linked",
+			keyboardNavigation: !1,
+			endDate: date,
+			forceParse: !1,
+			calendarWeeks: !0,
+			autoclose: !0
+		});
 		function submitHandler() {
 	        if ($.validate.form()) {
 	            $.operate.save(prefix + "/edit", $('#form-gasman-edit').serialize());

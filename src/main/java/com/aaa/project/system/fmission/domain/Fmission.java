@@ -2,8 +2,10 @@ package com.aaa.project.system.fmission.domain;
 
 import com.aaa.framework.web.domain.BaseEntity;
 import com.aaa.project.system.missionstate.domain.Missionstate;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -22,6 +24,8 @@ public class Fmission extends BaseEntity
 	/** 总任务序号 */
 	private Integer zmissionId;
 	/** 提交时间 */
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
 	private Date fmissionCommit;
 	/** 任务审核状态序号 */
 	private Integer fmissionState;

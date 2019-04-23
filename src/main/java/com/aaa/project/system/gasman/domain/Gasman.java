@@ -1,11 +1,13 @@
 package com.aaa.project.system.gasman.domain;
 
+import com.aaa.framework.web.domain.BaseEntity;
 import com.aaa.project.system.area.domain.Area;
-import com.aaa.project.system.focus.domain.Focus;
 import com.aaa.project.system.gas.domain.Gas;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import com.aaa.framework.web.domain.BaseEntity;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 /**
@@ -27,6 +29,8 @@ public class Gasman extends BaseEntity
 	/** 身份证号 */
 	private String gasmanCard;
 	/** 出生日期 */
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
 	private Date gasmanBirthday;
 	/** 民族 */
 	private String gasmanEthnic;
@@ -46,8 +50,6 @@ public class Gasman extends BaseEntity
 	private Area homeareaName;
 	/** 加油站序号 */
 	private Gas gasName;
-	/** 重点观察 */
-	private Focus focusName;
 
 	public Area getBirthareaName() {
 		return birthareaName;

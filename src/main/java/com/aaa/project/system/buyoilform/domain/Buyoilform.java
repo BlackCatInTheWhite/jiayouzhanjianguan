@@ -1,11 +1,14 @@
 package com.aaa.project.system.buyoilform.domain;
 
+import com.aaa.framework.web.domain.BaseEntity;
 import com.aaa.project.system.gas.domain.Gas;
 import com.aaa.project.system.oilkind.domain.Oilkind;
 import com.aaa.project.system.oiltype.domain.Oiltype;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import com.aaa.framework.web.domain.BaseEntity;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 /**
@@ -29,6 +32,8 @@ public class Buyoilform extends BaseEntity
 	/** 民族 */
 	private String nation;
 	/** 购买日期 */
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+8")
 	private Date date;
 	/** 购买数量 */
 	private Integer num;

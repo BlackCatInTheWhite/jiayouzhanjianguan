@@ -4,8 +4,10 @@ import com.aaa.framework.web.domain.BaseEntity;
 import com.aaa.project.system.gas.domain.Gas;
 import com.aaa.project.system.gasstatus.domain.Gasstatus;
 import com.aaa.project.system.policeman.domain.Policeman;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -34,6 +36,8 @@ public class Rectification extends BaseEntity
 	/** 整改时间 */
 	private Integer rectificationTime;
 	/** 整改开始时间 */
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
 	private Date rectificationBegin;
 	/** 加油站 */
 	private Gas gasName;
