@@ -12,6 +12,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="missionEnd"    column="mission_end"    />
         <result property="missionLastcommit"    column="mission_lastcommit"    />
         <result property="missionTimes"    column="mission_times"    />
+        <association property="gasName" column="gas_id" select="com.aaa.project.system.gas.mapper.GasMapper.selectGasById"></association>
+        <association property="policemanName" column="police_manid" select="com.aaa.project.system.policeman.mapper.PolicemanMapper.selectPolicemanById"></association>
     </resultMap>
 	
 	<sql id="selectZmissionVo">

@@ -9,6 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="projectKindid"    column="project_kindid"    />
         <result property="projectName"    column="project_name"    />
         <result property="point"    column="point"    />
+        <association property="projectkindName" column="project_kindid" select="com.aaa.project.system.projectkind.mapper.ProjectkindMapper.selectProjectkindById"></association>
     </resultMap>
 	
 	<sql id="selectPoliceprojectVo">

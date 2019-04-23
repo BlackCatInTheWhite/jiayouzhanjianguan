@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-rectification-edit" th:object="${rectification}">
+            <input id="rectificationId" name="rectificationId" th:field="*{rectificationId}"  type="hidden">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">加油站序号：</label>
+				<div class="col-sm-8">
+					<input id="gasId" name="gasId" th:field="*{gasId}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">任务记录序号：</label>
+				<div class="col-sm-8">
+					<input id="fmissionId" name="fmissionId" th:field="*{fmissionId}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">更改描述：</label>
+				<div class="col-sm-8">
+					<input id="rectificationDes" name="rectificationDes" th:field="*{rectificationDes}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">整改负责人序号：</label>
+				<div class="col-sm-8">
+					<input id="rectificationPolicemanid" name="rectificationPolicemanid" th:field="*{rectificationPolicemanid}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">状态：</label>
+				<div class="col-sm-8">
+					<input id="rectificationState" name="rectificationState" th:field="*{rectificationState}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">整改时间：</label>
+				<div class="col-sm-8">
+					<input id="rectificationTime" name="rectificationTime" th:field="*{rectificationTime}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">整改开始时间：</label>
+				<div class="col-sm-8">
+					<input id="rectificationBegin" name="rectificationBegin" th:field="*{rectificationBegin}" class="form-control" type="text">
+				</div>
+			</div>
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "system/rectification"
+		$("#form-rectification-edit").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			}
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/edit", $('#form-rectification-edit').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

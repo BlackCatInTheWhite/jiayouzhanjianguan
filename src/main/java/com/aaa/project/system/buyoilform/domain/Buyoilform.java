@@ -1,5 +1,8 @@
 package com.aaa.project.system.buyoilform.domain;
 
+import com.aaa.project.system.gas.domain.Gas;
+import com.aaa.project.system.oilkind.domain.Oilkind;
+import com.aaa.project.system.oiltype.domain.Oiltype;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.aaa.framework.web.domain.BaseEntity;
@@ -39,8 +42,38 @@ public class Buyoilform extends BaseEntity
 	private String adress;
 	/** 购买用途 */
 	private String usefor;
+	/** 油品类型 */
+	private Oilkind oilkindName;
+	/** 油品类型 */
+	private Oiltype oiltypeName;
+	/** 所属加油站 */
+	private Gas gasName;
 
-	public void setId(Integer id) 
+	public Oilkind getOilkindName() {
+		return oilkindName;
+	}
+
+	public void setOilkindName(Oilkind oilkindName) {
+		this.oilkindName = oilkindName;
+	}
+
+	public Oiltype getOiltypeName() {
+		return oiltypeName;
+	}
+
+	public void setOiltypeName(Oiltype oiltypeName) {
+		this.oiltypeName = oiltypeName;
+	}
+
+	public Gas getGasName() {
+		return gasName;
+	}
+
+	public void setGasName(Gas gasName) {
+		this.gasName = gasName;
+	}
+
+	public void setId(Integer id)
 	{
 		this.id = id;
 	}
@@ -162,7 +195,7 @@ public class Buyoilform extends BaseEntity
             .append("oiltypeId", getOiltypeId())
             .append("gasId", getGasId())
             .append("adress", getAdress())
-            .append("usefor", getUsefor())
+            .append("usefor", getUsefor()).append("oilkindName",getOilkindName()).append("oiltypeName",getOiltypeName()).append("gasName",getGasName())
             .toString();
     }
 }

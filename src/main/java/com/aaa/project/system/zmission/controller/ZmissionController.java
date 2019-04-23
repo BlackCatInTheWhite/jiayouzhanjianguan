@@ -1,23 +1,24 @@
 package com.aaa.project.system.zmission.controller;
 
-import java.util.List;
+import com.aaa.common.utils.poi.ExcelUtil;
+import com.aaa.framework.aspectj.lang.annotation.Log;
+import com.aaa.framework.aspectj.lang.enums.BusinessType;
+import com.aaa.framework.web.controller.BaseController;
+import com.aaa.framework.web.domain.AjaxResult;
+import com.aaa.framework.web.page.TableDataInfo;
+import com.aaa.project.system.gas.domain.Gas;
+import com.aaa.project.system.gas.service.IGasService;
+import com.aaa.project.system.policeman.domain.Policeman;
+import com.aaa.project.system.policeman.service.IPolicemanService;
+import com.aaa.project.system.zmission.domain.Zmission;
+import com.aaa.project.system.zmission.service.IZmissionService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import com.aaa.framework.aspectj.lang.annotation.Log;
-import com.aaa.framework.aspectj.lang.enums.BusinessType;
-import com.aaa.project.system.zmission.domain.Zmission;
-import com.aaa.project.system.zmission.service.IZmissionService;
-import com.aaa.framework.web.controller.BaseController;
-import com.aaa.framework.web.page.TableDataInfo;
-import com.aaa.framework.web.domain.AjaxResult;
-import com.aaa.common.utils.poi.ExcelUtil;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 巡查总任务分排 信息操作处理
@@ -33,6 +34,10 @@ public class ZmissionController extends BaseController
 	
 	@Autowired
 	private IZmissionService zmissionService;
+	@Autowired
+	private IGasService gasService;
+	@Autowired
+	private IPolicemanService policemanService;
 	
 	@RequiresPermissions("system:zmission:view")
 	@GetMapping()
@@ -72,8 +77,12 @@ public class ZmissionController extends BaseController
 	 * 新增巡查总任务分排
 	 */
 	@GetMapping("/add")
-	public String add()
+	public String add(ModelMap mmap)
 	{
+		List<Gas> gasList = gasService.selectGasList(new Gas());
+		List<Policeman> policemanList = policemanService.selectPolicemanList(new Policeman());
+		mmap.put("gasList", gasList);
+		mmap.put("policemanList", policemanList);
 	    return prefix + "/add";
 	}
 	
@@ -96,6 +105,10 @@ public class ZmissionController extends BaseController
 	public String edit(@PathVariable("missionId") Integer missionId, ModelMap mmap)
 	{
 		Zmission zmission = zmissionService.selectZmissionById(missionId);
+		List<Gas> gasList = gasService.selectGasList(new Gas());
+		List<Policeman> policemanList = policemanService.selectPolicemanList(new Policeman());
+		mmap.put("gasList", gasList);
+		mmap.put("policemanList", policemanList);
 		mmap.put("zmission", zmission);
 	    return prefix + "/edit";
 	}

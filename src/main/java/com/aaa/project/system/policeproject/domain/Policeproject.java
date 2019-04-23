@@ -1,5 +1,6 @@
 package com.aaa.project.system.policeproject.domain;
 
+import com.aaa.project.system.projectkind.domain.Projectkind;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.aaa.framework.web.domain.BaseEntity;
@@ -22,8 +23,18 @@ public class Policeproject extends BaseEntity
 	private String projectName;
 	/** 分数 */
 	private Integer point;
+	/** 项目分类 */
+	private Projectkind projectkindName;
 
-	public void setProjectId(Integer projectId) 
+	public Projectkind getProjectkindName() {
+		return projectkindName;
+	}
+
+	public void setProjectkindName(Projectkind projectkindName) {
+		this.projectkindName = projectkindName;
+	}
+
+	public void setProjectId(Integer projectId)
 	{
 		this.projectId = projectId;
 	}
@@ -65,7 +76,7 @@ public class Policeproject extends BaseEntity
             .append("projectId", getProjectId())
             .append("projectKindid", getProjectKindid())
             .append("projectName", getProjectName())
-            .append("point", getPoint())
+            .append("point", getPoint()).append("projectkindName",getProjectkindName())
             .toString();
     }
 }
