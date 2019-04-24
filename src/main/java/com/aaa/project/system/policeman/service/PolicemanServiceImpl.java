@@ -6,6 +6,7 @@ import com.aaa.project.system.policeman.mapper.PolicemanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -51,6 +52,13 @@ public class PolicemanServiceImpl implements IPolicemanService
 	 */
 	public Policeman selectJYZByPolicemanId(Integer policeman){
 		return policemanMapper.selectJYZByPolicemanId(policeman);
+	}
+
+	/***
+	 * 查询巡查人员的历史记录
+	 */
+	public Policeman selectPolicemanJYZById(Integer policeman,String address,Date committime){
+		return  policemanMapper.selectPolicemanJYZById(policeman,address,committime);
 	}
 
 	/**

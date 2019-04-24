@@ -1,7 +1,10 @@
 package com.aaa.project.system.policeman.mapper;
 
 import com.aaa.project.system.policeman.domain.Policeman;
-import java.util.List;	
+import org.apache.ibatis.annotations.Param;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * 派出所人员 数据层
@@ -39,6 +42,10 @@ public interface PolicemanMapper
 	 * @return
 	 */
 	public Policeman selectJYZByPolicemanId(Integer policeman);
+	/***
+	 * 查询巡查人员的历史记录
+	 */
+	public Policeman selectPolicemanJYZById(@Param("policemanId") Integer policeman,@Param("address") String address,@Param("committime") Date committime);
 	/**
      * 新增派出所人员
      * 
