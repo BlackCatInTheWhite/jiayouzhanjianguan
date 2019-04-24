@@ -504,19 +504,13 @@
             },
 			// 审核信息
 			agree: function(id) {
-				$.modal.confirm("确定删除该条" + $.table._option.modalName + "信息吗？", function() {
-					var url = $.common.isEmpty(id) ? $.table._option.removeUrl : $.table._option.removeUrl.replace("{id}", id);
-					var data = { "ids": id };
-					$.operate.submit(url, "post", "json", data);
-				});
+				var url = $.table._option.agreeUrl.replace("{id}", id);
+				$.modal.open("确认" + $.table._option.modalName, url);
 			},
 			// 巡检信息
 			mission: function(id) {
-				$.modal.confirm("确定删除该条" + $.table._option.modalName + "信息吗？", function() {
-					var url = $.common.isEmpty(id) ? $.table._option.removeUrl : $.table._option.removeUrl.replace("{id}", id);
-					var data = { "ids": id };
-					$.operate.submit(url, "post", "json", data);
-				});
+				var url = $.table._option.missionUrl.replace("{id}", id);
+				$.modal.open("确认" + $.table._option.modalName, url);
 			},
             // 工具栏表格树修改
             editTree: function() {

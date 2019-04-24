@@ -194,7 +194,7 @@
 		            	var actions = [];
 		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.gasId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
                         actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.gasId + '\')"><i class="fa fa-remove"></i>删除</a>');
-						actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.gasId + '\')"><i class="fa fa-remove"></i>员工管理</a>');
+						actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="/system/gasman/"><i class="fa fa-remove"></i>员工管理</a>');
 						actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.gasId + '\')"><i class="fa fa-remove"></i>散装油管理</a>');
 						return actions.join('');
 		            }

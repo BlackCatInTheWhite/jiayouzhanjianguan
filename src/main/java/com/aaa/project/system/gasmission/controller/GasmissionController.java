@@ -1,22 +1,19 @@
 package com.aaa.project.system.gasmission.controller;
 
-import com.aaa.framework.aspectj.lang.annotation.Log;
-import com.aaa.framework.aspectj.lang.enums.BusinessType;
 import com.aaa.framework.web.controller.BaseController;
 import com.aaa.framework.web.domain.AjaxResult;
 import com.aaa.framework.web.page.TableDataInfo;
 import com.aaa.project.system.gas.domain.Gas;
 import com.aaa.project.system.gas.service.IGasService;
-import com.aaa.project.system.gasstatus.service.IGasstatusService;
-import com.aaa.project.system.gastype.service.IGastypeService;
-import com.aaa.project.system.lpolice.service.ILpoliceService;
+import com.aaa.project.system.policeman.domain.Policeman;
+import com.aaa.project.system.policeman.service.IPolicemanService;
+import com.aaa.project.system.zmission.domain.Zmission;
+import com.aaa.project.system.zmission.service.IZmissionService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,11 +31,9 @@ public class GasmissionController extends BaseController {
     @Autowired
     private IGasService gasService;
     @Autowired
-    private ILpoliceService lpoliceService;
+    private IPolicemanService policemanService;
     @Autowired
-    private IGastypeService gastypeService;
-    @Autowired
-    private IGasstatusService gasstatusService;
+    private IZmissionService zmissionService;
 
     @RequiresPermissions("system:gasmission:view")
     @GetMapping()
@@ -60,14 +55,27 @@ public class GasmissionController extends BaseController {
     }
 
     /**
-     * 确认审核加油站
+     * 确认巡检
+     */
+    @GetMapping("/mission/{id}")
+    public String mission(@PathVariable("id") Integer gasId, ModelMap mmap) {
+        Gas gas = gasService.selectGasById(gasId);
+        List<Policeman> policemanList = policemanService.selectPolicemanList(new Policeman());
+        mmap.put("gas", gas);
+        mmap.put("policemanList", policemanList);
+        return prefix + "/mission";
+    }
+    /**
+     * 确认巡检加油站
      */
     @RequiresPermissions("system:gasmission:mission")
-    @Log(title = "加油站", businessType = BusinessType.DELETE)
     @PostMapping("/mission")
     @ResponseBody
-    public AjaxResult remove(String ids) {
-        return toAjax(gasService.deleteGasByIds(ids));
+    public AjaxResult agreeSave(Zmission zmission) {
+        Gas gas = gasService.selectGasById(zmission.getGasId());
+        gas.setGasstatusId(6);
+        gasService.updateGas(gas);
+        return toAjax(zmissionService.insertZmission(zmission));
     }
 
 }
