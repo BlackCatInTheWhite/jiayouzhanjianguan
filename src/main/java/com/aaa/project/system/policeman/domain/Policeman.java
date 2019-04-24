@@ -56,6 +56,16 @@ public class Policeman extends BaseEntity {
     private List<Gas> gas;
     /** 所属派出所 */
     private Lpolice lpoliceName;
+    /**巡查人员任务id*/
+    private List<Integer> missionId;
+
+    public List<Integer> getMissionId() {
+        return missionId;
+    }
+
+    public void setMissionId(List<Integer> missionId) {
+        this.missionId = missionId;
+    }
 
     public List<Gas> getGas() {
         return gas;
@@ -137,18 +147,20 @@ public class Policeman extends BaseEntity {
         return policemanPassword;
     }
 
+    @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
-                .append("policemanId", getPolicemanId())
-                .append("lpoliceId", getLpoliceId())
-                .append("policemanName", getPolicemanName())
-                .append("policemanAge", getPolicemanAge())
-                .append("policemanPost", getPolicemanPost())
-                .append("policemanCard", getPolicemanCard())
-                .append("policemanPhone", getPolicemanPhone())
-                .append("policemanPassword", getPolicemanPassword())
-                .toString();
-
-
-}
+        return "Policeman{" +
+                "policemanId=" + policemanId +
+                ", lpoliceId=" + lpoliceId +
+                ", policemanName='" + policemanName + '\'' +
+                ", policemanAge=" + policemanAge +
+                ", policemanPost='" + policemanPost + '\'' +
+                ", policemanCard='" + policemanCard + '\'' +
+                ", policemanPhone='" + policemanPhone + '\'' +
+                ", policemanPassword='" + policemanPassword + '\'' +
+                ", gas=" + gas +
+                ", lpoliceName=" + lpoliceName +
+                ", missionId=" + missionId +
+                '}';
+    }
 }

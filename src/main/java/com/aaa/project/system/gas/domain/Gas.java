@@ -88,6 +88,16 @@ public class Gas extends BaseEntity {
      * 加油站状态
      */
     private Gasstatus gasstatusName;
+    /**加油站对应的任务*/
+    private Integer missionId;
+
+    public Integer getMissionId() {
+        return missionId;
+    }
+
+    public void setMissionId(Integer missionId) {
+        this.missionId = missionId;
+    }
 
     public Lpolice getLpoliceName() {
         return lpoliceName;
@@ -233,26 +243,28 @@ public class Gas extends BaseEntity {
         return gasstatusId;
     }
 
+    @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
-                .append("gasId", getGasId())
-                .append("gasName", getGasName())
-                .append("gasAddress", getGasAddress())
-                .append("gasLongitude", getGasLongitude())
-                .append("gasLatitude", getGasLatitude())
-                .append("lpoliceId", getLpoliceId())
-                .append("staffNumber", getStaffNumber())
-                .append("machineNumber", getMachineNumber())
-                .append("gasType", getGasType())
-                .append("principalName", getPrincipalName())
-                .append("principalCard", getPrincipalCard())
-                .append("principalPhone", getPrincipalPhone())
-                .append("principalUsername", getPrincipalUsername())
-                .append("principalPassword", getPrincipalPassword())
-                .append("gasstatusId", getGasstatusId())
-                .append("lpoliceName", getLpoliceName())
-                .append("gastypeName", getGastypeName())
-                .append("gasstatusName", getGasstatusName())
-                .toString();
+        return "Gas{" +
+                "gasId=" + gasId +
+                ", gasName='" + gasName + '\'' +
+                ", gasAddress='" + gasAddress + '\'' +
+                ", gasLongitude=" + gasLongitude +
+                ", gasLatitude=" + gasLatitude +
+                ", lpoliceId=" + lpoliceId +
+                ", staffNumber=" + staffNumber +
+                ", machineNumber=" + machineNumber +
+                ", gasType=" + gasType +
+                ", principalName='" + principalName + '\'' +
+                ", principalCard='" + principalCard + '\'' +
+                ", principalPhone='" + principalPhone + '\'' +
+                ", principalUsername='" + principalUsername + '\'' +
+                ", principalPassword='" + principalPassword + '\'' +
+                ", gasstatusId=" + gasstatusId +
+                ", lpoliceName=" + lpoliceName +
+                ", gastypeName=" + gastypeName +
+                ", gasstatusName=" + gasstatusName +
+                ", missionId=" + missionId +
+                '}';
     }
 }

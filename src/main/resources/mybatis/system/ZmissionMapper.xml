@@ -12,12 +12,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="missionEnd"    column="mission_end"    />
         <result property="missionLastcommit"    column="mission_lastcommit"    />
         <result property="missionTimes"    column="mission_times"    />
+        <result property="missionLeft"    column="mission_left"    />
         <association property="gasName" column="gas_id" select="com.aaa.project.system.gas.mapper.GasMapper.selectGasById"></association>
         <association property="policemanName" column="police_manid" select="com.aaa.project.system.policeman.mapper.PolicemanMapper.selectPolicemanById"></association>
     </resultMap>
 	
 	<sql id="selectZmissionVo">
-        select mission_id, gas_id, police_manid, mission_begin, mission_end, mission_lastcommit, mission_times from jyz_zmission
+        select mission_id, gas_id, police_manid, mission_begin, mission_end, mission_lastcommit, mission_times, mission_left from jyz_zmission
     </sql>
 	
     <select id="selectZmissionList" parameterType="Zmission" resultMap="ZmissionResult">
@@ -30,6 +31,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="missionEnd != null "> and mission_end = #{missionEnd}</if>
              <if test="missionLastcommit != null "> and mission_lastcommit = #{missionLastcommit}</if>
              <if test="missionTimes != null "> and mission_times = #{missionTimes}</if>
+             <if test="missionLeft != null "> and mission_left = #{missionLeft}</if>
          </where>
     </select>
     
@@ -48,6 +50,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="missionEnd != null  ">mission_end,</if>
 			<if test="missionLastcommit != null  ">mission_lastcommit,</if>
 			<if test="missionTimes != null  ">mission_times,</if>
+			<if test="missionLeft != null  ">mission_left,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="missionId != null  ">#{missionId},</if>
@@ -57,6 +60,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="missionEnd != null  ">#{missionEnd},</if>
 			<if test="missionLastcommit != null  ">#{missionLastcommit},</if>
 			<if test="missionTimes != null  ">#{missionTimes},</if>
+			<if test="missionLeft != null  ">#{missionLeft},</if>
          </trim>
     </insert>
 	 
@@ -69,6 +73,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="missionEnd != null  ">mission_end = #{missionEnd},</if>
             <if test="missionLastcommit != null  ">mission_lastcommit = #{missionLastcommit},</if>
             <if test="missionTimes != null  ">mission_times = #{missionTimes},</if>
+            <if test="missionLeft != null  ">mission_left = #{missionLeft},</if>
         </trim>
         where mission_id = #{missionId}
     </update>

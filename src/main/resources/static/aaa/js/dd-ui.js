@@ -502,6 +502,16 @@
             	}
             	$.modal.open("修改" + $.table._option.modalName, url);
             },
+			// 审核信息
+			agree: function(id) {
+				var url = $.table._option.agreeUrl.replace("{id}", id);
+				$.modal.open("确认" + $.table._option.modalName, url);
+			},
+			// 巡检信息
+			mission: function(id) {
+				var url = $.table._option.missionUrl.replace("{id}", id);
+				$.modal.open("确认" + $.table._option.modalName, url);
+			},
             // 工具栏表格树修改
             editTree: function() {
             	var row = $('#bootstrap-tree-table').bootstrapTreeTable('getSelections')[0];

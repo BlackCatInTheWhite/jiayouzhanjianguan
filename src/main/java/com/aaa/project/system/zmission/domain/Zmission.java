@@ -14,7 +14,7 @@ import java.util.Date;
  * 巡查总任务分排表 jyz_zmission
  * 
  * @author aaa
- * @date 2019-04-23
+ * @date 2019-04-24
  */
 public class Zmission extends BaseEntity
 {
@@ -40,6 +40,8 @@ public class Zmission extends BaseEntity
 	private Date missionLastcommit;
 	/** 任务频次 */
 	private Integer missionTimes;
+	/** 任务剩余 */
+	private Integer missionLeft;
 	/** 所属加油站 */
 	private Gas gasName;
 	/** 巡查人员 */
@@ -124,6 +126,15 @@ public class Zmission extends BaseEntity
 	{
 		return missionTimes;
 	}
+	public void setMissionLeft(Integer missionLeft) 
+	{
+		this.missionLeft = missionLeft;
+	}
+
+	public Integer getMissionLeft() 
+	{
+		return missionLeft;
+	}
 
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -133,7 +144,8 @@ public class Zmission extends BaseEntity
             .append("missionBegin", getMissionBegin())
             .append("missionEnd", getMissionEnd())
             .append("missionLastcommit", getMissionLastcommit())
-            .append("missionTimes", getMissionTimes()).append("gasName",getGasName()).append("policemanName",getPolicemanName())
+            .append("missionTimes", getMissionTimes())
+            .append("missionLeft", getMissionLeft())
             .toString();
     }
 }

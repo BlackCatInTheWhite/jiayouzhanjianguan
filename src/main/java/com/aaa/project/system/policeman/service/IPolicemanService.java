@@ -1,6 +1,8 @@
 package com.aaa.project.system.policeman.service;
 
 import com.aaa.project.system.policeman.domain.Policeman;
+
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -33,6 +35,11 @@ public interface IPolicemanService
 	 * @return
 	 */
 	public Policeman selectJYZByPolicemanId(Integer policeman);
+
+	/***
+	 * 查询巡查人员的历史记录
+	 */
+	public Policeman selectPolicemanJYZById(Integer policeman,String address,Date committime);
 
 	/**
 	 *  根据登录信息查询公安人员

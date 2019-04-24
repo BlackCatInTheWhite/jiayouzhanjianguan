@@ -50,6 +50,16 @@ public class Gasman extends BaseEntity
 	private Area homeareaName;
 	/** 加油站序号 */
 	private Gas gasName;
+	/** 性别名称 */
+	private String genderName="男";
+
+	public String getGenderName() {
+		return genderName;
+	}
+
+	public void setGenderName(String genderName) {
+		this.genderName = genderName;
+	}
 
 	public Area getBirthareaName() {
 		return birthareaName;
@@ -96,6 +106,9 @@ public class Gasman extends BaseEntity
 	public void setGasmanGender(Integer gasmanGender) 
 	{
 		this.gasmanGender = gasmanGender;
+		if (gasmanGender == 0){
+			this.genderName="女";
+		}
 	}
 
 	public Integer getGasmanGender() 
@@ -187,7 +200,10 @@ public class Gasman extends BaseEntity
             .append("gasmanBirthplace", getGasmanBirthplace())
             .append("gasmanHomearea", getGasmanHomearea())
             .append("gasmanPhone", getGasmanPhone())
-            .append("gasId", getGasId()).append("birthareaName",getBirthareaName()).append("homeareaName",getHomeareaName()).append("gasName",getGasName())
+            .append("gasId", getGasId())
+				.append("birthareaName",getBirthareaName())
+				.append("homeareaName",getHomeareaName())
+				.append("gasName",getGasName()).append("genderName",getGenderName())
             .toString();
     }
 }
