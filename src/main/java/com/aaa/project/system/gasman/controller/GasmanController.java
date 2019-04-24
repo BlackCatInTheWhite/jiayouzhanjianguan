@@ -51,6 +51,7 @@ public class GasmanController extends BaseController {
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(Gasman gasman) {
+        System.out.println(gasman);
         startPage();
         List<Gasman> list = gasmanService.selectGasmanList(gasman);
         return getDataTable(list);
