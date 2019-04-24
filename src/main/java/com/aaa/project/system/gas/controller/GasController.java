@@ -20,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -41,6 +42,20 @@ public class GasController extends BaseController {
     private IGastypeService gastypeService;
     @Autowired
     private IGasstatusService gasstatusService;
+
+    @RequestMapping("/sign")
+    public String sign(HttpServletRequest req,Lpolice lpolice){
+        List<Lpolice> lpoliceList = lpoliceService.selectLpoliceList(lpolice);
+        req.setAttribute("lpoliceList",lpoliceList);
+        //System.out.println(lpoliceList);
+        return "system/sign/sign";
+    }
+    @RequestMapping("/signsave")
+    public String signSave(HttpServletRequest req,Gas gas){
+        gasService.insertGas(gas);
+        System.out.println(gas);
+        return "system/login";
+    }
 
     @RequiresPermissions("system:gas:view")
     @GetMapping()
