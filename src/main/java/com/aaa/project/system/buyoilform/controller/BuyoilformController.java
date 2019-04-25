@@ -89,6 +89,10 @@ public class BuyoilformController extends BaseController
 		mmap.put("oilkindList", oilkindList);
 		mmap.put("oiltypeList", oiltypeList);
 		mmap.put("gasList", gasList);
+		//判断加油站
+		if (1==1){
+			return "system/oilmanager/add";
+		}
 		return prefix + "/add";
 	}
 	
@@ -100,7 +104,11 @@ public class BuyoilformController extends BaseController
 	@PostMapping("/add")
 	@ResponseBody
 	public AjaxResult addSave(Buyoilform buyoilform)
-	{		
+	{
+		//判断加油站
+		if (buyoilform.getGasId()==null){
+			buyoilform.setGasId(1);
+		}
 		return toAjax(buyoilformService.insertBuyoilform(buyoilform));
 	}
 
