@@ -1,6 +1,8 @@
 package com.aaa.project.system.fmissionproject.service;
 
 import java.util.List;
+
+import com.aaa.project.system.projectkind.domain.Projectkind;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.aaa.project.system.fmissionproject.mapper.FmissionprojectMapper;
@@ -12,7 +14,7 @@ import com.aaa.common.support.Convert;
  * 项目记录 服务层实现
  * 
  * @author aaa
- * @date 2019-04-23
+ * @date 2019-04-25
  */
 @Service
 public class FmissionprojectServiceImpl implements IFmissionprojectService 
@@ -20,6 +22,9 @@ public class FmissionprojectServiceImpl implements IFmissionprojectService
 	@Autowired
 	private FmissionprojectMapper fmissionprojectMapper;
 
+	public List<Projectkind> selectFmissionprojectListByMissionId(Fmissionproject fmissionproject){
+		return fmissionprojectMapper.selectFmissionprojectListByMissionId(fmissionproject);
+	}
 	/**
      * 查询项目记录信息
      * 

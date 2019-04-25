@@ -1,16 +1,26 @@
 package com.aaa.project.system.fmissionproject.service;
 
 import com.aaa.project.system.fmissionproject.domain.Fmissionproject;
+import com.aaa.project.system.projectkind.domain.Projectkind;
+
 import java.util.List;
 
 /**
  * 项目记录 服务层
  * 
  * @author aaa
- * @date 2019-04-23
+ * @date 2019-04-25
  */
 public interface IFmissionprojectService 
 {
+	/**
+	 * 查询项目记录信息
+	 *
+	 * @param fmissionproject 含有任务id的fmissionproject
+	 * @return 指定的项目记录集合
+	 */
+	public List<Projectkind> selectFmissionprojectListByMissionId(Fmissionproject fmissionproject);
+
 	/**
      * 查询项目记录信息
      * 

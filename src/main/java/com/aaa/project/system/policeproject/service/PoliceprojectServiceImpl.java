@@ -21,6 +21,16 @@ public class PoliceprojectServiceImpl implements IPoliceprojectService
 	private PoliceprojectMapper policeprojectMapper;
 
 	/**
+	 * 查询项目信息
+	 *
+	 * @param policeproject 含有项目分类id
+	 * @return 项目信息
+	 */
+	public List<Policeproject> selectPoliceprojectByMission(Policeproject policeproject){
+		return policeprojectMapper.selectPoliceprojectByMission(policeproject);
+	}
+
+	/**
      * 查询项目信息
      * 
      * @param projectId 项目ID

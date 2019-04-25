@@ -11,12 +11,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="projectState"    column="project_state"    />
         <result property="projectPicturesrc"    column="project_picturesrc"    />
         <result property="projectDescribe"    column="project_describe"    />
+        <association property="policeprojectName" column="project_id" select="com.aaa.project.system.policeproject.mapper.PoliceprojectMapper.selectPoliceprojectById"></association>
+    </resultMap>
+
+    <resultMap type="Projectkind" id="ProjectkindResult">
+        <result property="projectKindid"    column="project_kindid"    />
+        <result property="projectKind"    column="project_kind"    />
     </resultMap>
 	
 	<sql id="selectFmissionprojectVo">
         select project_missionid, fmission_id, project_id, project_state, project_picturesrc, project_describe from jyz_fmissionproject
     </sql>
-	
+
+    <!-- 查找指定任务id的项目 -->
+    <select id="selectFmissionprojectListByMissionId" parameterType="Fmissionproject" resultMap="ProjectkindResult">
+        SELECT DISTINCT e.project_kindid,e.project_kind from (SELECT f.fmission_id,f.project_id,p.project_name,k.project_kindid,k.project_kind
+        from jyz_fmissionproject f ,jyz_policeproject p,jyz_projectkind k
+        where f.project_id = p.project_id
+        and p.project_kindid=k.project_kindid and f.fmission_id = 1) e
+    </select>
+
     <select id="selectFmissionprojectList" parameterType="Fmissionproject" resultMap="FmissionprojectResult">
         <include refid="selectFmissionprojectVo"/>
         <where>  

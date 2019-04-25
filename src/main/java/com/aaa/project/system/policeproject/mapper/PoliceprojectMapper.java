@@ -9,8 +9,16 @@ import java.util.List;
  * @author aaa
  * @date 2019-04-23
  */
-public interface PoliceprojectMapper 
+public interface PoliceprojectMapper
 {
+	/**
+	 * 查询项目信息
+	 *
+	 * @param policeproject 含有项目分类id
+	 * @return 项目信息
+	 */
+	public List<Policeproject> selectPoliceprojectByMission(Policeproject policeproject);
+
 	/**
      * 查询项目信息
      * 
