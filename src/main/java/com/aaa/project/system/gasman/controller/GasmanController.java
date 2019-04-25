@@ -44,6 +44,14 @@ public class GasmanController extends BaseController {
         return prefix + "/gasman";
     }
 
+    @RequiresPermissions("system:gasman:view")
+    @GetMapping("/{gasid}")
+    public String togasman(@PathVariable("gasid") Integer gasId,ModelMap mmap) {
+        System.out.println(gasId);
+        mmap.put("haveGasId",gasId);
+        return prefix + "/gasman";
+    }
+
     /**
      * 查询加油站员工列表
      */
@@ -51,7 +59,6 @@ public class GasmanController extends BaseController {
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(Gasman gasman) {
-        System.out.println(gasman);
         startPage();
         List<Gasman> list = gasmanService.selectGasmanList(gasman);
         return getDataTable(list);

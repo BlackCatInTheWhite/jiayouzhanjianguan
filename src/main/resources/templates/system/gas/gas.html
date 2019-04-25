@@ -108,7 +108,7 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
 				exportUrl: prefix + "/export",
-				gasmanUrl: prefix + "/gasman/{id}",
+				gasmanUrl: prefix + "/gasman",
 				oilUrl: prefix + "/oil",
                 modalName: "加油站",
 				search: false,
@@ -199,7 +199,7 @@
 		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.gasId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
                         actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.gasId + '\')"><i class="fa fa-remove"></i>删除</a>');
 						actions.push('<a class="btn btn-primary btn-xs ' + gasmanFlag + '" href="#" onclick="$.operate.gasman(\'' + row.gasId + '\')"><i class="fa fa-edit"></i>员工管理</a>');
-						actions.push('<a class="btn btn-default btn-xs ' + oilFlag + '" href="#" onclick="$.operate.oil(\'' + row.gasId + '\')"><i class="fa fa-edit"></i>散装油管理</a>');
+						actions.push('<a class="btn btn-info btn-xs ' + oilFlag + '" href="#" onclick="$.operate.oil(\'' + row.gasId + '\')"><i class="fa fa-edit"></i>散装油管理</a>');
 						return actions.join('');
 		            }
 		        }]

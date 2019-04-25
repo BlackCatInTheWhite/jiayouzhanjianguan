@@ -514,25 +514,15 @@
 			},
 			// 员工管理
 			gasman: function(id) {
-				var url = $.common.isEmpty(id) ? $.table._option.removeUrl : $.table._option.removeUrl.replace("{id}", id);
-				var data = { "id": id };
-				var config = {
-					url: url,
-					type: 'get',
-					dataType: 'json',
-					data: data,
-					success: function(result) {
-					}
-				};
-				$.ajax(config)
+				var url = $.table._option.gasmanUrl;
+				var data = { "gasid": id };
+				location.href=url+'?gasid='+id;
 			},
 			// 散装油管理
 			oil: function(id) {
-				$.modal.confirm("确定删除该条" + $.table._option.modalName + "信息吗？", function() {
-					var url = $.common.isEmpty(id) ? $.table._option.removeUrl : $.table._option.removeUrl.replace("{id}", id);
-					var data = { "ids": id };
-					$.operate.submit(url, "post", "json", data);
-				});
+				var url = $.table._option.oilUrl;
+				var data = { "gasid": id };
+				location.href=url+'?gasid='+id;
 			},
             // 工具栏表格树修改
             editTree: function() {
