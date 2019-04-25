@@ -11,6 +11,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="projectState"    column="project_state"    />
         <result property="projectPicturesrc"    column="project_picturesrc"    />
         <result property="projectDescribe"    column="project_describe"    />
+        <association property="policeprojectName" column="project_id" select="com.aaa.project.system.policeproject.mapper.PoliceprojectMapper.selectPoliceprojectById"></association>
     </resultMap>
 
     <resultMap type="Projectkind" id="ProjectkindResult">

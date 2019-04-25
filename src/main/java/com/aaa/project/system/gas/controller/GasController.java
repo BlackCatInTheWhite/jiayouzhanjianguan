@@ -6,8 +6,12 @@ import com.aaa.framework.aspectj.lang.enums.BusinessType;
 import com.aaa.framework.web.controller.BaseController;
 import com.aaa.framework.web.domain.AjaxResult;
 import com.aaa.framework.web.page.TableDataInfo;
+import com.aaa.project.system.buyoilform.domain.Buyoilform;
+import com.aaa.project.system.buyoilform.service.IBuyoilformService;
 import com.aaa.project.system.gas.domain.Gas;
 import com.aaa.project.system.gas.service.IGasService;
+import com.aaa.project.system.gasman.domain.Gasman;
+import com.aaa.project.system.gasman.service.IGasmanService;
 import com.aaa.project.system.gasstatus.domain.Gasstatus;
 import com.aaa.project.system.gasstatus.service.IGasstatusService;
 import com.aaa.project.system.gastype.domain.Gastype;
@@ -20,6 +24,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -41,6 +46,24 @@ public class GasController extends BaseController {
     private IGastypeService gastypeService;
     @Autowired
     private IGasstatusService gasstatusService;
+    @Autowired
+    private IGasmanService gasmanService;
+    @Autowired
+    private IBuyoilformService buyoilformService;
+
+    @RequestMapping("/sign")
+    public String sign(HttpServletRequest req,Lpolice lpolice){
+        List<Lpolice> lpoliceList = lpoliceService.selectLpoliceList(lpolice);
+        req.setAttribute("lpoliceList",lpoliceList);
+        //System.out.println(lpoliceList);
+        return "system/sign/sign";
+    }
+    @RequestMapping("/signsave")
+    public String signSave(HttpServletRequest req,Gas gas){
+        gasService.insertGas(gas);
+        System.out.println(gas);
+        return "system/login";
+    }
 
     @RequiresPermissions("system:gas:view")
     @GetMapping()
@@ -136,4 +159,44 @@ public class GasController extends BaseController {
         return toAjax(gasService.deleteGasByIds(ids));
     }
 
+    /**
+     * 员工管理
+     */
+    @RequiresPermissions("system:gas:gasman")
+    @GetMapping("/gasman")
+    public String gasman(@RequestParam("gasid") Integer gasid,ModelMap mmap) {
+        mmap.put("gasid", gasid);
+        return prefix + "/togasman";
+    }
+    /**
+     * 员工填充
+     */
+    @PostMapping("/gasman/list/{gasid}")
+    @ResponseBody
+    public TableDataInfo gasmanlist(@PathVariable(name = "gasid") Integer gasid,Gasman gasman) {
+        gasman.setGasId(gasid);
+        startPage();
+        List<Gasman> list = gasmanService.selectGasmanList(gasman);
+        return getDataTable(list);
+    }
+    /**
+     * 散装油管理
+     */
+    @RequiresPermissions("system:gas:oil")
+    @GetMapping("/oil")
+    public String oil(@RequestParam("gasid") Integer gasid,ModelMap mmap) {
+        mmap.put("gasid", gasid);
+        return prefix + "/tooil";
+    }
+    /**
+     * 散装油填充
+     */
+    @PostMapping("/oil/list/{gasid}")
+    @ResponseBody
+    public TableDataInfo oillist(@PathVariable(name = "gasid") Integer gasid, Buyoilform buyoilform) {
+        buyoilform.setGasId(gasid);
+        startPage();
+        List<Buyoilform> list = buyoilformService.selectBuyoilformList(buyoilform);
+        return getDataTable(list);
+    }
 }

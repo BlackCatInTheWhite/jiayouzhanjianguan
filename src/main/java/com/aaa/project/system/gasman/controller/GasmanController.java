@@ -44,6 +44,14 @@ public class GasmanController extends BaseController {
         return prefix + "/gasman";
     }
 
+    @RequiresPermissions("system:gasman:view")
+    @GetMapping("/{gasid}")
+    public String togasman(@PathVariable("gasid") Integer gasId,ModelMap mmap) {
+        System.out.println(gasId);
+        mmap.put("haveGasId",gasId);
+        return prefix + "/gasman";
+    }
+
     /**
      * 查询加油站员工列表
      */
@@ -51,7 +59,6 @@ public class GasmanController extends BaseController {
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(Gasman gasman) {
-        System.out.println(gasman);
         startPage();
         List<Gasman> list = gasmanService.selectGasmanList(gasman);
         return getDataTable(list);
@@ -79,6 +86,10 @@ public class GasmanController extends BaseController {
         List<Gas> gasList = gasService.selectGasList(new Gas());
         mmap.put("areaList", areaList);
         mmap.put("gasList", gasList);
+        //判断是否是加油站进入
+        if (1==1){
+            return "system/gasmanmanager/add";
+        }
         return prefix + "/add";
     }
 
@@ -90,6 +101,12 @@ public class GasmanController extends BaseController {
     @PostMapping("/add")
     @ResponseBody
     public AjaxResult addSave(Gasman gasman) {
+        if (gasman.getGasId()==null){
+            gasman.setGasId(1);
+        }
+        Gas gas = gasService.selectGasById(gasman.getGasId());
+        gas.setStaffNumber(gas.getStaffNumber()+1);
+        gasService.updateGas(gas);
         return toAjax(gasmanService.insertGasman(gasman));
     }
 
@@ -104,6 +121,10 @@ public class GasmanController extends BaseController {
         mmap.put("areaList", areaList);
         mmap.put("gasList", gasList);
         mmap.put("gasman", gasman);
+        //判断是否是加油站进入
+        if (1==1){
+            return "system/gasmanmanager/edit";
+        }
         return prefix + "/edit";
     }
 
@@ -126,6 +147,9 @@ public class GasmanController extends BaseController {
     @PostMapping("/remove")
     @ResponseBody
     public AjaxResult remove(String ids) {
+        Gas gas = gasService.selectGasById(gasmanService.selectGasmanById(Integer.parseInt(ids)).getGasId());
+        gas.setStaffNumber(gas.getStaffNumber()-1);
+        gasService.updateGas(gas);
         return toAjax(gasmanService.deleteGasmanByIds(ids));
     }
 

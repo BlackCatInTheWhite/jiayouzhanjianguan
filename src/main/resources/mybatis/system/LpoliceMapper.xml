@@ -22,7 +22,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="lpoliceName != null  and lpoliceName != '' "> and lpolice_name = #{lpoliceName}</if>
          </where>
     </select>
-    
+    <select id="selectLpoliceAll" parameterType="Lpolice" resultMap="LpoliceResult">
+        <include refid="selectLpoliceVo"/>
+    </select>
     <select id="selectLpoliceById" parameterType="Integer" resultMap="LpoliceResult">
         <include refid="selectLpoliceVo"/>
         where lpolice_id = #{lpoliceId}

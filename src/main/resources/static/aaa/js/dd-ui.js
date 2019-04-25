@@ -512,6 +512,24 @@
 				var url = $.table._option.missionUrl.replace("{id}", id);
 				$.modal.open("确认" + $.table._option.modalName, url);
 			},
+			// 员工管理
+			gasman: function(id) {
+				var url = $.table._option.gasmanUrl;
+				var data = { "gasid": id };
+				location.href=url+'?gasid='+id;
+			},
+			// 散装油管理
+			oil: function(id) {
+				var url = $.table._option.oilUrl;
+				var data = { "gasid": id };
+				location.href=url+'?gasid='+id;
+			},
+			// 任务详情管理
+			fmissiondetail: function(id) {
+				var url = $.table._option.detailUrl;
+				var data = { "fmissionId": id };
+				location.href=url+'?fmissionId='+id;
+			},
             // 工具栏表格树修改
             editTree: function() {
             	var row = $('#bootstrap-tree-table').bootstrapTreeTable('getSelections')[0];
