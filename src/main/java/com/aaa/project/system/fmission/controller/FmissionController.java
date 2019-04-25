@@ -8,6 +8,8 @@ import com.aaa.framework.web.domain.AjaxResult;
 import com.aaa.framework.web.page.TableDataInfo;
 import com.aaa.project.system.fmission.domain.Fmission;
 import com.aaa.project.system.fmission.service.IFmissionService;
+import com.aaa.project.system.fmissionproject.domain.Fmissionproject;
+import com.aaa.project.system.fmissionproject.service.IFmissionprojectService;
 import com.aaa.project.system.missionstate.domain.Missionstate;
 import com.aaa.project.system.missionstate.service.IMissionstateService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -34,6 +36,8 @@ public class FmissionController extends BaseController
 	private IFmissionService fmissionService;
 	@Autowired
 	private IMissionstateService missionstateService;
+	@Autowired
+	private IFmissionprojectService fmissionprojectService;
 
 	@RequiresPermissions("system:fmission:view")
 	@GetMapping()
@@ -128,5 +132,25 @@ public class FmissionController extends BaseController
 	{		
 		return toAjax(fmissionService.deleteFmissionByIds(ids));
 	}
-	
+
+	/**
+	 * 详情管理
+	 */
+	@RequiresPermissions("system:fmission:detail")
+	@GetMapping("/detail")
+	public String oil(@RequestParam("fmissionId") Integer fmissionId,ModelMap mmap) {
+		mmap.put("fmissionId", fmissionId);
+		return prefix + "/todetail";
+	}
+	/**
+	 * 详情填充
+	 */
+	@PostMapping("/detail/list/{fmissionId}")
+	@ResponseBody
+	public TableDataInfo oillist(@PathVariable(name = "fmissionId") Integer fmissionId, Fmissionproject fmissionproject) {
+		fmissionproject.setFmissionId(fmissionId);
+		startPage();
+		List<Fmissionproject> list = fmissionprojectService.selectFmissionprojectList(fmissionproject);
+		return getDataTable(list);
+	}
 }

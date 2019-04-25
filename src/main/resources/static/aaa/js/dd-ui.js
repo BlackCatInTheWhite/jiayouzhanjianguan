@@ -524,6 +524,12 @@
 				var data = { "gasid": id };
 				location.href=url+'?gasid='+id;
 			},
+			// 任务详情管理
+			fmissiondetail: function(id) {
+				var url = $.table._option.detailUrl;
+				var data = { "fmissionId": id };
+				location.href=url+'?fmissionId='+id;
+			},
             // 工具栏表格树修改
             editTree: function() {
             	var row = $('#bootstrap-tree-table').bootstrapTreeTable('getSelections')[0];

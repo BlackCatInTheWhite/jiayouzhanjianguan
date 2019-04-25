@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+    
+     <div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table" data-mobile-responsive="true"></table>
+			</div>
+		</div>
+	</div>
+    <div th:include="include :: footer"></div>
+    <script th:inline="javascript">
+        var prefix = ctx + "system/gasmanager";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                modalName: "加油站",
+				search: false,
+		        showExport: true,
+                columns: [{
+		            checkbox: true
+		        },
+				{
+					field : 'gasId', 
+					title : '加油站序号',
+					visible: false
+				},
+				{
+					field : 'gasName', 
+					title : '加油站名称',
+					sortable: true
+				},
+				{
+					field : 'gasAddress', 
+					title : '详细地址',
+					sortable: true
+				},
+				{
+					field : 'gasLongitude', 
+					title : '经度',
+					sortable: true
+				},
+				{
+					field : 'gasLatitude', 
+					title : '纬度',
+					sortable: true
+				},
+				{
+					field : 'lpoliceName.lpoliceName',
+					title : '所属派出所',
+					sortable: true
+				},
+				{
+					field : 'staffNumber', 
+					title : '员工数量',
+					sortable: true
+				},
+				{
+					field : 'machineNumber', 
+					title : '加油机数量',
+					sortable: true
+				},
+				{
+					field : 'gastypeName.gastypeName',
+					title : '性质',
+					sortable: true
+				},
+				{
+					field : 'principalName', 
+					title : '法人姓名',
+					sortable: true
+				},
+				{
+					field : 'principalCard', 
+					title : '法人身份证号',
+					sortable: true
+				},
+				{
+					field : 'principalPhone', 
+					title : '法人电话',
+					sortable: true
+				},
+				{
+					field : 'principalUsername', 
+					title : '登录账号',
+					sortable: true
+				},
+				{
+					field : 'principalPassword', 
+					title : '登录密码',
+					sortable: true
+				},
+				{
+					field : 'gasstatusName.gasstatusName',
+					title : '状态',
+					sortable: true
+				}]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

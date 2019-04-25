@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+    
+     <div class="container-div">
+		<div class="row">
+	        <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
+				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:gasman:add">
+					<i class="fa fa-plus"></i> 添加
+				</a>
+				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="system:gasman:edit">
+					<i class="fa fa-edit"></i> 修改
+				</a>
+				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:gasman:remove">
+					<i class="fa fa-remove"></i> 删除
+				</a>
+			</div>
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table" data-mobile-responsive="true"></table>
+			</div>
+		</div>
+	</div>
+    <div th:include="include :: footer"></div>
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:gasman:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:gasman:remove')}]];
+        var prefix = ctx + "system/gasman";
+
+        $(function() {
+            var options = {
+                url: ctx + "system/gasmanmanager/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                modalName: "加油站员工",
+				search: false,
+		        showExport: true,
+                columns: [{
+		            checkbox: true
+		        },
+				{
+					field : 'gasmanId', 
+					title : '加油站员工序号',
+					visible: false
+				},
+				{
+					field : 'gasmanName', 
+					title : '姓名',
+					sortable: true
+				},
+				{
+					field : 'genderName',
+					title : '性别',
+					sortable: true
+				},
+				{
+					field : 'gasmanCard', 
+					title : '身份证号',
+					sortable: true
+				},
+				{
+					field : 'gasmanBirthday', 
+					title : '出生日期',
+					sortable: true
+				},
+				{
+					field : 'gasmanEthnic', 
+					title : '民族',
+					sortable: true
+				},
+				{
+					field : 'birthareaName.areaName',
+					title : '户籍所属县区',
+					sortable: true
+				},
+				{
+					field : 'gasmanBirthplace', 
+					title : '户籍地详址',
+					sortable: true
+				},
+				{
+					field : 'homeareaName.areaName',
+					title : '现居住地所属县区',
+					sortable: true
+				},
+				{
+					field : 'gasmanPhone', 
+					title : '联系方式',
+					sortable: true
+				},
+		        {
+		            title: '操作',
+		            align: 'center',
+		            formatter: function(value, row, index) {
+		            	var actions = [];
+		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.gasmanId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.gasmanId + '\')"><i class="fa fa-remove"></i>删除</a>');
+						return actions.join('');
+		            }
+		        }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

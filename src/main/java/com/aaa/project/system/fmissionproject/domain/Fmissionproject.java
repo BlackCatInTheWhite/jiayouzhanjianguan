@@ -1,5 +1,6 @@
 package com.aaa.project.system.fmissionproject.domain;
 
+import com.aaa.project.system.policeproject.domain.Policeproject;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.aaa.framework.web.domain.BaseEntity;
@@ -8,7 +9,7 @@ import com.aaa.framework.web.domain.BaseEntity;
  * 项目记录表 jyz_fmissionproject
  * 
  * @author aaa
- * @date 2019-04-23
+ * @date 2019-04-25
  */
 public class Fmissionproject extends BaseEntity
 {
@@ -26,8 +27,18 @@ public class Fmissionproject extends BaseEntity
 	private String projectPicturesrc;
 	/** 不通过描述 */
 	private String projectDescribe;
+	/** 项目名称 */
+	private Policeproject policeprojectName;
 
-	public void setProjectMissionid(Integer projectMissionid) 
+	public Policeproject getPoliceprojectName() {
+		return policeprojectName;
+	}
+
+	public void setPoliceprojectName(Policeproject policeprojectName) {
+		this.policeprojectName = policeprojectName;
+	}
+
+	public void setProjectMissionid(Integer projectMissionid)
 	{
 		this.projectMissionid = projectMissionid;
 	}
@@ -89,7 +100,7 @@ public class Fmissionproject extends BaseEntity
             .append("projectId", getProjectId())
             .append("projectState", getProjectState())
             .append("projectPicturesrc", getProjectPicturesrc())
-            .append("projectDescribe", getProjectDescribe())
+            .append("projectDescribe", getProjectDescribe()).append("policeprojectName",getPoliceprojectName())
             .toString();
     }
 }
