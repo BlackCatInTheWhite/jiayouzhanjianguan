@@ -512,6 +512,28 @@
 				var url = $.table._option.missionUrl.replace("{id}", id);
 				$.modal.open("确认" + $.table._option.modalName, url);
 			},
+			// 员工管理
+			gasman: function(id) {
+				var url = $.common.isEmpty(id) ? $.table._option.removeUrl : $.table._option.removeUrl.replace("{id}", id);
+				var data = { "id": id };
+				var config = {
+					url: url,
+					type: 'get',
+					dataType: 'json',
+					data: data,
+					success: function(result) {
+					}
+				};
+				$.ajax(config)
+			},
+			// 散装油管理
+			oil: function(id) {
+				$.modal.confirm("确定删除该条" + $.table._option.modalName + "信息吗？", function() {
+					var url = $.common.isEmpty(id) ? $.table._option.removeUrl : $.table._option.removeUrl.replace("{id}", id);
+					var data = { "ids": id };
+					$.operate.submit(url, "post", "json", data);
+				});
+			},
             // 工具栏表格树修改
             editTree: function() {
             	var row = $('#bootstrap-tree-table').bootstrapTreeTable('getSelections')[0];

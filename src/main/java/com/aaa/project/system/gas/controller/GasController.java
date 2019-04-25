@@ -151,4 +151,15 @@ public class GasController extends BaseController {
         return toAjax(gasService.deleteGasByIds(ids));
     }
 
+    /**
+     * 员工管理
+     */
+    @RequiresPermissions("system:gas:gasman")
+    @GetMapping("/gasman/{id}")
+    public String gasman(@PathVariable("id") Integer gasId, ModelMap mmap) {
+        Gas gas = gasService.selectGasById(gasId);
+        mmap.put("gas", gas);
+        return "system/gasman/";
+    }
+
 }
