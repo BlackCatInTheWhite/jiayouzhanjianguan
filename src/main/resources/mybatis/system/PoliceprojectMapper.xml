@@ -15,7 +15,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<sql id="selectPoliceprojectVo">
         select project_id, project_kindid, project_name, point from jyz_policeproject
     </sql>
-	
+
+    <select id="selectPoliceprojectByMission" parameterType="Policeproject" resultMap="PoliceprojectResult">
+        <include refid="selectPoliceprojectVo"/>
+        <where>
+            <if test="projectId != null "> and project_id = #{projectId}</if>
+            <if test="projectKindid != null "> and project_kindid = #{projectKindid}</if>
+            <if test="projectName != null  and projectName != '' "> and project_name = #{projectName}</if>
+            <if test="point != null "> and point = #{point}</if>
+        </where>
+    </select>
+
     <select id="selectPoliceprojectList" parameterType="Policeproject" resultMap="PoliceprojectResult">
         <include refid="selectPoliceprojectVo"/>
         <where>  

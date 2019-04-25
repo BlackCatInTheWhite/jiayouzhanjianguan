@@ -113,7 +113,9 @@ public class FileUploadUtils
 
         String fileName = encodingFilename(file.getOriginalFilename(), extension);
 
+
         File desc = getAbsoluteFile(baseDir, baseDir + fileName);
+        System.out.println(baseDir + fileName);
         file.transferTo(desc);
         return fileName;
     }

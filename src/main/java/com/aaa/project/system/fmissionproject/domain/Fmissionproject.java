@@ -20,6 +20,29 @@ public class Fmissionproject extends BaseEntity
 	private Integer fmissionId;
 	/** 项目序号 */
 	private Integer projectId;
+	/** 项目名称 */
+	private String projectName;
+
+
+
+	public String getProjectName() {
+		return projectName;
+	}
+
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
+
+	public String getProjectKind() {
+		return projectKind;
+	}
+
+	public void setProjectKind(String projectKind) {
+		this.projectKind = projectKind;
+	}
+
+	/** 项目分类 */
+	private String projectKind;
 	/** 提交项目状态 */
 	private Integer projectState;
 	/** 不通过图片 */
@@ -82,14 +105,18 @@ public class Fmissionproject extends BaseEntity
 		return projectDescribe;
 	}
 
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("projectMissionid", getProjectMissionid())
-            .append("fmissionId", getFmissionId())
-            .append("projectId", getProjectId())
-            .append("projectState", getProjectState())
-            .append("projectPicturesrc", getProjectPicturesrc())
-            .append("projectDescribe", getProjectDescribe())
-            .toString();
-    }
+	@Override
+	public String toString() {
+		return "Fmissionproject{" +
+				"projectMissionid=" + projectMissionid +
+				", fmissionId=" + fmissionId +
+				", projectId=" + projectId +
+				", projectName='" + projectName + '\'' +
+				", projectKind='" + projectKind + '\'' +
+				", projectState=" + projectState +
+				", projectPicturesrc='" + projectPicturesrc + '\'' +
+				", projectDescribe='" + projectDescribe + '\'' +
+				'}';
+	}
+
 }
