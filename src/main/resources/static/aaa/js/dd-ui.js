@@ -530,6 +530,12 @@
 				var data = { "fmissionId": id };
 				location.href=url+'?fmissionId='+id;
 			},
+			// 发送整改管理
+			fmissionnotice: function(id) {
+				var url = $.table._option.detailUrl;
+				var data = { "fmissionId": id };
+				location.href=url+'?fmissionId='+id;
+			},
             // 工具栏表格树修改
             editTree: function() {
             	var row = $('#bootstrap-tree-table').bootstrapTreeTable('getSelections')[0];
