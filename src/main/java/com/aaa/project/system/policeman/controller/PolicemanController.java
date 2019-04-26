@@ -88,7 +88,7 @@ public class PolicemanController extends BaseController
 	@PostMapping("/add")
 	@ResponseBody
 	public AjaxResult addSave(Policeman policeman)
-	{		
+	{
 		return toAjax(policemanService.insertPoliceman(policeman));
 	}
 
@@ -111,7 +111,7 @@ public class PolicemanController extends BaseController
 	@PostMapping("/edit")
 	@ResponseBody
 	public AjaxResult editSave(Policeman policeman)
-	{		
+	{
 		return toAjax(policemanService.updatePoliceman(policeman));
 	}
 	
