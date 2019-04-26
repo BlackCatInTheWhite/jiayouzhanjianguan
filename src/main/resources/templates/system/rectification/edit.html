@@ -38,7 +38,7 @@
 				<label class="col-sm-3 control-label">状态：</label>
 				<div class="col-sm-8">
 					<select id="rectificationState" name="rectificationState" class="form-control">
-						<option th:each="status:${gasstatusList}" th:value="${status.gasstatusId}" th:text="${status.gasstatusName}" th:field="*{rectificationState}"></option>
+						<option th:each="status:${missionstateList}" th:value="${status.missionStateid}" th:text="${status.missionStatename}" th:field="*{rectificationState}"></option>
 					</select>
 				</div>
 			</div>

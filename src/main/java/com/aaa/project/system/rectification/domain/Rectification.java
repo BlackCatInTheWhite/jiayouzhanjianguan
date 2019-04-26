@@ -2,7 +2,7 @@ package com.aaa.project.system.rectification.domain;
 
 import com.aaa.framework.web.domain.BaseEntity;
 import com.aaa.project.system.gas.domain.Gas;
-import com.aaa.project.system.gasstatus.domain.Gasstatus;
+import com.aaa.project.system.missionstate.domain.Missionstate;
 import com.aaa.project.system.policeman.domain.Policeman;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -43,8 +43,16 @@ public class Rectification extends BaseEntity
 	private Gas gasName;
 	/** 巡检人员 */
 	private Policeman policemanName;
-	/** 加油站状态 */
-	private Gasstatus gasstatusName;
+	/** 任务状态 */
+	private Missionstate missionstateName;
+
+	public Missionstate getMissionstateName() {
+		return missionstateName;
+	}
+
+	public void setMissionstateName(Missionstate missionstateName) {
+		this.missionstateName = missionstateName;
+	}
 
 	public Gas getGasName() {
 		return gasName;
@@ -60,14 +68,6 @@ public class Rectification extends BaseEntity
 
 	public void setPolicemanName(Policeman policemanName) {
 		this.policemanName = policemanName;
-	}
-
-	public Gasstatus getGasstatusName() {
-		return gasstatusName;
-	}
-
-	public void setGasstatusName(Gasstatus gasstatusName) {
-		this.gasstatusName = gasstatusName;
 	}
 
 	public void setRectificationId(Integer rectificationId)
@@ -152,7 +152,7 @@ public class Rectification extends BaseEntity
             .append("rectificationPolicemanid", getRectificationPolicemanid())
             .append("rectificationState", getRectificationState())
             .append("rectificationTime", getRectificationTime())
-            .append("rectificationBegin", getRectificationBegin()).append("gasName",getGasName()).append("policemanName",getPolicemanName()).append("gasstatusName",getGasstatusName())
+            .append("rectificationBegin", getRectificationBegin()).append("gasName",getGasName()).append("policemanName",getPolicemanName()).append("missionstate",getMissionstateName())
             .toString();
     }
 }

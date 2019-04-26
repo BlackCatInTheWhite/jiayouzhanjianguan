@@ -8,8 +8,8 @@ import com.aaa.framework.web.domain.AjaxResult;
 import com.aaa.framework.web.page.TableDataInfo;
 import com.aaa.project.system.gas.domain.Gas;
 import com.aaa.project.system.gas.service.IGasService;
-import com.aaa.project.system.gasstatus.domain.Gasstatus;
-import com.aaa.project.system.gasstatus.service.IGasstatusService;
+import com.aaa.project.system.missionstate.domain.Missionstate;
+import com.aaa.project.system.missionstate.service.IMissionstateService;
 import com.aaa.project.system.policeman.domain.Policeman;
 import com.aaa.project.system.policeman.service.IPolicemanService;
 import com.aaa.project.system.rectification.domain.Rectification;
@@ -41,7 +41,7 @@ public class RectificationController extends BaseController
 	@Autowired
 	private IPolicemanService policemanService;
 	@Autowired
-	private IGasstatusService gasstatusService;
+	private IMissionstateService missionstateService;
 	
 	@RequiresPermissions("system:rectification:view")
 	@GetMapping()
@@ -85,10 +85,10 @@ public class RectificationController extends BaseController
 	{
 		List<Gas> gasList = gasService.selectGasList(new Gas());
 		List<Policeman> policemanList = policemanService.selectPolicemanList(new Policeman());
-		List<Gasstatus> gasstatusList = gasstatusService.selectGasstatusList(new Gasstatus());
+		List<Missionstate> missionstateList = missionstateService.selectMissionstateList(new Missionstate());
 		mmap.put("gasList", gasList);
 		mmap.put("policemanList", policemanList);
-		mmap.put("gasstatusList", gasstatusList);
+		mmap.put("missionstateList", missionstateList);
 		return prefix + "/add";
 	}
 	
@@ -113,10 +113,10 @@ public class RectificationController extends BaseController
 		Rectification rectification = rectificationService.selectRectificationById(rectificationId);
 		List<Gas> gasList = gasService.selectGasList(new Gas());
 		List<Policeman> policemanList = policemanService.selectPolicemanList(new Policeman());
-		List<Gasstatus> gasstatusList = gasstatusService.selectGasstatusList(new Gasstatus());
+		List<Missionstate> missionstateList = missionstateService.selectMissionstateList(new Missionstate());
 		mmap.put("gasList", gasList);
 		mmap.put("policemanList", policemanList);
-		mmap.put("gasstatusList", gasstatusList);
+		mmap.put("missionstateList", missionstateList);
 		mmap.put("rectification", rectification);
 	    return prefix + "/edit";
 	}

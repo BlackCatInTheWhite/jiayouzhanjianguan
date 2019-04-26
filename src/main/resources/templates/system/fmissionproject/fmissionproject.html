@@ -46,12 +46,14 @@
 	</div>
     <div th:include="include :: footer"></div>
     <script th:inline="javascript">
+		var showFlag = [[${@permission.hasPermi('system:fmissionproject:show')}]];
         var prefix = ctx + "system/fmissionproject";
 
         $(function() {
             var options = {
                 url: prefix + "/list",
 				exportUrl: prefix + "/export",
+				showUrl: prefix + "/show/{id}",
                 modalName: "项目记录",
 				search: false,
 		        showExport: true,
@@ -93,7 +95,7 @@
 		            align: 'center',
 		            formatter: function(value, row, index) {
 		            	var actions = [];
-						actions.push('<a class="btn btn-primary btn-xs" href="'+row.projectPicturesrc+'" target="_blank"><i class="fa fa-edit"></i>查看图片</a>');
+						actions.push('<a class="btn btn-info btn-xs ' + showFlag + '" href="#" onclick="$.operate.fmissionshow(\'' + row.projectMissionid + '\')"><i class="fa fa-edit"></i>查看图片</a>');
 						return actions.join('');
 		            }
 		        }]
