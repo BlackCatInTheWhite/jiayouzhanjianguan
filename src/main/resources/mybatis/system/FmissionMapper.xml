@@ -11,6 +11,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="fmissionState"    column="fmission_state"    />
         <result property="point"    column="point"    />
         <association property="missionstateName" column="fmission_state" select="com.aaa.project.system.missionstate.mapper.MissionstateMapper.selectMissionstateById"></association>
+        <association property="zmissiongasName" column="zmission_id" select="com.aaa.project.system.zmission.mapper.ZmissionMapper.selectZmissionById"></association>
     </resultMap>
 	
 	<sql id="selectFmissionVo">

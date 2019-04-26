@@ -2,6 +2,7 @@ package com.aaa.project.system.fmission.domain;
 
 import com.aaa.framework.web.domain.BaseEntity;
 import com.aaa.project.system.missionstate.domain.Missionstate;
+import com.aaa.project.system.zmission.domain.Zmission;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -33,6 +34,16 @@ public class Fmission extends BaseEntity
 	private Integer point;
 	/** 任务审核状态 */
 	private Missionstate missionstateName;
+	/** 总任务对应加油站 */
+	private Zmission zmissiongasName;
+
+	public Zmission getZmissiongasName() {
+		return zmissiongasName;
+	}
+
+	public void setZmissiongasName(Zmission zmissiongasName) {
+		this.zmissiongasName = zmissiongasName;
+	}
 
 	public Missionstate getMissionstateName() {
 		return missionstateName;
@@ -94,7 +105,7 @@ public class Fmission extends BaseEntity
             .append("zmissionId", getZmissionId())
             .append("fmissionCommit", getFmissionCommit())
             .append("fmissionState", getFmissionState())
-            .append("point", getPoint()).append("missionstateName",getMissionstateName())
+            .append("point", getPoint()).append("missionstateName",getMissionstateName()).append("zmissiongasName",getZmissiongasName())
             .toString();
     }
 }

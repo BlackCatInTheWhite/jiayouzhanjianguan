@@ -81,8 +81,8 @@
 					visible: true
 				},
 				{
-					field : 'zmissionId', 
-					title : '总任务序号',
+					field : 'zmissiongasName.gasName.gasName',
+					title : '总任务对应加油站',
 					sortable: true
 				},
 				{
@@ -107,7 +107,8 @@
 		            	var actions = [];
 		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.fmissionId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
                         actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.fmissionId + '\')"><i class="fa fa-remove"></i>删除</a>');
-						actions.push('<a class="btn btn-primary btn-xs ' + detailFlag + '" href="#" onclick="$.operate.fmissiondetail(\'' + row.fmissionId + '\')"><i class="fa fa-edit"></i>查看详情</a>');
+						actions.push('<a class="btn btn-primary btn-xs ' + detailFlag + '" href="#" onclick="$.operate.fmissiondetail(\'' + row.zmissionId + '\')"><i class="fa fa-edit"></i>查看详情</a>');
+
 						return actions.join('');
 		            }
 		        }]
