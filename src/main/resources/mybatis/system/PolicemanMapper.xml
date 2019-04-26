@@ -84,7 +84,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectPolicemanVo"/>
         where policeman_phone = #{policemanPhone} and policeman_password=#{policemanPassword}
     </select>
-    <insert id="insertPoliceman" parameterType="Policeman">
+    <insert id="insertPoliceman" useGeneratedKeys="true" keyProperty="policemanId" parameterType="Policeman">
         insert into jyz_policeman
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="policemanId != null  ">policeman_id,</if>

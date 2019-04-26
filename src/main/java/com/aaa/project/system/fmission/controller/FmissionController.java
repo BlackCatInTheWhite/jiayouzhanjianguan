@@ -15,6 +15,7 @@ import com.aaa.project.system.policeman.domain.Policeman;
 import com.aaa.project.system.policeman.service.IPolicemanService;
 import com.aaa.project.system.rectification.domain.Rectification;
 import com.aaa.project.system.rectification.service.IRectificationService;
+import com.aaa.project.system.zmission.domain.Zmission;
 import com.aaa.project.system.zmission.service.IZmissionService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -64,10 +67,31 @@ public class FmissionController extends BaseController
 	@RequiresPermissions("system:fmission:list")
 	@PostMapping("/list")
 	@ResponseBody
-	public TableDataInfo list(Fmission fmission)
+	public TableDataInfo list(Fmission fmission, HttpSession session)
 	{
+		Policeman policeman = policemanService.selectPolicemanById((Integer) session.getAttribute("policemanid"));
+		Gas gas=new Gas();
+		gas.setLpoliceId(policeman.getLpoliceId());
+		List<Gas> gases = gasService.selectGasList(gas);
+		List<Integer> gasidlist=new ArrayList<>();
+		//所有加油站id
+		for (Gas g:gases) {
+			gasidlist.add(g.getGasId());
+		}
+		System.out.println(gasidlist);
+		//所有总任务id
+		Zmission zmission=new Zmission();
+		zmission.setGasidlist(gasidlist);
+		List<Zmission> zmissions = zmissionService.selectZmissionByLpolice(zmission);
+		List<Integer> zmissionlist=new ArrayList<>();
+		for (Zmission z:zmissions) {
+			zmissionlist.add(z.getMissionId());
+		}
+		System.out.println(zmissionlist);
+		if (zmissionlist.isEmpty())zmissionlist.add(0);
+		fmission.setZmissionlist(zmissionlist);
 		startPage();
-        List<Fmission> list = fmissionService.selectFmissionList(fmission);
+        List<Fmission> list = fmissionService.selectFmissionByZmissionlist(fmission);
 		return getDataTable(list);
 	}
 	
@@ -115,6 +139,9 @@ public class FmissionController extends BaseController
 	public AjaxResult fmissionagree(String id) {
 		Fmission fmission = fmissionService.selectFmissionById(Integer.parseInt(id));
 		fmission.setFmissionState(2);
+		Gas gas = gasService.selectGasById(zmissionService.selectZmissionById(fmission.getZmissionId()).getGasId());
+		gas.setGasstatusId(1);
+		gasService.updateGas(gas);
 		return toAjax(fmissionService.updateFmission(fmission));
 	}
 
@@ -140,6 +167,7 @@ public class FmissionController extends BaseController
 	public AjaxResult noticeSave(Rectification rectification) {
 		Fmission fmission = fmissionService.selectFmissionById(rectification.getFmissionId());
 		fmission.setFmissionState(2);
+		fmissionService.updateFmission(fmission);
 		Gas gas = gasService.selectGasById(rectification.getGasId());
 		gas.setGasstatusId(2);
 		gasService.updateGas(gas);

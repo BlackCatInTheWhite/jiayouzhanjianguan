@@ -1,19 +1,25 @@
 package com.aaa.project.system.user.controller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.subject.Subject;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import com.aaa.common.utils.ServletUtils;
 import com.aaa.common.utils.StringUtils;
 import com.aaa.framework.web.controller.BaseController;
 import com.aaa.framework.web.domain.AjaxResult;
+import com.aaa.project.system.user.domain.User;
+import com.aaa.project.system.user.service.UserServiceImpl;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * 登录验证
@@ -23,6 +29,8 @@ import com.aaa.framework.web.domain.AjaxResult;
 @Controller
 public class LoginController extends BaseController
 {
+    @Autowired
+    private UserServiceImpl userserviceimpl;
     @GetMapping("/login")
     public String login(HttpServletRequest request, HttpServletResponse response)
     {
@@ -37,13 +45,21 @@ public class LoginController extends BaseController
 
     @PostMapping("/login")
     @ResponseBody
-    public AjaxResult ajaxLogin(String username, String password, Boolean rememberMe)
+    public AjaxResult ajaxLogin(String username, String password, Boolean rememberMe,HttpServletRequest request)
     {
         UsernamePasswordToken token = new UsernamePasswordToken(username, password, rememberMe);
         Subject subject = SecurityUtils.getSubject();
         try
         {
             subject.login(token);
+
+            User user=new User();
+            user.setLoginName(username);
+            user.setPassword(password);
+            List<User> users = userserviceimpl.selectUserList(user);
+            HttpSession session=request.getSession();
+            session.setAttribute("policemanid",users.get(0).getPolicemanId());
+            session.setAttribute("gasid",users.get(0).getGasId());
             return success();
         }
         catch (AuthenticationException e)

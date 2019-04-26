@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -47,7 +48,6 @@ public class GasmanController extends BaseController {
     @RequiresPermissions("system:gasman:view")
     @GetMapping("/{gasid}")
     public String togasman(@PathVariable("gasid") Integer gasId,ModelMap mmap) {
-        System.out.println(gasId);
         mmap.put("haveGasId",gasId);
         return prefix + "/gasman";
     }
@@ -58,7 +58,7 @@ public class GasmanController extends BaseController {
     @RequiresPermissions("system:gasman:list")
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(Gasman gasman) {
+    public TableDataInfo list(Gasman gasman,HttpSession session) {
         startPage();
         List<Gasman> list = gasmanService.selectGasmanList(gasman);
         return getDataTable(list);
@@ -86,11 +86,7 @@ public class GasmanController extends BaseController {
         List<Gas> gasList = gasService.selectGasList(new Gas());
         mmap.put("areaList", areaList);
         mmap.put("gasList", gasList);
-        //判断是否是加油站进入
-        if (1==1){
-            return "system/gasmanmanager/add";
-        }
-        return prefix + "/add";
+        return "system/gasmanmanager/add";
     }
 
     /**
@@ -100,9 +96,9 @@ public class GasmanController extends BaseController {
     @Log(title = "加油站员工", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
-    public AjaxResult addSave(Gasman gasman) {
+    public AjaxResult addSave(Gasman gasman, HttpSession session) {
         if (gasman.getGasId()==null){
-            gasman.setGasId(1);
+            gasman.setGasId((Integer)session.getAttribute("gasid"));
         }
         Gas gas = gasService.selectGasById(gasman.getGasId());
         gas.setStaffNumber(gas.getStaffNumber()+1);
@@ -121,11 +117,7 @@ public class GasmanController extends BaseController {
         mmap.put("areaList", areaList);
         mmap.put("gasList", gasList);
         mmap.put("gasman", gasman);
-        //判断是否是加油站进入
-        if (1==1){
-            return "system/gasmanmanager/edit";
-        }
-        return prefix + "/edit";
+        return "system/gasmanmanager/edit";
     }
 
     /**

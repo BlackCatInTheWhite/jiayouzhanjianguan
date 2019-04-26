@@ -50,5 +50,7 @@ public interface IFmissionService
      * @return 结果
      */
 	public int deleteFmissionByIds(String ids);
+
+	public List<Fmission> selectFmissionByZmissionlist(Fmission fmission);
 	
 }

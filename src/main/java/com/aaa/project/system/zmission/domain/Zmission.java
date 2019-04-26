@@ -9,6 +9,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 巡查总任务分排表 jyz_zmission
@@ -46,6 +47,16 @@ public class Zmission extends BaseEntity
 	private Gas gasName;
 	/** 巡查人员 */
 	private Policeman policemanName;
+	/** 地区内所有加油站 */
+	private List<Integer> gasidlist;
+
+	public List<Integer> getGasidlist() {
+		return gasidlist;
+	}
+
+	public void setGasidlist(List<Integer> gasidlist) {
+		this.gasidlist = gasidlist;
+	}
 
 	public Gas getGasName() {
 		return gasName;
@@ -145,7 +156,7 @@ public class Zmission extends BaseEntity
             .append("missionEnd", getMissionEnd())
             .append("missionLastcommit", getMissionLastcommit())
             .append("missionTimes", getMissionTimes())
-            .append("missionLeft", getMissionLeft())
+            .append("missionLeft", getMissionLeft()).append("Gasidlist",getGasidlist())
             .toString();
     }
 }

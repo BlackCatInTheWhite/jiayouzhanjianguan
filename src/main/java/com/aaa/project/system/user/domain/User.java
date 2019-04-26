@@ -1,14 +1,15 @@
 package com.aaa.project.system.user.domain;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-import java.util.Date;
-import java.util.List;
-import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import com.aaa.framework.aspectj.lang.annotation.Excel;
 import com.aaa.framework.web.domain.BaseEntity;
 import com.aaa.project.system.dept.domain.Dept;
 import com.aaa.project.system.role.domain.Role;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+import org.apache.shiro.crypto.SecureRandomNumberGenerator;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * 用户对象 sys_user
@@ -84,6 +85,28 @@ public class User extends BaseEntity
 
     /** 岗位组 */
     private Long[] postIds;
+
+    /** 加油站 */
+    private Integer gasId;
+
+    /** 警察 */
+    private Integer policemanId;
+
+    public Integer getGasId() {
+        return gasId;
+    }
+
+    public void setGasId(Integer gasId) {
+        this.gasId = gasId;
+    }
+
+    public Integer getPolicemanId() {
+        return policemanId;
+    }
+
+    public void setPolicemanId(Integer policemanId) {
+        this.policemanId = policemanId;
+    }
 
     public Long getUserId()
     {
@@ -317,7 +340,7 @@ public class User extends BaseEntity
             .append("createTime", getCreateTime())
             .append("updateBy", getUpdateBy())
             .append("updateTime", getUpdateTime())
-            .append("remark", getRemark())
+            .append("remark", getRemark()).append("gasId",getGasId()).append("policemanId",getPolicemanId())
             .toString();
     }
 }

@@ -18,6 +18,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -52,10 +54,19 @@ public class ZmissionController extends BaseController
 	@RequiresPermissions("system:zmission:list")
 	@PostMapping("/list")
 	@ResponseBody
-	public TableDataInfo list(Zmission zmission)
+	public TableDataInfo list(Zmission zmission, HttpSession session)
 	{
+		Policeman policeman = policemanService.selectPolicemanById((Integer) session.getAttribute("policemanid"));
+		Gas gas=new Gas();
+		gas.setLpoliceId(policeman.getLpoliceId());
+		List<Gas> gases = gasService.selectGasList(gas);
+		List<Integer> gasidlist=new ArrayList<>();
+		for (Gas g:gases) {
+			gasidlist.add(g.getGasId());
+		}
+		zmission.setGasidlist(gasidlist);
 		startPage();
-        List<Zmission> list = zmissionService.selectZmissionList(zmission);
+        List<Zmission> list = zmissionService.selectZmissionByLpolice(zmission);
 		return getDataTable(list);
 	}
 	

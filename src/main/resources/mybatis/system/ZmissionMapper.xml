@@ -34,7 +34,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="missionLeft != null "> and mission_left = #{missionLeft}</if>
          </where>
     </select>
-    
+
+    <select id="selectZmissionByLpolice" parameterType="Zmission" resultMap="ZmissionResult">
+        <include refid="selectZmissionVo"/>
+        <where>
+            <if test="missionId != null "> and mission_id = #{missionId}</if>
+            <if test="gasidlist != null "> and gas_id in
+                <foreach collection="gasidlist" index="index" item="item" open="(" separator="," close=")">#{item}</foreach>
+            </if>
+            <if test="policeManid != null "> and police_manid = #{policeManid}</if>
+            <if test="missionBegin != null "> and mission_begin = #{missionBegin}</if>
+            <if test="missionEnd != null "> and mission_end = #{missionEnd}</if>
+            <if test="missionLastcommit != null "> and mission_lastcommit = #{missionLastcommit}</if>
+            <if test="missionTimes != null "> and mission_times = #{missionTimes}</if>
+            <if test="missionLeft != null "> and mission_left = #{missionLeft}</if>
+        </where>
+    </select>
+
     <select id="selectZmissionById" parameterType="Integer" resultMap="ZmissionResult">
         <include refid="selectZmissionVo"/>
         where mission_id = #{missionId}

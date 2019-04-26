@@ -1,12 +1,12 @@
 package com.aaa.project.system.zmission.service;
 
-import java.util.List;
+import com.aaa.common.support.Convert;
+import com.aaa.project.system.zmission.domain.Zmission;
+import com.aaa.project.system.zmission.mapper.ZmissionMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.aaa.project.system.zmission.mapper.ZmissionMapper;
-import com.aaa.project.system.zmission.domain.Zmission;
-import com.aaa.project.system.zmission.service.IZmissionService;
-import com.aaa.common.support.Convert;
+
+import java.util.List;
 
 /**
  * 巡查总任务分排 服务层实现
@@ -79,5 +79,10 @@ public class ZmissionServiceImpl implements IZmissionService
 	{
 		return zmissionMapper.deleteZmissionByIds(Convert.toStrArray(ids));
 	}
-	
+
+	@Override
+	public List<Zmission> selectZmissionByLpolice(Zmission zmission) {
+		return zmissionMapper.selectZmissionByLpolice(zmission);
+	}
+
 }

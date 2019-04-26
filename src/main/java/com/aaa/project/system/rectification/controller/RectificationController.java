@@ -20,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -56,7 +57,7 @@ public class RectificationController extends BaseController
 	@RequiresPermissions("system:rectification:list")
 	@PostMapping("/list")
 	@ResponseBody
-	public TableDataInfo list(Rectification rectification)
+	public TableDataInfo list(Rectification rectification, HttpSession session)
 	{
 		startPage();
         List<Rectification> list = rectificationService.selectRectificationList(rectification);

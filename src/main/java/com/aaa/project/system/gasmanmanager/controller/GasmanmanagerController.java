@@ -2,8 +2,6 @@ package com.aaa.project.system.gasmanmanager.controller;
 
 import com.aaa.framework.web.controller.BaseController;
 import com.aaa.framework.web.page.TableDataInfo;
-import com.aaa.project.system.area.service.IAreaService;
-import com.aaa.project.system.gas.service.IGasService;
 import com.aaa.project.system.gasman.domain.Gasman;
 import com.aaa.project.system.gasman.service.IGasmanService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -14,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -29,10 +28,6 @@ public class GasmanmanagerController extends BaseController {
 
     @Autowired
     private IGasmanService gasmanService;
-    @Autowired
-    private IAreaService areaService;
-    @Autowired
-    private IGasService gasService;
 
     @RequiresPermissions("system:gasmanmanager:view")
     @GetMapping()
@@ -46,9 +41,8 @@ public class GasmanmanagerController extends BaseController {
     @RequiresPermissions("system:gasmanmanager:list")
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(Gasman gasman) {
-        //应该是session里的属性
-        gasman.setGasId(1);
+    public TableDataInfo list(Gasman gasman, HttpSession session) {
+        gasman.setGasId((Integer) session.getAttribute("gasid"));
         startPage();
         List<Gasman> list = gasmanService.selectGasmanList(gasman);
         return getDataTable(list);

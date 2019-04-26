@@ -58,5 +58,7 @@ public interface ZmissionMapper
      * @return 结果
      */
 	public int deleteZmissionByIds(String[] missionIds);
+
+	public List<Zmission> selectZmissionByLpolice(Zmission zmission);
 	
 }
