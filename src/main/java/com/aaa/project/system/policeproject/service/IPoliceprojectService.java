@@ -12,6 +12,14 @@ import java.util.List;
 public interface IPoliceprojectService 
 {
 	/**
+	 * 查询项目信息
+	 *
+	 * @param policeproject 含有项目分类id
+	 * @return 项目信息
+	 */
+	public List<Policeproject> selectPoliceprojectByMission(Policeproject policeproject);
+
+	/**
      * 查询项目信息
      * 
      * @param projectId 项目ID

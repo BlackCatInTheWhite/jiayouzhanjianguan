@@ -116,7 +116,7 @@
 			<table width="100% " border="0 " align="center">
 				<tbody><tr>
 					<td align="center">
-						<input type="submit" value="注册 "/>
+						<input type="submit" class="btn btn-success" value="注册 " onclick="return check()"/>
 					</td>
 				</tr>
 				</tbody></table>
@@ -178,5 +178,22 @@
                 map.addOverlay(new BMap.Marker(point));
             }
         },"中国 ");
+    }
+    check = function(){
+        var strc = $("#principalCard").val();
+        var strp = $("#principalPhone").val();
+        var reg1=/^\d{17}.$/;
+        var reg2=/^1[0-9]{10}$/
+        if(reg1.test(strc)){
+            if(reg2.test(strp)){
+                return true;
+            }else{
+                alert("手机号输入有误");
+            }
+        }else{
+            alert("身份证输入有误");
+            return false;
+        }
+
     }
 </script>
