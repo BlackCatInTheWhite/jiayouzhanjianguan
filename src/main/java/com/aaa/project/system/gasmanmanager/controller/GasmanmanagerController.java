@@ -29,7 +29,7 @@ public class GasmanmanagerController extends BaseController {
     @Autowired
     private IGasmanService gasmanService;
 
-    @RequiresPermissions("system:gasmanmanager:view")
+    @RequiresPermissions("system:gasman:view")
     @GetMapping()
     public String gasmanmanager() {
         return prefix + "/gasmanmanager";
@@ -38,7 +38,7 @@ public class GasmanmanagerController extends BaseController {
     /**
      * 查询加油站员工列表
      */
-    @RequiresPermissions("system:gasmanmanager:list")
+    @RequiresPermissions("system:gasman:list")
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(Gasman gasman, HttpSession session) {

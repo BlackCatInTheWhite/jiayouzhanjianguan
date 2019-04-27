@@ -74,6 +74,7 @@ public class GasmissionController extends BaseController {
     @PostMapping("/mission")
     @ResponseBody
     public AjaxResult agreeSave(Zmission zmission) {
+        zmission.setMissionLeft(zmission.getMissionTimes());
         Gas gas = gasService.selectGasById(zmission.getGasId());
         gas.setGasstatusId(6);
         gasService.updateGas(gas);

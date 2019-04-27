@@ -30,6 +30,8 @@ import com.aaa.project.system.user.mapper.UserRoleMapper;
 @Service
 public class UserServiceImpl implements IUserService
 {
+
+
     @Autowired
     private UserMapper userMapper;
 
@@ -355,5 +357,10 @@ public class UserServiceImpl implements IUserService
             return idsStr.substring(0, idsStr.length() - 1);
         }
         return idsStr.toString();
+    }
+
+    @Override
+    public Long selectBypolicemanid(Integer policemanId) {
+        return userMapper.selectBypolicemanid(policemanId);
     }
 }

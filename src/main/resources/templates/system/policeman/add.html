@@ -4,13 +4,16 @@
 <head th:include="include :: header"></head>
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-        <form class="form-horizontal m" id="form-policeman-add">
+        <form class="form-horizontal m" id="form-policeman-add" th:object="${policeman}">
+			<input id="policemanId" name="policemanId" th:field="*{lpoliceId}"  hidden="hidden">
 			<div class="form-group">	
 				<label class="col-sm-3 control-label">所属派出所：</label>
 				<div class="col-sm-8">
-					<select id="lpoliceId" name="lpoliceId" class="form-control">
-						<option th:each="lpolice:${lpoliceList}" th:value="${lpolice.lpoliceId}" th:text="${lpolice.lpoliceName}"></option>
-					</select>
+					<input id="lpoliceId" name="lpoliceId" th:field="*{lpoliceName.lpoliceName}" class="form-control" type="text" readonly="readonly">
+					<!--<select id="lpoliceId" name="lpoliceId" class="form-control" disabled="disabled">-->
+						<!--<option th:each="lpolice:${lpoliceList}" th:value="${lpolice.lpoliceId}" th:text="${lpolice.lpoliceName}"></option>-->
+					<!--</select>-->
+
 				</div>
 			</div>
 			<div class="form-group">	

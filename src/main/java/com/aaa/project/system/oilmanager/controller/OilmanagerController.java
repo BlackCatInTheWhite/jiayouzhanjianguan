@@ -30,7 +30,7 @@ public class OilmanagerController extends BaseController
     @Autowired
     private IBuyoilformService buyoilformService;
 
-    @RequiresPermissions("system:oilmanager:view")
+    @RequiresPermissions("system:buyoilform:view")
     @GetMapping()
     public String oilmanager()
     {
@@ -40,7 +40,7 @@ public class OilmanagerController extends BaseController
     /**
      * 查询散装油登记列表
      */
-    @RequiresPermissions("system:oilmanager:list")
+    @RequiresPermissions("system:buyoilform:list")
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(Buyoilform buyoilform, HttpSession session)

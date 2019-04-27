@@ -29,7 +29,7 @@ public class GasmanagerController extends BaseController {
     @Autowired
     private IGasService gasService;
 
-    @RequiresPermissions("system:gasmanager:view")
+    @RequiresPermissions("system:gas:view")
     @GetMapping()
     public String gasmanager() {
         return prefix + "/gasmanager";
@@ -38,7 +38,7 @@ public class GasmanagerController extends BaseController {
     /**
      * 查询加油站
      */
-    @RequiresPermissions("system:gasmanager:list")
+    @RequiresPermissions("system:gas:list")
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(Gas gas, HttpSession session) {

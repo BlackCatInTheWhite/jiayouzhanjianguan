@@ -9,6 +9,9 @@
 			<div class="form-group">	
 				<label class="col-sm-3 control-label">加油站名称：</label>
 				<div class="col-sm-8">
+					<input id="fmissionId" name="fmissionId" th:value="${fmissionId}" style="display: none">
+					<input id="lpoliceId" name="lpoliceId" th:field="*{lpoliceId}" style="display: none">
+					<input id="gasType" name="gasType" th:field="*{gasType}" style="display: none">
 					<input id="gasName" name="gasName" th:field="*{gasName}" class="form-control" type="text">
 				</div>
 			</div>
@@ -16,14 +19,6 @@
 				<label class="col-sm-3 control-label">详细地址：</label>
 				<div class="col-sm-8">
 					<input id="gasAddress" name="gasAddress" th:field="*{gasAddress}" class="form-control" type="text" readonly="readonly">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">所属派出所：</label>
-				<div class="col-sm-8">
-					<select id="lpoliceId" name="lpoliceId" class="form-control">
-						<option th:each="lpolice:${lpoliceList}" th:value="${lpolice.lpoliceId}" th:text="${lpolice.lpoliceName}" th:field="*{lpoliceId}" disabled="disabled"></option>
-					</select>
 				</div>
 			</div>
 			<div class="form-group">	
@@ -36,14 +31,6 @@
 				<label class="col-sm-3 control-label">加油机数量：</label>
 				<div class="col-sm-8">
 					<input id="machineNumber" name="machineNumber" th:field="*{machineNumber}" class="form-control" type="text">
-				</div>
-			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">性质：</label>
-				<div class="col-sm-8">
-					<select id="gasType" name="gasType" class="form-control">
-						<option th:each="gastype:${gastypeList}" th:value="${gastype.gastypeId}" th:text="${gastype.gastypeName}" th:field="*{gasType}"></option>
-					</select>
 				</div>
 			</div>
 			<div class="form-group">	
@@ -76,19 +63,11 @@
 					<input id="principalPassword" name="principalPassword" th:field="*{principalPassword}" class="form-control" type="text">
 				</div>
 			</div>
-			<div class="form-group">	
-				<label class="col-sm-3 control-label">状态：</label>
-				<div class="col-sm-8">
-					<select id="gasstatusId" name="gasstatusId" class="form-control">
-						<option th:each="status:${gasstatusList}" th:value="${status.gasstatusId}" th:text="${status.gasstatusName}" th:field="*{gasstatusId}"></option>
-					</select>
-				</div>
-			</div>
 		</form>
     </div>
     <div th:include="include::footer"></div>
     <script type="text/javascript">
-		var prefix = ctx + "system/gas"
+		var prefix = ctx + "system/fmission"
 		$("#form-gas-edit").validate({
 			rules:{
 				xxxx:{
@@ -99,7 +78,7 @@
 		
 		function submitHandler() {
 	        if ($.validate.form()) {
-	            $.operate.save(prefix + "/edit", $('#form-gas-edit').serialize());
+	            $.operate.save(prefix + "/gasregister", $('#form-gas-edit').serialize());
 	        }
 	    }
 	</script>
