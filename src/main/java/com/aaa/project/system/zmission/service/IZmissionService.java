@@ -50,5 +50,7 @@ public interface IZmissionService
      * @return 结果
      */
 	public int deleteZmissionByIds(String ids);
+
+	public List<Zmission> selectZmissionByLpolice(Zmission zmission);
 	
 }

@@ -28,6 +28,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="point != null "> and point = #{point}</if>
          </where>
     </select>
+
+    <select id="selectFmissionByZmissionlist" parameterType="Fmission" resultMap="FmissionResult">
+        <include refid="selectFmissionVo"/>
+        <where>
+            <if test="fmissionId != null "> and fmission_id = #{fmissionId}</if>
+            <if test="zmissionlist != null "> and zmission_id  in
+                <foreach collection="zmissionlist" index="index" item="item" open="(" separator="," close=")">#{item}</foreach>
+            </if>
+            <if test="fmissionCommit != null "> and fmission_commit = #{fmissionCommit}</if>
+            <if test="fmissionState != null "> and fmission_state = #{fmissionState}</if>
+            <if test="point != null "> and point = #{point}</if>
+        </where>
+    </select>
     
     <select id="selectFmissionById" parameterType="Integer" resultMap="FmissionResult">
         <include refid="selectFmissionVo"/>

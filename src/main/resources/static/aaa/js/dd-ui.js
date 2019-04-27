@@ -530,11 +530,25 @@
 				var data = { "fmissionId": id };
 				location.href=url+'?fmissionId='+id;
 			},
+			// 确认审核
+			fmissionagree: function(id) {
+				var url = $.common.isEmpty(id) ? $.table._option.agreeUrl : $.table._option.agreeUrl.replace("{id}", id);
+				var data = { "id": id };
+				$.operate.submit(url, "post", "json", data);
+			},
 			// 发送整改管理
-			fmissionnotice: function(id) {
-				var url = $.table._option.detailUrl;
-				var data = { "fmissionId": id };
-				location.href=url+'?fmissionId='+id;
+            fmissionnotice: function(id) {
+                var url = $.table._option.noticeUrl.replace("{id}", id);
+                $.modal.open("确认" + $.table._option.modalName, url);
+			},
+			// 整改图片查看
+			fmissionshow: function(id) {
+				var url = $.table._option.showUrl.replace("{id}", id);
+				$.modal.open("确认" + $.table._option.modalName, url);
+			},
+			// 整改图片关闭
+			noshow: function() {
+				$.modal.closeLoading();
 			},
             // 工具栏表格树修改
             editTree: function() {

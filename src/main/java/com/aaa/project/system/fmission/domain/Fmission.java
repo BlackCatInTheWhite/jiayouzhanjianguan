@@ -9,6 +9,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 分任务记录表 jyz_fmission
@@ -36,6 +37,16 @@ public class Fmission extends BaseEntity
 	private Missionstate missionstateName;
 	/** 总任务对应加油站 */
 	private Zmission zmissiongasName;
+	/** 总任务序号集 */
+	private List<Integer> zmissionlist;
+
+	public List<Integer> getZmissionlist() {
+		return zmissionlist;
+	}
+
+	public void setZmissionlist(List<Integer> zmissionlist) {
+		this.zmissionlist = zmissionlist;
+	}
 
 	public Zmission getZmissiongasName() {
 		return zmissiongasName;
@@ -105,7 +116,7 @@ public class Fmission extends BaseEntity
             .append("zmissionId", getZmissionId())
             .append("fmissionCommit", getFmissionCommit())
             .append("fmissionState", getFmissionState())
-            .append("point", getPoint()).append("missionstateName",getMissionstateName()).append("zmissiongasName",getZmissiongasName())
+            .append("point", getPoint()).append("missionstateName",getMissionstateName()).append("zmissiongasName",getZmissiongasName()).append("zmissionlist",getZmissionlist())
             .toString();
     }
 }

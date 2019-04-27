@@ -10,12 +10,15 @@ import com.aaa.project.system.lpolice.domain.Lpolice;
 import com.aaa.project.system.lpolice.service.ILpoliceService;
 import com.aaa.project.system.policeman.domain.Policeman;
 import com.aaa.project.system.policeman.service.IPolicemanService;
+import com.aaa.project.system.user.domain.User;
+import com.aaa.project.system.user.service.IUserService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -34,7 +37,9 @@ public class PolicemanController extends BaseController
 	private IPolicemanService policemanService;
 	@Autowired
 	private ILpoliceService lpoliceService;
-	
+	@Autowired
+	private IUserService userService;
+
 	@RequiresPermissions("system:policeman:view")
 	@GetMapping()
 	public String policeman()
@@ -48,8 +53,9 @@ public class PolicemanController extends BaseController
 	@RequiresPermissions("system:policeman:list")
 	@PostMapping("/list")
 	@ResponseBody
-	public TableDataInfo list(Policeman policeman)
+	public TableDataInfo list(Policeman policeman, HttpSession session)
 	{
+		policeman.setLpoliceId(policemanService.selectPolicemanById((Integer) session.getAttribute("policemanid")).getLpoliceId());
 		startPage();
         List<Policeman> list = policemanService.selectPolicemanList(policeman);
 		return getDataTable(list);
@@ -89,7 +95,23 @@ public class PolicemanController extends BaseController
 	@ResponseBody
 	public AjaxResult addSave(Policeman policeman)
 	{
-		return toAjax(policemanService.insertPoliceman(policeman));
+		policemanService.insertPoliceman(policeman);
+		User user=new User();
+		//警察局
+		user.setDeptId(111L);
+		user.setParentId(100L);
+		user.setLoginName(policeman.getPolicemanPhone());
+		user.setUserName(policeman.getPolicemanName());
+		user.setEmail("957945717@qq.com");
+		user.setPhonenumber(policeman.getPolicemanPhone());
+		user.setSex("0");
+		user.setPassword(policeman.getPolicemanPassword());
+		user.setStatus("0");
+		user.setPostIds(new Long[]{4L});
+		user.setRoleIds(new Long[]{3L});
+		user.setPolicemanId(policeman.getPolicemanId());
+		int user1 = userService.insertUser(user);
+		return toAjax(user1);
 	}
 
 	/**

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<meta charset="utf-8">
+<title>不合格图片</title>
+<link th:href="@{/ajax/libs/cropbox/cropbox.css}" rel="stylesheet"/>
+<body class="white-bg">
+	<label>不合格描述: </label><label th:value="${fmissionproject.projectDescribe}"></label>
+    <div class="container"> 
+        <div class="imageBox"> 
+	        <div class="thumbBox"></div> 
+	        <div class="spinner" style="display: none">Loading...</div> 
+	   </div> 
+	   <div class="action">
+		   <input type="button" id="btnZoomIn" class="Btnsty_peyton" value="+" />
+		   <input type="button" id="btnZoomOut" class="Btnsty_peyton" value="-" />
+	   </div>
+    </div>
+<div th:include="include::footer"></div>
+<script th:src="@{/ajax/libs/cropbox/cropbox.js}"></script>
+<script type="text/javascript">
+var cropper;
+$(window).load(function() {
+	var avatar = '[[${fmissionproject.projectPicturesrc}]]';
+    var options = {
+        thumbBox: '.thumbBox',
+        spinner: '.spinner',
+        imgSrc: $.common.isEmpty(avatar) ? ctx + 'img/profile.jpg' : avatar
+    }
+    cropper = $('.imageBox').cropbox(options);
+	
+	$('#btnZoomIn').on('click', function(){
+		cropper.zoomIn();
+	})
+	
+	$('#btnZoomOut').on('click', function(){
+		cropper.zoomOut();
+	})
+});
+function submitHandler() {
+	$.operate.noshow();
+}
+</script>
+</body>
+</html>

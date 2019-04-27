@@ -58,5 +58,7 @@ public interface FmissionMapper
      * @return 结果
      */
 	public int deleteFmissionByIds(String[] fmissionIds);
+
+	public List<Fmission> selectFmissionByZmissionlist(Fmission fmission);
 	
 }

@@ -1,12 +1,12 @@
 package com.aaa.project.system.fmission.service;
 
-import java.util.List;
+import com.aaa.common.support.Convert;
+import com.aaa.project.system.fmission.domain.Fmission;
+import com.aaa.project.system.fmission.mapper.FmissionMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.aaa.project.system.fmission.mapper.FmissionMapper;
-import com.aaa.project.system.fmission.domain.Fmission;
-import com.aaa.project.system.fmission.service.IFmissionService;
-import com.aaa.common.support.Convert;
+
+import java.util.List;
 
 /**
  * 分任务记录 服务层实现
@@ -79,5 +79,10 @@ public class FmissionServiceImpl implements IFmissionService
 	{
 		return fmissionMapper.deleteFmissionByIds(Convert.toStrArray(ids));
 	}
-	
+
+	@Override
+	public List<Fmission> selectFmissionByZmissionlist(Fmission fmission) {
+		return fmissionMapper.selectFmissionByZmissionlist(fmission);
+	}
+
 }

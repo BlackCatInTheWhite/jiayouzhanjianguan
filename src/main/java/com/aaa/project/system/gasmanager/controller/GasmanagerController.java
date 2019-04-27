@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -40,9 +41,8 @@ public class GasmanagerController extends BaseController {
     @RequiresPermissions("system:gasmanager:list")
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(Gas gas) {
-        //应该用session的属性
-        gas.setGasId(1);
+    public TableDataInfo list(Gas gas, HttpSession session) {
+        gas.setGasId((Integer) session.getAttribute("gasid"));
         startPage();
         List<Gas> list = gasService.selectGasList(gas);
         return getDataTable(list);
