@@ -10,6 +10,8 @@ import com.aaa.project.system.fmissionproject.domain.Fmissionproject;
 import com.aaa.project.system.fmissionproject.service.IFmissionprojectService;
 import com.aaa.common.support.Convert;
 
+import javax.xml.crypto.dsig.keyinfo.RetrievalMethod;
+
 /**
  * 项目记录 服务层实现
  * 
@@ -22,6 +24,21 @@ public class FmissionprojectServiceImpl implements IFmissionprojectService
 	@Autowired
 	private FmissionprojectMapper fmissionprojectMapper;
 
+	/**
+	 * 查询重复提交项目的上次提交内容
+	 * @param fmissionproject
+	 * @return
+	 */
+	public Fmissionproject selectByFmissionIdAndProjectID(Fmissionproject fmissionproject){
+		return fmissionprojectMapper.selectByFmissionIdAndProjectID(fmissionproject);
+	}
+
+	/**
+	 * 查询项目记录信息
+	 *
+	 * @param fmissionproject 含有任务id的fmissionproject
+	 * @return 指定的项目记录集合
+	 */
 	public List<Projectkind> selectFmissionprojectListByMissionId(Fmissionproject fmissionproject){
 		return fmissionprojectMapper.selectFmissionprojectListByMissionId(fmissionproject);
 	}

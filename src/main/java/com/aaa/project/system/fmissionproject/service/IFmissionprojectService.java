@@ -11,8 +11,15 @@ import java.util.List;
  * @author aaa
  * @date 2019-04-25
  */
-public interface IFmissionprojectService 
+public interface IFmissionprojectService
 {
+	/**
+	 * 查询重复提交项目的上次提交内容
+	 * @param fmissionproject
+	 * @return
+	 */
+	public Fmissionproject selectByFmissionIdAndProjectID(Fmissionproject fmissionproject);
+
 	/**
 	 * 查询项目记录信息
 	 *
