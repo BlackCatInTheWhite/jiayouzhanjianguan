@@ -1,7 +1,6 @@
 package com.aaa.project.system.fmission.controller;
 
 import com.aaa.common.utils.poi.ExcelUtil;
-import com.aaa.framework.shiro.service.PasswordService;
 import com.aaa.framework.web.controller.BaseController;
 import com.aaa.framework.web.domain.AjaxResult;
 import com.aaa.framework.web.page.TableDataInfo;
@@ -219,7 +218,6 @@ public class FmissionController extends BaseController
 		user.setPostIds(new Long[]{4L});
 		user.setRoleIds(new Long[]{4L});
 		user.setGasId(gas.getGasId());
-		System.out.println(user);
 		int user1 = userService.insertUser(user);
 		return toAjax(user1);
 	}

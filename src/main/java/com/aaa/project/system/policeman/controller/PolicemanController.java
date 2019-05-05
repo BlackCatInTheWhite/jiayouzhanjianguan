@@ -7,7 +7,6 @@ import com.aaa.framework.shiro.service.PasswordService;
 import com.aaa.framework.web.controller.BaseController;
 import com.aaa.framework.web.domain.AjaxResult;
 import com.aaa.framework.web.page.TableDataInfo;
-import com.aaa.project.system.lpolice.domain.Lpolice;
 import com.aaa.project.system.lpolice.service.ILpoliceService;
 import com.aaa.project.system.policeman.domain.Policeman;
 import com.aaa.project.system.policeman.service.IPolicemanService;
@@ -82,11 +81,9 @@ public class PolicemanController extends BaseController
 	@GetMapping("/add")
 	public String add(ModelMap mmap,HttpSession session)
 	{
-		List<Lpolice> lpoliceList = lpoliceService.selectLpoliceList(new Lpolice());
 		Integer policemanid = (Integer)session.getAttribute("policemanid");
 		Policeman policeman = policemanService.selectPolicemanById(policemanid);
 		mmap.put("policeman",policeman);
-
 		return prefix + "/add";
 	}
 	
@@ -141,21 +138,16 @@ public class PolicemanController extends BaseController
 
 		User user = new User();
 		Integer policemanid =policeman.getPolicemanId();
-		System.out.println(userService.selectBypolicemanid(policemanid));
 		Long userid = userService.selectBypolicemanid(policemanid);
 		user.setUserId(userid);
 		user.setLoginName(policeman.getPolicemanPhone());
-		System.out.println(policeman.getPolicemanPassword());
 		String s = new PasswordService().encryptPassword(policeman.getPolicemanPhone(), policeman.getPolicemanPassword(), "111111");
 		user.setPassword(s);
-		System.out.println(s);
 		user.setSalt("111111");
 		user.setUserName(policeman.getPolicemanName());
 		user.setPhonenumber(policeman.getPolicemanPhone());
 		user.setPostIds(new Long[]{4L});
 		user.setRoleIds(new Long[]{3L});
-		System.out.println(user);
-		//userService.updateUser()
 		policemanService.updatePoliceman(policeman);
 		return toAjax(userService.updateUser(user));
 	}
