@@ -138,4 +138,6 @@ public interface IUserService
      * @return 结果
      */
     public String selectUserPostGroup(Long userId);
+
+    public Long selectBypolicemanid(Integer policemanId);
 }

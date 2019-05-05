@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -47,7 +48,8 @@ public class RegisterController extends BaseController {
     @RequiresPermissions("system:register:list")
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(Gas gas) {
+    public TableDataInfo list(Gas gas, HttpSession session) {
+        gas.setLpoliceId(policemanService.selectPolicemanById((Integer) session.getAttribute("policemanid")).getLpoliceId());
         gas.setGasstatusId(3);
         startPage();
         List<Gas> list = gasService.selectGasList(gas);

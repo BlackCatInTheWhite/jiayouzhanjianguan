@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -28,7 +29,7 @@ public class GasmanagerController extends BaseController {
     @Autowired
     private IGasService gasService;
 
-    @RequiresPermissions("system:gasmanager:view")
+    @RequiresPermissions("system:gas:view")
     @GetMapping()
     public String gasmanager() {
         return prefix + "/gasmanager";
@@ -37,12 +38,11 @@ public class GasmanagerController extends BaseController {
     /**
      * 查询加油站
      */
-    @RequiresPermissions("system:gasmanager:list")
+    @RequiresPermissions("system:gas:list")
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(Gas gas) {
-        //应该用session的属性
-        gas.setGasId(1);
+    public TableDataInfo list(Gas gas, HttpSession session) {
+        gas.setGasId((Integer) session.getAttribute("gasid"));
         startPage();
         List<Gas> list = gasService.selectGasList(gas);
         return getDataTable(list);

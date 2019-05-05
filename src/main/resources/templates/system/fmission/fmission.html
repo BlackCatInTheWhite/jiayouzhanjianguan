@@ -15,14 +15,6 @@
 							</li>
 
 							<li>
-								提交时间：<input type="text" name="fmissionCommit"/>
-							</li>
-
-							<li>
-								任务审核状态：<input type="text" name="missionstateName.missionStatename"/>
-							</li>
-
-							<li>
 								分数：<input type="text" name="point"/>
 							</li>
 
@@ -36,15 +28,6 @@
 			</div>
 			
 	        <div class="btn-group-sm hidden-xs" id="toolbar" role="group">
-				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:fmission:add">
-					<i class="fa fa-plus"></i> 添加
-				</a>
-				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="system:fmission:edit">
-					<i class="fa fa-edit"></i> 修改
-				</a>
-				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:fmission:remove">
-					<i class="fa fa-remove"></i> 删除
-				</a>
 				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:fmission:export">
 						<i class="fa fa-download"></i> 导出
 				 </a>
@@ -56,19 +39,20 @@
 	</div>
     <div th:include="include :: footer"></div>
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('system:fmission:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('system:fmission:remove')}]];
 		var detailFlag = [[${@permission.hasPermi('system:fmission:detail')}]];
+		var noticeFlag = [[${@permission.hasPermi('system:fmission:notice')}]];
+		var agreeFlag = [[${@permission.hasPermi('system:fmission:agree')}]];
+        var registerFlag = [[${@permission.hasPermi('system:fmission:gasregister')}]];
         var prefix = ctx + "system/fmission";
 
         $(function() {
             var options = {
                 url: prefix + "/list",
-                createUrl: prefix + "/add",
-                updateUrl: prefix + "/edit/{id}",
-                removeUrl: prefix + "/remove",
 				exportUrl: prefix + "/export",
 				detailUrl: prefix + "/detail",
+				noticeUrl: prefix + "/notice/{id}",
+				agreeUrl: prefix + "/agree",
+                registerUrl: prefix + "/gasregister/{id}",
                 modalName: "分任务记录",
 				search: false,
 		        showExport: true,
@@ -81,9 +65,9 @@
 					visible: true
 				},
 				{
-					field : 'zmissionId', 
-					title : '总任务序号',
-					sortable: true
+					field : 'zmissiongasName.gasName.gasName',
+					title : '总任务对应加油站',
+					sortable: false
 				},
 				{
 					field : 'fmissionCommit', 
@@ -93,7 +77,7 @@
 				{
 					field : 'missionstateName.missionStatename',
 					title : '任务审核状态',
-					sortable: true
+					sortable: false
 				},
 				{
 					field : 'point', 
@@ -105,9 +89,13 @@
 		            align: 'center',
 		            formatter: function(value, row, index) {
 		            	var actions = [];
-		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.fmissionId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.fmissionId + '\')"><i class="fa fa-remove"></i>删除</a>');
-						actions.push('<a class="btn btn-primary btn-xs ' + detailFlag + '" href="#" onclick="$.operate.fmissiondetail(\'' + row.fmissionId + '\')"><i class="fa fa-edit"></i>查看详情</a>');
+                        actions.push('<a class="btn btn-primary btn-xs ' + detailFlag + '" href="#" onclick="$.operate.fmissiondetail(\'' + row.fmissionId + '\')"><i class="fa fa-edit"></i>查看详情</a>');
+						if (row.fmissionState == 1 && row.zmissiongasName.gasName.gasstatusId != 5)
+						actions.push('<a class="btn btn-info btn-xs ' + agreeFlag + '" href="#" onclick="$.operate.fmissionagree(\'' + row.fmissionId + '\')"><i class="fa fa-edit"></i>确认审核</a>');
+						if (row.point < 60 && row.fmissionState == 1 && row.zmissiongasName.gasName.gasstatusId != 5)
+						actions.push('<a class="btn btn-warning btn-xs ' + noticeFlag + '" href="#" onclick="$.operate.fmissionnotice(\'' + row.fmissionId + '\')"><i class="fa fa-edit"></i>发送整改</a>');
+                        if (row.zmissiongasName.gasName.gasstatusId == 5)
+                        actions.push('<a class="btn btn-success btn-xs ' + registerFlag + '" href="#" onclick="$.operate.fmissionregister(\'' + row.fmissionId + '\')"><i class="fa fa-edit"></i>批准注册</a>');
 						return actions.join('');
 		            }
 		        }]

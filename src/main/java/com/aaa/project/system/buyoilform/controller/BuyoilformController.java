@@ -20,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -81,7 +82,7 @@ public class BuyoilformController extends BaseController
 	 * 新增散装油登记
 	 */
 	@GetMapping("/add")
-	public String add( ModelMap mmap)
+	public String add(ModelMap mmap)
 	{
 		List<Oilkind> oilkindList = oilkindService.selectOilkindList(new Oilkind());
 		List<Oiltype> oiltypeList = oiltypeService.selectOiltypeList(new Oiltype());
@@ -89,11 +90,7 @@ public class BuyoilformController extends BaseController
 		mmap.put("oilkindList", oilkindList);
 		mmap.put("oiltypeList", oiltypeList);
 		mmap.put("gasList", gasList);
-		//判断加油站
-		if (1==1){
-			return "system/oilmanager/add";
-		}
-		return prefix + "/add";
+		return "system/oilmanager/add";
 	}
 	
 	/**
@@ -103,11 +100,10 @@ public class BuyoilformController extends BaseController
 	@Log(title = "散装油登记", businessType = BusinessType.INSERT)
 	@PostMapping("/add")
 	@ResponseBody
-	public AjaxResult addSave(Buyoilform buyoilform)
+	public AjaxResult addSave(Buyoilform buyoilform,HttpSession session)
 	{
-		//判断加油站
 		if (buyoilform.getGasId()==null){
-			buyoilform.setGasId(1);
+			buyoilform.setGasId((Integer) session.getAttribute("gasid"));
 		}
 		return toAjax(buyoilformService.insertBuyoilform(buyoilform));
 	}

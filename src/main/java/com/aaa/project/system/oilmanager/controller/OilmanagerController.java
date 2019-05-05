@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -29,7 +30,7 @@ public class OilmanagerController extends BaseController
     @Autowired
     private IBuyoilformService buyoilformService;
 
-    @RequiresPermissions("system:oilmanager:view")
+    @RequiresPermissions("system:buyoilform:view")
     @GetMapping()
     public String oilmanager()
     {
@@ -39,13 +40,12 @@ public class OilmanagerController extends BaseController
     /**
      * 查询散装油登记列表
      */
-    @RequiresPermissions("system:oilmanager:list")
+    @RequiresPermissions("system:buyoilform:list")
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(Buyoilform buyoilform)
+    public TableDataInfo list(Buyoilform buyoilform, HttpSession session)
     {
-        //判断加油站
-        buyoilform.setGasId(1);
+        buyoilform.setGasId((Integer) session.getAttribute("gasid"));
         startPage();
         List<Buyoilform> list = buyoilformService.selectBuyoilformList(buyoilform);
         return getDataTable(list);

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -47,7 +48,8 @@ public class GasmissionController extends BaseController {
     @RequiresPermissions("system:gasmission:list")
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(Gas gas) {
+    public TableDataInfo list(Gas gas, HttpSession session) {
+        gas.setLpoliceId(policemanService.selectPolicemanById((Integer) session.getAttribute("policemanid")).getLpoliceId());
         gas.setGasstatusId(1);
         startPage();
         List<Gas> list = gasService.selectGasList(gas);
@@ -72,6 +74,7 @@ public class GasmissionController extends BaseController {
     @PostMapping("/mission")
     @ResponseBody
     public AjaxResult agreeSave(Zmission zmission) {
+        zmission.setMissionLeft(zmission.getMissionTimes());
         Gas gas = gasService.selectGasById(zmission.getGasId());
         gas.setGasstatusId(6);
         gasService.updateGas(gas);

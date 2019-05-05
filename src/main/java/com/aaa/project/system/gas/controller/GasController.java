@@ -18,6 +18,7 @@ import com.aaa.project.system.gastype.domain.Gastype;
 import com.aaa.project.system.gastype.service.IGastypeService;
 import com.aaa.project.system.lpolice.domain.Lpolice;
 import com.aaa.project.system.lpolice.service.ILpoliceService;
+import com.aaa.project.system.policeman.service.IPolicemanService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -50,19 +54,20 @@ public class GasController extends BaseController {
     private IGasmanService gasmanService;
     @Autowired
     private IBuyoilformService buyoilformService;
+    @Autowired
+    private IPolicemanService policemanService;
 
     @RequestMapping("/sign")
     public String sign(HttpServletRequest req,Lpolice lpolice){
         List<Lpolice> lpoliceList = lpoliceService.selectLpoliceList(lpolice);
         req.setAttribute("lpoliceList",lpoliceList);
-        //System.out.println(lpoliceList);
         return "system/sign/sign";
     }
     @RequestMapping("/signsave")
-    public String signSave(HttpServletRequest req,Gas gas){
+    public String signSave(HttpServletResponse resp, Gas gas) throws IOException {
         gasService.insertGas(gas);
-        System.out.println(gas);
-        return "system/login";
+        resp.sendRedirect("/login");
+        return "login";
     }
 
     @RequiresPermissions("system:gas:view")
@@ -77,7 +82,8 @@ public class GasController extends BaseController {
     @RequiresPermissions("system:gas:list")
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(Gas gas) {
+    public TableDataInfo list(Gas gas, HttpSession session) {
+        gas.setLpoliceId(policemanService.selectPolicemanById((Integer) session.getAttribute("policemanid")).getLpoliceId());
         startPage();
         List<Gas> list = gasService.selectGasList(gas);
         return getDataTable(list);

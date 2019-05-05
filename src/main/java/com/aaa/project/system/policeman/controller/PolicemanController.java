@@ -3,19 +3,22 @@ package com.aaa.project.system.policeman.controller;
 import com.aaa.common.utils.poi.ExcelUtil;
 import com.aaa.framework.aspectj.lang.annotation.Log;
 import com.aaa.framework.aspectj.lang.enums.BusinessType;
+import com.aaa.framework.shiro.service.PasswordService;
 import com.aaa.framework.web.controller.BaseController;
 import com.aaa.framework.web.domain.AjaxResult;
 import com.aaa.framework.web.page.TableDataInfo;
-import com.aaa.project.system.lpolice.domain.Lpolice;
 import com.aaa.project.system.lpolice.service.ILpoliceService;
 import com.aaa.project.system.policeman.domain.Policeman;
 import com.aaa.project.system.policeman.service.IPolicemanService;
+import com.aaa.project.system.user.domain.User;
+import com.aaa.project.system.user.service.IUserService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -34,7 +37,9 @@ public class PolicemanController extends BaseController
 	private IPolicemanService policemanService;
 	@Autowired
 	private ILpoliceService lpoliceService;
-	
+	@Autowired
+	private IUserService userService;
+
 	@RequiresPermissions("system:policeman:view")
 	@GetMapping()
 	public String policeman()
@@ -48,8 +53,9 @@ public class PolicemanController extends BaseController
 	@RequiresPermissions("system:policeman:list")
 	@PostMapping("/list")
 	@ResponseBody
-	public TableDataInfo list(Policeman policeman)
+	public TableDataInfo list(Policeman policeman, HttpSession session)
 	{
+		policeman.setLpoliceId(policemanService.selectPolicemanById((Integer) session.getAttribute("policemanid")).getLpoliceId());
 		startPage();
         List<Policeman> list = policemanService.selectPolicemanList(policeman);
 		return getDataTable(list);
@@ -73,10 +79,11 @@ public class PolicemanController extends BaseController
 	 * 新增派出所人员
 	 */
 	@GetMapping("/add")
-	public String add(ModelMap mmap)
+	public String add(ModelMap mmap,HttpSession session)
 	{
-		List<Lpolice> lpoliceList = lpoliceService.selectLpoliceList(new Lpolice());
-		mmap.put("lpoliceList", lpoliceList);
+		Integer policemanid = (Integer)session.getAttribute("policemanid");
+		Policeman policeman = policemanService.selectPolicemanById(policemanid);
+		mmap.put("policeman",policeman);
 		return prefix + "/add";
 	}
 	
@@ -88,8 +95,24 @@ public class PolicemanController extends BaseController
 	@PostMapping("/add")
 	@ResponseBody
 	public AjaxResult addSave(Policeman policeman)
-	{		
-		return toAjax(policemanService.insertPoliceman(policeman));
+	{
+		policemanService.insertPoliceman(policeman);
+		User user=new User();
+		//警察局
+		user.setDeptId(111L);
+		user.setParentId(100L);
+		user.setLoginName(policeman.getPolicemanPhone());
+		user.setUserName(policeman.getPolicemanName());
+		user.setEmail("957945717@qq.com");
+		user.setPhonenumber(policeman.getPolicemanPhone());
+		user.setSex("0");
+		user.setPassword(policeman.getPolicemanPassword());
+		user.setStatus("0");
+		user.setPostIds(new Long[]{4L});
+		user.setRoleIds(new Long[]{3L});
+		user.setPolicemanId(policeman.getPolicemanId());
+		int user1 = userService.insertUser(user);
+		return toAjax(user1);
 	}
 
 	/**
@@ -111,8 +134,22 @@ public class PolicemanController extends BaseController
 	@PostMapping("/edit")
 	@ResponseBody
 	public AjaxResult editSave(Policeman policeman)
-	{		
-		return toAjax(policemanService.updatePoliceman(policeman));
+	{
+
+		User user = new User();
+		Integer policemanid =policeman.getPolicemanId();
+		Long userid = userService.selectBypolicemanid(policemanid);
+		user.setUserId(userid);
+		user.setLoginName(policeman.getPolicemanPhone());
+		String s = new PasswordService().encryptPassword(policeman.getPolicemanPhone(), policeman.getPolicemanPassword(), "111111");
+		user.setPassword(s);
+		user.setSalt("111111");
+		user.setUserName(policeman.getPolicemanName());
+		user.setPhonenumber(policeman.getPolicemanPhone());
+		user.setPostIds(new Long[]{4L});
+		user.setRoleIds(new Long[]{3L});
+		policemanService.updatePoliceman(policeman);
+		return toAjax(userService.updateUser(user));
 	}
 	
 	/**
@@ -123,7 +160,8 @@ public class PolicemanController extends BaseController
 	@PostMapping( "/remove")
 	@ResponseBody
 	public AjaxResult remove(String ids)
-	{		
+	{
+
 		return toAjax(policemanService.deletePolicemanByIds(ids));
 	}
 	

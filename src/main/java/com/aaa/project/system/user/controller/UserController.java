@@ -1,16 +1,5 @@
 package com.aaa.project.system.user.controller;
 
-import java.util.List;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import com.aaa.common.utils.StringUtils;
 import com.aaa.common.utils.poi.ExcelUtil;
 import com.aaa.framework.aspectj.lang.annotation.Log;
@@ -22,6 +11,14 @@ import com.aaa.project.system.post.service.IPostService;
 import com.aaa.project.system.role.service.IRoleService;
 import com.aaa.project.system.user.domain.User;
 import com.aaa.project.system.user.service.IUserService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 用户信息
@@ -96,6 +93,7 @@ public class UserController extends BaseController
         {
             return error("不允许修改超级管理员用户");
         }
+        System.out.println(user);
         return toAjax(userService.insertUser(user));
     }
 
