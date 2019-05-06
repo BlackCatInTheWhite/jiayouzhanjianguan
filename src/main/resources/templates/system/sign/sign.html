@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <meta charset="utf-8">
-<link th:href="@{/css/login.css}" rel="stylesheet"/>
+<link th:href="@{/css/sign.css}" rel="stylesheet"/>
 <head th:include="include :: header"></head>
 <title>加油站信息注册</title>
 <style type="text/css">
@@ -12,13 +12,15 @@
 	*{
 		color: black;
 	}
-
+	#table{
+		background-color: rgba(0,0,0,0.6);
+	}
 </style>
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=GvF1E3C7lRHSbUBV2GX5bm2LYrVDgmRj"></script>
 <script th:src="@{/js/jquery.min.js}"></script>
 <body class="signin">
 		<form action="signsave" method="post">
-			<table style="width:800px" cellspacing="0" cellpadding="0" align="center">
+			<table id="table" style="width:800px" cellspacing="0" cellpadding="0" align="center">
 				<tbody>
 				<tr>
 					<td colspan="2">加油站基本信息</td>
@@ -102,13 +104,13 @@
 				<tr>
 					<td  >登陆账号：</td>
 					<td>
-						<input type="text" style="width:250px" name="principalUsername" id="principalUsername">
+						<input type="text" style="width:250px" name="principalUsername" id="principalUsername" required="true">
 					</td>
 				</tr>
 				<tr>
 					<td  >登录密码：</td>
 					<td>
-						<input type="text" style="width:250px" name="principalPassword" id="principalPassword">
+						<input type="text" style="width:250px" name="principalPassword" id="principalPassword" required="true">
 					</td>
 				</tr>
 				</tbody></table>
@@ -122,14 +124,14 @@
 				</tbody></table>
 			<table style="width:800px" class="table_add" cellspacing="0" cellpadding="0 " align="center ">
 				<tbody><tr>
-					<td class="tdbiaoti" colspan="2">注册步骤说明</td>
+					<td class="tdbiaoti" colspan="2" style="color:red ">注册步骤说明</td>
 				</tr>
-				<tr>
-					<td>
+				<tr >
+					<td >
 						<ul style="color:red ">
-							<li style="list-style-type:none; ">1、企业信息注册后，需等待审核.</li>
-							<li style="list-style-type:none; ">2、审核通过后，才能注册账号。</li>
-							<li style="list-style-type:none; ">3、同一个企业只允许注册一次。</li>
+							<li style="list-style-type:none; color:red " >1、企业信息注册后，需等待审核.</li>
+							<li style="list-style-type:none; color:red ">2、审核通过后，才能注册账号。</li>
+							<li style="list-style-type:none; color:red ">3、同一个企业只允许注册一次。</li>
 						</ul>
 					</td>
 				</tr>
