@@ -15,6 +15,7 @@ import com.aaa.project.system.oilkind.domain.Oilkind;
 import com.aaa.project.system.oilkind.service.IOilkindService;
 import com.aaa.project.system.oiltype.domain.Oiltype;
 import com.aaa.project.system.oiltype.service.IOiltypeService;
+import com.aaa.project.system.policeman.service.IPolicemanService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -44,6 +46,8 @@ public class BuyoilformController extends BaseController
 	private IOiltypeService oiltypeService;
 	@Autowired
 	private IGasService gasService;
+	@Autowired
+	private IPolicemanService policemanService;
 	
 	@RequiresPermissions("system:buyoilform:view")
 	@GetMapping()
@@ -149,5 +153,36 @@ public class BuyoilformController extends BaseController
 	{		
 		return toAjax(buyoilformService.deleteBuyoilformByIds(ids));
 	}
-	
+
+	/**
+	 * 主页报表统计加油站
+	 */
+	@GetMapping( "/showGas")
+	@ResponseBody
+	public List<Integer> showGas(HttpSession session) {
+		List<Integer> gasidList=new ArrayList<>();
+		if (session.getAttribute(ServerConst.POLICEMAN_ID) != null) {
+			Gas gas = new Gas();
+			gas.setLpoliceId(policemanService.selectPolicemanById((Integer) session.getAttribute(ServerConst.POLICEMAN_ID)).getLpoliceId());
+			List<Gas> gasList = gasService.selectGasList(gas);
+			for (Gas gasitem: gasList){
+				gasidList.add(gasitem.getGasId());
+			}
+		}else if (session.getAttribute(ServerConst.GAS_ID) != null){
+			gasidList.add((Integer) session.getAttribute(ServerConst.GAS_ID));
+		}
+		return gasidList;
+	}
+
+	/**
+	 * 主页报表统计散装油
+	 */
+	@GetMapping( "/showIndex/{gasId}")
+	@ResponseBody
+	public List<Buyoilform> showIndex(@PathVariable("gasId")Integer gasId) {
+		Buyoilform buyoilform = new Buyoilform();
+		buyoilform.setGasId(gasId);
+		List<Buyoilform> buyoilformList = buyoilformService.selectBuyoilformOil(buyoilform);
+		return buyoilformList;
+	}
 }

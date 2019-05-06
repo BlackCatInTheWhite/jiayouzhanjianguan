@@ -26,6 +26,14 @@ public interface BuyoilformMapper
      * @return 散装油登记集合
      */
 	public List<Buyoilform> selectBuyoilformList(Buyoilform buyoilform);
+
+	/**
+	 * 查询散装油登记列表区分油品类型
+	 *
+	 * @param buyoilform 散装油登记信息
+	 * @return 散装油登记集合
+	 */
+	public List<Buyoilform> selectBuyoilformOil(Buyoilform buyoilform);
 	
 	/**
      * 新增散装油登记

@@ -1,12 +1,12 @@
 package com.aaa.project.system.buyoilform.service;
 
-import java.util.List;
+import com.aaa.common.support.Convert;
+import com.aaa.project.system.buyoilform.domain.Buyoilform;
+import com.aaa.project.system.buyoilform.mapper.BuyoilformMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.aaa.project.system.buyoilform.mapper.BuyoilformMapper;
-import com.aaa.project.system.buyoilform.domain.Buyoilform;
-import com.aaa.project.system.buyoilform.service.IBuyoilformService;
-import com.aaa.common.support.Convert;
+
+import java.util.List;
 
 /**
  * 散装油登记 服务层实现
@@ -43,8 +43,19 @@ public class BuyoilformServiceImpl implements IBuyoilformService
 	{
 	    return buyoilformMapper.selectBuyoilformList(buyoilform);
 	}
-	
-    /**
+
+	/**
+	 * 查询散装油登记列表区分油品类型
+	 *
+	 * @param buyoilform 散装油登记信息
+	 * @return 散装油登记集合
+	 */
+	@Override
+	public List<Buyoilform> selectBuyoilformOil(Buyoilform buyoilform) {
+		return buyoilformMapper.selectBuyoilformOil(buyoilform);
+	}
+
+	/**
      * 新增散装油登记
      * 
      * @param buyoilform 散装油登记信息

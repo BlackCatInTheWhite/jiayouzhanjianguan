@@ -14,140 +14,77 @@
 
 <body class="gray-bg">
 
-       <div id="main" style="width: 400px; height: 400px;float:left"></div>
-       <div id="main2" style="width: 600px; height: 400px;float:left"></div>
+       <div id="main0" style="width: 400px; height: 400px;float:left"></div>
+       <div id="main1" style="width: 400px; height: 400px;float:left"></div>
+       <div id="main2" style="width: 400px; height: 400px;float:left"></div>
+       <div id="main3" style="width: 400px; height: 400px;float:left"></div>
+       <div id="main4" style="width: 400px; height: 400px;float:left"></div>
+       <div id="main5" style="width: 400px; height: 400px;float:left"></div>
+       <div id="main6" style="width: 400px; height: 400px;float:left"></div>
+       <div id="main7" style="width: 400px; height: 400px;float:left"></div>
+       <div id="main8" style="width: 400px; height: 400px;float:left"></div>
 
     <script th:src="@{/js/jquery.min.js}"></script>
     <script th:src="@{/js/echarts.min.js}"></script>
     <script th:src="@{/js/bootstrap.min.js}"></script>
        <script type="text/javascript">
-           var myChart = echarts.init(document.getElementById('main'));
-           var myChart2 = echarts.init(document.getElementById('main2'));
-
-           // $.get('${pageContext.request.contextPath }/order/orderaccordion').done(
-           //     function(data) {
-           //         var textArray = new Array();//名称数组
-           //         var valueArray = new Array();//数值数组
-           //         //遍历menu对象，填充数组
-           //         $.each(data, function(i, n) {
-           //             textArray.push(n.msgname)
-           //             valueArray.push(n.num)
-           //         })
-
-                   myChart.setOption({
-                       color: ['#3398DB'],
-                       tooltip : {
-                           trigger: 'axis',
-                           axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-                               type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-                           }
-                       },
-                       grid: {
-                           left: '3%',
-                           right: '4%',
-                           bottom: '3%',
-                           containLabel: true
-                       },
-                       xAxis : [
-                           {
-                               type : 'category',
-                               data : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                               axisTick: {
-                                   alignWithLabel: true
+           var showGasurl = "/system/buyoilform/showGas";
+           var showOilurl = "/system/buyoilform/showIndex/";
+           $.get(showGasurl,function (data) {
+               $.each(data,function (i,n) {
+                   var myChart = echarts.init(document.getElementById('main'+i));
+                   $.get(showOilurl+n,function (data) {
+                       var chartTitle = data[0].gasName.gasName;
+                       var textArray = new Array();//名称数组,x轴
+                       var valueArray = new Array();//数值数组,y轴
+                       //遍历menu对象，填充数组
+                       $.each(data, function (i, n) {
+                           textArray.push(n.oilkindName.oilKindname + ':' + n.oiltypeName.oilName + "(阈值:" + n.oiltypeName.oilThreshold + ")");
+                           valueArray.push(n.sumNum);
+                       });
+                       myChart.setOption({
+                           color: ['#3398DB'],
+                           title: {
+                               text: chartTitle + "散装油统计",
+                           },
+                           tooltip: {
+                               trigger: 'axis',
+                               axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                                   type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
                                }
-                           }
-                       ],
-                       yAxis : [
-                           {
-                               type : 'value'
-                           }
-                       ],
-                       series : [
-                           {
-                               name:'直接访问',
-                               type:'bar',
-                               barWidth: '60%',
-                               data:[10, 52, 200, 334, 390, 330, 220]
-                           }
-                       ]
+                           },
+                           grid: {
+                               left: '3%',
+                               right: '4%',
+                               bottom: '3%',
+                               containLabel: true
+                           },
+                           xAxis: [
+                               {
+                                   type: 'category',
+                                   data: textArray,
+                                   axisTick: {
+                                       alignWithLabel: true
+                                   }
+                               }
+                           ],
+                           yAxis: [
+                               {
+                                   type: 'value'
+                               }
+                           ],
+                           series: [
+                               {
+                                   name: '卖出数量(L)',
+                                   type: 'bar',
+                                   barWidth: '60%',
+                                   data: valueArray
+                               }
+                           ]
+                       });
                    });
-              // });
-
-           // $.get('${pageContext.request.contextPath }/order/orderaccordion2').done(
-           //     function(data) {
-           //         var goodsArray = new Array();//名称数组
-           //         var valueArray1 = new Array();//阈值数组
-           //         var valueArray2 = new Array();//库存数组
-           //         //遍历menu对象，填充数组
-           //         $.each(data, function(i, n) {
-           //             goodsArray.push(n.goodsname);
-           //             valueArray1.push(n.threshold);
-           //             valueArray2.push(n.quantity);
-           //         })
-
-                   // myChart2.setOption({
-                   //     title : {
-                   //         text: '需要购买的货物',
-                   //
-                   //     },
-                   //     tooltip : {
-                   //         trigger: 'axis'
-                   //     },
-                   //     legend: {
-                   //         data:['仓库数量','阈值']
-                   //     },
-                   //
-                   //     calculable : true,
-                   //     xAxis : [
-                   //         {
-                   //             type : 'category',
-                   //             data : goodsArray,
-                   //         }
-                   //     ],
-                   //     yAxis : [
-                   //         {
-                   //             type : 'value'
-                   //         }
-                   //     ],
-                   //     series : [
-                   //
-                   //         {
-                   //             name:'仓库数量',
-                   //             type:'bar',
-                   //             data:valueArray2,
-                   //             itemStyle: {
-                   //                 normal: {
-                   //                     color: function(params) {
-                   //                         var colorList = [
-                   //                             '#98F5FF'
-                   //                         ];
-                   //                         return colorList[params.dataIndex]
-                   //                     },
-                   //
-                   //                 }
-                   //             },
-                   //
-                   //         },
-                   //         {
-                   //             name:'阈值',
-                   //             type:'bar',
-                   //             data:valueArray1,
-                   //             itemStyle: {
-                   //                 normal: {
-                   //                     color: function(params) {
-                   //                         var colorList = [
-                   //                             '#AB82FF'
-                   //                         ];
-                   //                         return colorList[params.dataIndex]
-                   //                     },
-                   //
-                   //                 }
-                   //             },
-                   //
-                   //         }
-                   //     ]
-                   // });
-              // });
+               });
+           });
        </script>
 </body>
 </html>

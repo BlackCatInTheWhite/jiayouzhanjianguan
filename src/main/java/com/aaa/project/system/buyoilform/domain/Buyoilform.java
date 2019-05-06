@@ -86,6 +86,18 @@ public class Buyoilform extends BaseEntity {
      * 性别名称
      */
     private String sexName="男";
+    /**
+     * 总油量
+     */
+    private Integer sumNum;
+
+    public Integer getSumNum() {
+        return sumNum;
+    }
+
+    public void setSumNum(Integer sumNum) {
+        this.sumNum = sumNum;
+    }
 
     public String getSexName() {
         return sexName;
@@ -231,7 +243,7 @@ public class Buyoilform extends BaseEntity {
                 .append("oiltypeId", getOiltypeId())
                 .append("gasId", getGasId())
                 .append("adress", getAdress())
-                .append("usefor", getUsefor()).append("oilkindName", getOilkindName()).append("oiltypeName", getOiltypeName()).append("gasName", getGasName()).append("sexName", getSexName())
+                .append("usefor", getUsefor()).append("oilkindName", getOilkindName()).append("oiltypeName", getOiltypeName()).append("gasName", getGasName()).append("sexName", getSexName()).append("sumNum",getSumNum())
                 .toString();
     }
 }
