@@ -145,5 +145,25 @@ public class RectificationController extends BaseController
 	{		
 		return toAjax(rectificationService.deleteRectificationByIds(ids));
 	}
-	
+
+	/**
+	 * 整改管理
+	 */
+	@RequiresPermissions("system:rectification:fail")
+	@GetMapping("/fail")
+	public String fail(@RequestParam("gasid") Integer gasid,ModelMap mmap) {
+		mmap.put("gasid", gasid);
+		return prefix + "/torect";
+	}
+	/**
+	 * 整改填充
+	 */
+	@PostMapping("/rectification/list/{gasid}")
+	@ResponseBody
+	public TableDataInfo rectlist(@PathVariable(name = "gasid") Integer gasid, Rectification rectification) {
+		rectification.setGasId(gasid);
+		startPage();
+		List<Rectification> list = rectificationService.selectRectificationList(rectification);
+		return getDataTable(list);
+	}
 }

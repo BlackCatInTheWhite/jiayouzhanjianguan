@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+
+	<div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 select-table table-striped">
+				<input th:value="${gasid}" style="display: none" id="thisgasid">
+				<table id="bootstrap-table" data-mobile-responsive="true"></table>
+			</div>
+		</div>
+	</div>
+    <div th:include="include :: footer"></div>
+    <script th:inline="javascript">
+        $(function() {
+            var options = {
+                url:ctx + "system/rectification/rectification/list/"+$("#thisgasid").val(),
+                modalName: "整改",
+				search: false,
+		        showExport: true,
+                columns: [{
+		            checkbox: true
+		        },
+				{
+					field : 'rectificationId', 
+					title : '整改序号',
+					visible: false
+				},
+				{
+					field : 'gasName.gasName',
+					title : '加油站',
+					sortable: true
+				},
+				{
+					field : 'fmissionId', 
+					title : '任务记录序号',
+					sortable: true
+				},
+				{
+					field : 'rectificationDes', 
+					title : '整改描述',
+					sortable: true
+				},
+				{
+					field : 'policemanName.policemanName',
+					title : '整改负责人',
+					sortable: true
+				},
+				{
+					field : 'missionstateName.missionStatename',
+					title : '状态',
+					sortable: true
+				},
+				{
+					field : 'rectificationTime', 
+					title : '整改时间(天)',
+					sortable: true
+				},
+				{
+					field : 'rectificationBegin', 
+					title : '整改开始时间',
+					sortable: true
+				}]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

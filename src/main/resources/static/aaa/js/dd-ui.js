@@ -555,6 +555,12 @@
                 var url = $.table._option.registerUrl.replace("{id}", id);
                 $.modal.open("批准" + $.table._option.modalName, url);
             },
+			// 整改管理
+			gasfail: function(id) {
+				var url = $.table._option.failUrl;
+				var data = { "gasid": id };
+				location.href=url+'?gasid='+id;
+			},
             // 工具栏表格树修改
             editTree: function() {
             	var row = $('#bootstrap-tree-table').bootstrapTreeTable('getSelections')[0];
