@@ -69,6 +69,7 @@ public class PasswordService
 
     public boolean matches(User user, String newPassword)
     {
+
         return user.getPassword().equals(encryptPassword(user.getLoginName(), newPassword, user.getSalt()));
     }
 
@@ -86,5 +87,6 @@ public class PasswordService
     {
         System.out.println(new PasswordService().encryptPassword("admin", "admin123", "111111"));
         System.out.println(new PasswordService().encryptPassword("ry", "admin123", "222222"));
+        System.out.println(new PasswordService().encryptPassword("13949249522", "123456", "111111"));
     }
 }

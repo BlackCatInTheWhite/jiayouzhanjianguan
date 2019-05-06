@@ -550,6 +550,11 @@
 			noshow: function() {
 				$.modal.closeLoading();
 			},
+            // 批准加油站注册
+            fmissionregister: function(id) {
+                var url = $.table._option.registerUrl.replace("{id}", id);
+                $.modal.open("批准" + $.table._option.modalName, url);
+            },
             // 工具栏表格树修改
             editTree: function() {
             	var row = $('#bootstrap-tree-table').bootstrapTreeTable('getSelections')[0];

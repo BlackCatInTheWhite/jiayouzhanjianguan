@@ -19,52 +19,10 @@
 							</li>
 
 							<li>
-								经度：<input type="text" name="gasLongitude"/>
-							</li>
-
-							<li>
-								纬度：<input type="text" name="gasLatitude"/>
-							</li>
-
-							<li>
-								所属派出所：<input type="text" name="lpoliceName.lpoliceName"/>
-							</li>
-
-							<li>
-								员工数量：<input type="text" name="staffNumber"/>
-							</li>
-
-							<li>
-								加油机数量：<input type="text" name="machineNumber"/>
-							</li>
-
-							<li>
-								性质：<input type="text" name="gastypeName.gastypeName"/>
-							</li>
-
-							<li>
-								法人姓名：<input type="text" name="principalName"/>
-							</li>
-
-							<li>
 								法人身份证号：<input type="text" name="principalCard"/>
 							</li>
 
-							<li>
-								法人电话：<input type="text" name="principalPhone"/>
-							</li>
 
-							<li>
-								登录账号：<input type="text" name="principalUsername"/>
-							</li>
-
-							<li>
-								登录密码：<input type="text" name="principalPassword"/>
-							</li>
-
-							<li>
-								状态：<input type="text" name="gasstatusName.gasstatusName"/>
-							</li>
 							<li>
 								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
 								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
@@ -120,27 +78,12 @@
 				{
 					field : 'gasName', 
 					title : '加油站名称',
-					sortable: true
+					sortable: false
 				},
 				{
 					field : 'gasAddress', 
 					title : '详细地址',
-					sortable: true
-				},
-				{
-					field : 'gasLongitude', 
-					title : '经度',
-					sortable: true
-				},
-				{
-					field : 'gasLatitude', 
-					title : '纬度',
-					sortable: true
-				},
-				{
-					field : 'lpoliceName.lpoliceName',
-					title : '所属派出所',
-					sortable: true
+					sortable: false
 				},
 				{
 					field : 'staffNumber', 
@@ -155,37 +98,27 @@
 				{
 					field : 'gastypeName.gastypeName',
 					title : '性质',
-					sortable: true
+					sortable: false
 				},
 				{
 					field : 'principalName', 
 					title : '法人姓名',
-					sortable: true
+					sortable: false
 				},
 				{
 					field : 'principalCard', 
 					title : '法人身份证号',
-					sortable: true
+					sortable: false
 				},
 				{
 					field : 'principalPhone', 
 					title : '法人电话',
-					sortable: true
-				},
-				{
-					field : 'principalUsername', 
-					title : '登录账号',
-					sortable: true
-				},
-				{
-					field : 'principalPassword', 
-					title : '登录密码',
-					sortable: true
+					sortable: false
 				},
 				{
 					field : 'gasstatusName.gasstatusName',
 					title : '状态',
-					sortable: true
+					sortable: false
 				},
 		        {
 		            title: '操作',

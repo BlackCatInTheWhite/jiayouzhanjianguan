@@ -59,6 +59,7 @@ public class Policeman extends BaseEntity {
     /**巡查人员任务id*/
     private List<Integer> missionId;
 
+
     public List<Integer> getMissionId() {
         return missionId;
     }

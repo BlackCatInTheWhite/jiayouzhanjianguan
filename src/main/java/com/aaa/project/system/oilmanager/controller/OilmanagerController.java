@@ -2,6 +2,7 @@ package com.aaa.project.system.oilmanager.controller;
 
 import com.aaa.framework.web.controller.BaseController;
 import com.aaa.framework.web.page.TableDataInfo;
+import com.aaa.project.myconst.ServerConst;
 import com.aaa.project.system.buyoilform.domain.Buyoilform;
 import com.aaa.project.system.buyoilform.service.IBuyoilformService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -30,7 +31,7 @@ public class OilmanagerController extends BaseController
     @Autowired
     private IBuyoilformService buyoilformService;
 
-    @RequiresPermissions("system:oilmanager:view")
+    @RequiresPermissions("system:buyoilform:view")
     @GetMapping()
     public String oilmanager()
     {
@@ -40,12 +41,12 @@ public class OilmanagerController extends BaseController
     /**
      * 查询散装油登记列表
      */
-    @RequiresPermissions("system:oilmanager:list")
+    @RequiresPermissions("system:buyoilform:list")
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(Buyoilform buyoilform, HttpSession session)
     {
-        buyoilform.setGasId((Integer) session.getAttribute("gasid"));
+        buyoilform.setGasId((Integer) session.getAttribute(ServerConst.GAS_ID));
         startPage();
         List<Buyoilform> list = buyoilformService.selectBuyoilformList(buyoilform);
         return getDataTable(list);

@@ -14,6 +14,13 @@ import java.util.List;
 public interface FmissionprojectMapper 
 {
 	/**
+	 * 查询重复提交项目的上次提交内容
+	 * @param fmissionproject
+	 * @return
+	 */
+	public Fmissionproject selectByFmissionIdAndProjectID(Fmissionproject fmissionproject);
+
+	/**
 	 * 查询项目记录信息
 	 *
 	 * @param fmissionproject 含有任务id的fmissionproject

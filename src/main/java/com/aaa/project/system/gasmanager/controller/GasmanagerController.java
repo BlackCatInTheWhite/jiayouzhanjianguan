@@ -2,6 +2,7 @@ package com.aaa.project.system.gasmanager.controller;
 
 import com.aaa.framework.web.controller.BaseController;
 import com.aaa.framework.web.page.TableDataInfo;
+import com.aaa.project.myconst.ServerConst;
 import com.aaa.project.system.gas.domain.Gas;
 import com.aaa.project.system.gas.service.IGasService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -29,7 +30,7 @@ public class GasmanagerController extends BaseController {
     @Autowired
     private IGasService gasService;
 
-    @RequiresPermissions("system:gasmanager:view")
+    @RequiresPermissions("system:gas:view")
     @GetMapping()
     public String gasmanager() {
         return prefix + "/gasmanager";
@@ -38,11 +39,11 @@ public class GasmanagerController extends BaseController {
     /**
      * 查询加油站
      */
-    @RequiresPermissions("system:gasmanager:list")
+    @RequiresPermissions("system:gas:list")
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(Gas gas, HttpSession session) {
-        gas.setGasId((Integer) session.getAttribute("gasid"));
+        gas.setGasId((Integer) session.getAttribute(ServerConst.GAS_ID));
         startPage();
         List<Gas> list = gasService.selectGasList(gas);
         return getDataTable(list);

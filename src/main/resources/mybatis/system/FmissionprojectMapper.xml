@@ -1,25 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aaa.project.system.fmissionproject.mapper.FmissionprojectMapper">
-    
+
     <resultMap type="Fmissionproject" id="FmissionprojectResult">
-        <result property="projectMissionid"    column="project_missionid"    />
-        <result property="fmissionId"    column="fmission_id"    />
-        <result property="projectId"    column="project_id"    />
-        <result property="projectState"    column="project_state"    />
-        <result property="projectPicturesrc"    column="project_picturesrc"    />
-        <result property="projectDescribe"    column="project_describe"    />
-        <association property="policeprojectName" column="project_id" select="com.aaa.project.system.policeproject.mapper.PoliceprojectMapper.selectPoliceprojectById"></association>
+        <result property="projectMissionid" column="project_missionid"/>
+        <result property="fmissionId" column="fmission_id"/>
+        <result property="projectId" column="project_id"/>
+        <result property="projectState" column="project_state"/>
+        <result property="projectPicturesrc" column="project_picturesrc"/>
+        <result property="projectDescribe" column="project_describe"/>
+        <association property="policeprojectName" column="project_id"
+                     select="com.aaa.project.system.policeproject.mapper.PoliceprojectMapper.selectPoliceprojectById"></association>
+    </resultMap>
+
+    <resultMap type="Fmissionproject" id="FmissionprojectNew">
+        <result property="projectMissionid" column="project_missionid"/>
+        <result property="fmissionId" column="fmission_id"/>
+        <result property="projectId" column="project_id"/>
+        <result property="projectState" column="project_state"/>
+        <result property="projectPicturesrc" column="project_picturesrc"/>
+        <result property="projectDescribe" column="project_describe"/>
     </resultMap>
 
     <resultMap type="Projectkind" id="ProjectkindResult">
-        <result property="projectKindid"    column="project_kindid"    />
-        <result property="projectKind"    column="project_kind"    />
+        <result property="projectKindid" column="project_kindid"/>
+        <result property="projectKind" column="project_kind"/>
     </resultMap>
-	
-	<sql id="selectFmissionprojectVo">
+
+    <sql id="selectFmissionprojectVo">
         select project_missionid, fmission_id, project_id, project_state, project_picturesrc, project_describe from jyz_fmissionproject
     </sql>
 
@@ -31,64 +41,75 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         and p.project_kindid=k.project_kindid and f.fmission_id = 1) e
     </select>
 
+    <!-- 查找该项目上次提交记录 -->
+    <select id="selectByFmissionIdAndProjectID" parameterType="Fmissionproject" resultMap="FmissionprojectNew">
+        <include refid="selectFmissionprojectVo"/>
+        where fmission_id = #{fmissionId} and project_id = #{projectId}
+    </select>
+
     <select id="selectFmissionprojectList" parameterType="Fmissionproject" resultMap="FmissionprojectResult">
         <include refid="selectFmissionprojectVo"/>
-        <where>  
-            <if test="projectMissionid != null "> and project_missionid = #{projectMissionid}</if>
-             <if test="fmissionId != null "> and fmission_id = #{fmissionId}</if>
-             <if test="projectId != null "> and project_id = #{projectId}</if>
-             <if test="projectState != null "> and project_state = #{projectState}</if>
-             <if test="projectPicturesrc != null  and projectPicturesrc != '' "> and project_picturesrc = #{projectPicturesrc}</if>
-             <if test="projectDescribe != null  and projectDescribe != '' "> and project_describe = #{projectDescribe}</if>
-         </where>
+        <where>
+            <if test="projectMissionid != null ">and project_missionid = #{projectMissionid}</if>
+            <if test="fmissionId != null ">and fmission_id = #{fmissionId}</if>
+            <if test="projectId != null ">and project_id = #{projectId}</if>
+            <if test="projectState != null ">and project_state = #{projectState}</if>
+            <if test="projectPicturesrc != null  and projectPicturesrc != '' ">and project_picturesrc =
+                #{projectPicturesrc}
+            </if>
+            <if test="projectDescribe != null  and projectDescribe != '' ">and project_describe = #{projectDescribe}
+            </if>
+        </where>
     </select>
-    
+
     <select id="selectFmissionprojectById" parameterType="Integer" resultMap="FmissionprojectResult">
         <include refid="selectFmissionprojectVo"/>
         where project_missionid = #{projectMissionid}
     </select>
-        
+
     <insert id="insertFmissionproject" parameterType="Fmissionproject">
         insert into jyz_fmissionproject
-		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="projectMissionid != null  ">project_missionid,</if>
-			<if test="fmissionId != null  ">fmission_id,</if>
-			<if test="projectId != null  ">project_id,</if>
-			<if test="projectState != null  ">project_state,</if>
-			<if test="projectPicturesrc != null  and projectPicturesrc != ''  ">project_picturesrc,</if>
-			<if test="projectDescribe != null  and projectDescribe != ''  ">project_describe,</if>
-         </trim>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="projectMissionid != null  ">project_missionid,</if>
+            <if test="fmissionId != null  ">fmission_id,</if>
+            <if test="projectId != null  ">project_id,</if>
+            <if test="projectState != null  ">project_state,</if>
+            <if test="projectPicturesrc != null  and projectPicturesrc != ''  ">project_picturesrc,</if>
+            <if test="projectDescribe != null  and projectDescribe != ''  ">project_describe,</if>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="projectMissionid != null  ">#{projectMissionid},</if>
-			<if test="fmissionId != null  ">#{fmissionId},</if>
-			<if test="projectId != null  ">#{projectId},</if>
-			<if test="projectState != null  ">#{projectState},</if>
-			<if test="projectPicturesrc != null  and projectPicturesrc != ''  ">#{projectPicturesrc},</if>
-			<if test="projectDescribe != null  and projectDescribe != ''  ">#{projectDescribe},</if>
-         </trim>
+            <if test="projectMissionid != null  ">#{projectMissionid},</if>
+            <if test="fmissionId != null  ">#{fmissionId},</if>
+            <if test="projectId != null  ">#{projectId},</if>
+            <if test="projectState != null  ">#{projectState},</if>
+            <if test="projectPicturesrc != null  and projectPicturesrc != ''  ">#{projectPicturesrc},</if>
+            <if test="projectDescribe != null  and projectDescribe != ''  ">#{projectDescribe},</if>
+        </trim>
     </insert>
-	 
+
     <update id="updateFmissionproject" parameterType="Fmissionproject">
         update jyz_fmissionproject
         <trim prefix="SET" suffixOverrides=",">
             <if test="fmissionId != null  ">fmission_id = #{fmissionId},</if>
             <if test="projectId != null  ">project_id = #{projectId},</if>
             <if test="projectState != null  ">project_state = #{projectState},</if>
-            <if test="projectPicturesrc != null  and projectPicturesrc != ''  ">project_picturesrc = #{projectPicturesrc},</if>
+            <if test="projectPicturesrc != null  and projectPicturesrc != ''  ">project_picturesrc =
+                #{projectPicturesrc},
+            </if>
             <if test="projectDescribe != null  and projectDescribe != ''  ">project_describe = #{projectDescribe},</if>
         </trim>
         where project_missionid = #{projectMissionid}
     </update>
 
-	<delete id="deleteFmissionprojectById" parameterType="Integer">
+    <delete id="deleteFmissionprojectById" parameterType="Integer">
         delete from jyz_fmissionproject where project_missionid = #{projectMissionid}
     </delete>
-	
+
     <delete id="deleteFmissionprojectByIds" parameterType="String">
-        delete from jyz_fmissionproject where project_missionid in 
+        delete from jyz_fmissionproject where project_missionid in
         <foreach item="projectMissionid" collection="array" open="(" separator="," close=")">
             #{projectMissionid}
         </foreach>
     </delete>
-    
+
 </mapper>

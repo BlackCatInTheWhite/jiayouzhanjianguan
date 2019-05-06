@@ -37,18 +37,18 @@ public class UploadInfo {
     private IPoliceprojectService policeprojectService;
     @Autowired
     private IFmissionprojectService fmissionprojectService;
+
     /**
-     *
-     * @param file 后台上传的图片文件
+     * @param file    后台上传的图片文件
      * @param request 请求，储存表单信息
      * @return
      */
     @RequestMapping("/uploadForm")
     @ResponseBody
-    public String uploadImg(@RequestParam(value="form",required=true) MultipartFile file, HttpServletRequest request){
+    public String uploadImg(@RequestParam(value = "form", required = true) MultipartFile file, HttpServletRequest request) {
         Fmissionproject fmissionproject = new Fmissionproject();
         String pictureSrc = "";
-        if(!file.isEmpty()) {
+        if (!file.isEmpty()) {
             int indexOf = file.getOriginalFilename().lastIndexOf(".");
             System.out.println(file.getOriginalFilename());
             String substring = file.getOriginalFilename().substring(indexOf);
@@ -62,11 +62,9 @@ public class UploadInfo {
         }
         String radio = request.getParameter("radio");
         Integer state = 1;//1代表未通过 2代表通过
-        if(radio=="radio1") {
-            state = 1;
-        } else  if(radio=="radio2"){
+        if (radio.equals("radio2")) {
             state = 2;
-        };
+        }
         String topic = request.getParameter("topic");
         System.out.println(request.getParameter("fmissionId"));
         Integer fmissionId = Integer.parseInt(request.getParameter("fmissionId"));
@@ -74,22 +72,32 @@ public class UploadInfo {
 
         fmissionproject.setFmissionId(fmissionId);
         fmissionproject.setProjectId(projectId);
-        fmissionproject.setProjectState(state);
-        fmissionproject.setProjectPicturesrc(pictureSrc);
-        fmissionproject.setProjectDescribe(topic);
-        fmissionprojectService.insertFmissionproject(fmissionproject);
+        Fmissionproject fmissionprojectnew = fmissionprojectService.selectByFmissionIdAndProjectID(fmissionproject);
+        if (fmissionprojectnew == null) {
+            System.out.println("insert");
+            System.out.println(fmissionprojectnew);
+            fmissionproject.setProjectState(state);
+            fmissionproject.setProjectPicturesrc(pictureSrc);
+            fmissionproject.setProjectDescribe(topic);
+            fmissionprojectService.insertFmissionproject(fmissionproject);
+        } else {
+            System.out.println("update");
+            fmissionprojectnew.setProjectState(state);
+            fmissionprojectnew.setProjectPicturesrc(pictureSrc);
+            fmissionprojectnew.setProjectDescribe(topic);
+            fmissionprojectService.updateFmissionproject(fmissionprojectnew);
+        }
         return "上传完毕";
     }
+
     @RequestMapping("/uploadFormNoImg")
     @ResponseBody
-    public String uploadImg(HttpServletRequest request){
+    public String uploadImg(HttpServletRequest request) {
         String radio = request.getParameter("radio");
         Integer state = 1;//1代表未通过 2代表通过
-        if(radio=="radio1") {
-            state = 1;
-        } else  if(radio=="radio2"){
+        if (radio.equals("radio2")) {
             state = 2;
-        };
+        }
         String topic = request.getParameter("topic");
         System.out.println(request.getParameter("fmissionId"));
         Integer fmissionId = Integer.parseInt(request.getParameter("fmissionId"));
@@ -97,21 +105,32 @@ public class UploadInfo {
         Fmissionproject fmissionproject = new Fmissionproject();
         fmissionproject.setFmissionId(fmissionId);
         fmissionproject.setProjectId(projectId);
-        fmissionproject.setProjectState(state);
-        fmissionproject.setProjectDescribe(topic);
-        fmissionprojectService.insertFmissionproject(fmissionproject);
+        Fmissionproject fmissionprojectnew = fmissionprojectService.selectByFmissionIdAndProjectID(fmissionproject);
+        if (fmissionprojectnew == null) {
+            System.out.println(fmissionproject);
+            fmissionproject.setProjectState(state);
+            fmissionproject.setProjectDescribe(topic);
+            fmissionprojectService.insertFmissionproject(fmissionproject);
+        } else {
+            System.out.println(fmissionprojectnew);
+            fmissionprojectnew.setProjectState(state);
+            fmissionprojectnew.setProjectDescribe(topic);
+            fmissionprojectService.updateFmissionproject(fmissionprojectnew);
+        }
         return "提交成功";
     }
+
     @RequestMapping("/getProjectKind")
     @ResponseBody
-    public List<Projectkind> getProjectkind( HttpServletRequest request){
-
+    public List<Projectkind> getProjectkind(HttpServletRequest request) {
         List<Projectkind> list = projectkindService.selectProjectkindList(new Projectkind());
+        System.out.println(list.size());
         return list;
     }
+
     @RequestMapping("/getProjectList")
     @ResponseBody
-    public List<Policeproject> getProjectList(@RequestParam(value = "projectKindId")String kindId, HttpServletRequest request){
+    public List<Policeproject> getProjectList(@RequestParam(value = "projectKindId") String kindId, HttpServletRequest request) {
 
         Integer projectkindId = Integer.parseInt(kindId);
         Policeproject policeproject = new Policeproject();

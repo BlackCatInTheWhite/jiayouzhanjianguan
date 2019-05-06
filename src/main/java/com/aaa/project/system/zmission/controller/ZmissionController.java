@@ -6,6 +6,7 @@ import com.aaa.framework.aspectj.lang.enums.BusinessType;
 import com.aaa.framework.web.controller.BaseController;
 import com.aaa.framework.web.domain.AjaxResult;
 import com.aaa.framework.web.page.TableDataInfo;
+import com.aaa.project.myconst.ServerConst;
 import com.aaa.project.system.gas.domain.Gas;
 import com.aaa.project.system.gas.service.IGasService;
 import com.aaa.project.system.policeman.domain.Policeman;
@@ -56,7 +57,7 @@ public class ZmissionController extends BaseController
 	@ResponseBody
 	public TableDataInfo list(Zmission zmission, HttpSession session)
 	{
-		Policeman policeman = policemanService.selectPolicemanById((Integer) session.getAttribute("policemanid"));
+		Policeman policeman = policemanService.selectPolicemanById((Integer) session.getAttribute(ServerConst.POLICEMAN_ID));
 		Gas gas=new Gas();
 		gas.setLpoliceId(policeman.getLpoliceId());
 		List<Gas> gases = gasService.selectGasList(gas);

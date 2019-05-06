@@ -4,19 +4,22 @@ import com.aaa.common.utils.poi.ExcelUtil;
 import com.aaa.framework.web.controller.BaseController;
 import com.aaa.framework.web.domain.AjaxResult;
 import com.aaa.framework.web.page.TableDataInfo;
+import com.aaa.project.myconst.ServerConst;
 import com.aaa.project.system.fmission.domain.Fmission;
 import com.aaa.project.system.fmission.service.IFmissionService;
 import com.aaa.project.system.fmissionproject.domain.Fmissionproject;
 import com.aaa.project.system.fmissionproject.service.IFmissionprojectService;
 import com.aaa.project.system.gas.domain.Gas;
 import com.aaa.project.system.gas.service.IGasService;
-import com.aaa.project.system.missionstate.service.IMissionstateService;
 import com.aaa.project.system.policeman.domain.Policeman;
 import com.aaa.project.system.policeman.service.IPolicemanService;
 import com.aaa.project.system.rectification.domain.Rectification;
 import com.aaa.project.system.rectification.service.IRectificationService;
+import com.aaa.project.system.user.domain.User;
+import com.aaa.project.system.user.service.IUserService;
 import com.aaa.project.system.zmission.domain.Zmission;
 import com.aaa.project.system.zmission.service.IZmissionService;
+import org.apache.ibatis.annotations.Param;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -42,8 +45,6 @@ public class FmissionController extends BaseController
 	@Autowired
 	private IFmissionService fmissionService;
 	@Autowired
-	private IMissionstateService missionstateService;
-	@Autowired
 	private IFmissionprojectService fmissionprojectService;
 	@Autowired
 	private IZmissionService zmissionService;
@@ -53,6 +54,8 @@ public class FmissionController extends BaseController
 	private IPolicemanService policemanService;
 	@Autowired
 	 private IRectificationService rectificationService;
+	@Autowired
+	private IUserService userService;
 
 	@RequiresPermissions("system:fmission:view")
 	@GetMapping()
@@ -69,7 +72,7 @@ public class FmissionController extends BaseController
 	@ResponseBody
 	public TableDataInfo list(Fmission fmission, HttpSession session)
 	{
-		Policeman policeman = policemanService.selectPolicemanById((Integer) session.getAttribute("policemanid"));
+		Policeman policeman = policemanService.selectPolicemanById((Integer) session.getAttribute(ServerConst.POLICEMAN_ID));
 		Gas gas=new Gas();
 		gas.setLpoliceId(policeman.getLpoliceId());
 		List<Gas> gases = gasService.selectGasList(gas);
@@ -78,7 +81,6 @@ public class FmissionController extends BaseController
 		for (Gas g:gases) {
 			gasidlist.add(g.getGasId());
 		}
-		System.out.println(gasidlist);
 		//所有总任务id
 		Zmission zmission=new Zmission();
 		zmission.setGasidlist(gasidlist);
@@ -87,8 +89,7 @@ public class FmissionController extends BaseController
 		for (Zmission z:zmissions) {
 			zmissionlist.add(z.getMissionId());
 		}
-		System.out.println(zmissionlist);
-		if (zmissionlist.isEmpty())zmissionlist.add(0);
+		if (zmissionlist.isEmpty())zmissionlist.add(ServerConst.ZERO);
 		fmission.setZmissionlist(zmissionlist);
 		startPage();
         List<Fmission> list = fmissionService.selectFmissionByZmissionlist(fmission);
@@ -138,9 +139,9 @@ public class FmissionController extends BaseController
 	@ResponseBody
 	public AjaxResult fmissionagree(String id) {
 		Fmission fmission = fmissionService.selectFmissionById(Integer.parseInt(id));
-		fmission.setFmissionState(2);
+		fmission.setFmissionState(ServerConst.FMISSIONSTATE_SUCCESS);
 		Gas gas = gasService.selectGasById(zmissionService.selectZmissionById(fmission.getZmissionId()).getGasId());
-		gas.setGasstatusId(1);
+		gas.setGasstatusId(ServerConst.GASSTATE_NORMAL);
 		gasService.updateGas(gas);
 		return toAjax(fmissionService.updateFmission(fmission));
 	}
@@ -166,11 +167,53 @@ public class FmissionController extends BaseController
 	@ResponseBody
 	public AjaxResult noticeSave(Rectification rectification) {
 		Fmission fmission = fmissionService.selectFmissionById(rectification.getFmissionId());
-		fmission.setFmissionState(2);
+		fmission.setFmissionState(ServerConst.FMISSIONSTATE_SUCCESS);
 		fmissionService.updateFmission(fmission);
 		Gas gas = gasService.selectGasById(rectification.getGasId());
-		gas.setGasstatusId(2);
+		gas.setGasstatusId(ServerConst.GASSTATE_RECTIFICATION);
 		gasService.updateGas(gas);
 		return toAjax(rectificationService.insertRectification(rectification));
+	}
+	/**
+	 * 批准加油站注册
+	 */
+	@GetMapping("/gasregister/{id}")
+	public String gasregister(@PathVariable("id") Integer fmissionId, ModelMap mmap) {
+		Fmission fmission = fmissionService.selectFmissionById(fmissionId);
+		Zmission zmission = zmissionService.selectZmissionById(fmission.getZmissionId());
+		Gas gas = gasService.selectGasById(zmission.getGasId());
+		mmap.put("gas",gas);
+		mmap.put("fmissionId",fmissionId);
+		return prefix + "/toregister";
+	}
+	/**
+	 * 确认批准加油站注册
+	 */
+	@RequiresPermissions("system:fmission:gasregister")
+	@PostMapping("/gasregister")
+	@ResponseBody
+	public AjaxResult gasregisterSave(Gas gas, @Param("fmissionId") Integer fmissionId) {
+		Fmission fmission = fmissionService.selectFmissionById(fmissionId);
+		fmission.setFmissionState(ServerConst.FMISSIONSTATE_SUCCESS);
+		fmissionService.updateFmission(fmission);
+		Gas oldgas = gasService.selectGasById(gas.getGasId());
+		gas.setGasLongitude(oldgas.getGasLongitude());
+		gas.setGasLatitude(oldgas.getGasLatitude());
+		gas.setGasstatusId(ServerConst.GASSTATE_NORMAL);
+		gasService.updateGas(gas);
+		User user=new User();
+		user.setDeptId(ServerConst.USER_DEPTID_GAS);
+		user.setParentId(ServerConst.USER_DEPTID_PARENT);
+		user.setLoginName(gas.getPrincipalUsername());
+		user.setUserName(gas.getPrincipalName());
+		user.setEmail(ServerConst.USER_EMAIL);
+		user.setPhonenumber(gas.getPrincipalPhone());
+		user.setSex(ServerConst.USER_SEX_MAN);
+		user.setPassword(gas.getPrincipalPassword());
+		user.setStatus(ServerConst.USER_STATUS);
+		user.setPostIds(ServerConst.USER_POSTIDS);
+		user.setRoleIds(ServerConst.USER_ROLEIDS_GAS);
+		user.setGasId(gas.getGasId());
+		return toAjax(userService.insertUser(user));
 	}
 }
