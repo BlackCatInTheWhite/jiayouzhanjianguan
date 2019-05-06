@@ -3,6 +3,7 @@ package com.aaa.project.system.gasmission.controller;
 import com.aaa.framework.web.controller.BaseController;
 import com.aaa.framework.web.domain.AjaxResult;
 import com.aaa.framework.web.page.TableDataInfo;
+import com.aaa.project.myconst.ServerConst;
 import com.aaa.project.system.gas.domain.Gas;
 import com.aaa.project.system.gas.service.IGasService;
 import com.aaa.project.system.policeman.domain.Policeman;
@@ -49,8 +50,8 @@ public class GasmissionController extends BaseController {
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(Gas gas, HttpSession session) {
-        gas.setLpoliceId(policemanService.selectPolicemanById((Integer) session.getAttribute("policemanid")).getLpoliceId());
-        gas.setGasstatusId(1);
+        gas.setLpoliceId(policemanService.selectPolicemanById((Integer) session.getAttribute(ServerConst.POLICEMAN_ID)).getLpoliceId());
+        gas.setGasstatusId(ServerConst.GASSTATE_NORMAL);
         startPage();
         List<Gas> list = gasService.selectGasList(gas);
         return getDataTable(list);
@@ -76,7 +77,7 @@ public class GasmissionController extends BaseController {
     public AjaxResult agreeSave(Zmission zmission) {
         zmission.setMissionLeft(zmission.getMissionTimes());
         Gas gas = gasService.selectGasById(zmission.getGasId());
-        gas.setGasstatusId(6);
+        gas.setGasstatusId(ServerConst.GASSTATE_MISSION);
         gasService.updateGas(gas);
         return toAjax(zmissionService.insertZmission(zmission));
     }

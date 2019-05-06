@@ -6,6 +6,7 @@ import com.aaa.framework.aspectj.lang.enums.BusinessType;
 import com.aaa.framework.web.controller.BaseController;
 import com.aaa.framework.web.domain.AjaxResult;
 import com.aaa.framework.web.page.TableDataInfo;
+import com.aaa.project.myconst.ServerConst;
 import com.aaa.project.system.buyoilform.domain.Buyoilform;
 import com.aaa.project.system.buyoilform.service.IBuyoilformService;
 import com.aaa.project.system.gas.domain.Gas;
@@ -103,7 +104,7 @@ public class BuyoilformController extends BaseController
 	public AjaxResult addSave(Buyoilform buyoilform,HttpSession session)
 	{
 		if (buyoilform.getGasId()==null){
-			buyoilform.setGasId((Integer) session.getAttribute("gasid"));
+			buyoilform.setGasId((Integer) session.getAttribute(ServerConst.GAS_ID));
 		}
 		return toAjax(buyoilformService.insertBuyoilform(buyoilform));
 	}

@@ -4,13 +4,13 @@ import com.aaa.common.utils.poi.ExcelUtil;
 import com.aaa.framework.web.controller.BaseController;
 import com.aaa.framework.web.domain.AjaxResult;
 import com.aaa.framework.web.page.TableDataInfo;
+import com.aaa.project.myconst.ServerConst;
 import com.aaa.project.system.fmission.domain.Fmission;
 import com.aaa.project.system.fmission.service.IFmissionService;
 import com.aaa.project.system.fmissionproject.domain.Fmissionproject;
 import com.aaa.project.system.fmissionproject.service.IFmissionprojectService;
 import com.aaa.project.system.gas.domain.Gas;
 import com.aaa.project.system.gas.service.IGasService;
-import com.aaa.project.system.missionstate.service.IMissionstateService;
 import com.aaa.project.system.policeman.domain.Policeman;
 import com.aaa.project.system.policeman.service.IPolicemanService;
 import com.aaa.project.system.rectification.domain.Rectification;
@@ -45,8 +45,6 @@ public class FmissionController extends BaseController
 	@Autowired
 	private IFmissionService fmissionService;
 	@Autowired
-	private IMissionstateService missionstateService;
-	@Autowired
 	private IFmissionprojectService fmissionprojectService;
 	@Autowired
 	private IZmissionService zmissionService;
@@ -74,7 +72,7 @@ public class FmissionController extends BaseController
 	@ResponseBody
 	public TableDataInfo list(Fmission fmission, HttpSession session)
 	{
-		Policeman policeman = policemanService.selectPolicemanById((Integer) session.getAttribute("policemanid"));
+		Policeman policeman = policemanService.selectPolicemanById((Integer) session.getAttribute(ServerConst.POLICEMAN_ID));
 		Gas gas=new Gas();
 		gas.setLpoliceId(policeman.getLpoliceId());
 		List<Gas> gases = gasService.selectGasList(gas);
@@ -91,7 +89,7 @@ public class FmissionController extends BaseController
 		for (Zmission z:zmissions) {
 			zmissionlist.add(z.getMissionId());
 		}
-		if (zmissionlist.isEmpty())zmissionlist.add(0);
+		if (zmissionlist.isEmpty())zmissionlist.add(ServerConst.ZERO);
 		fmission.setZmissionlist(zmissionlist);
 		startPage();
         List<Fmission> list = fmissionService.selectFmissionByZmissionlist(fmission);
@@ -141,9 +139,9 @@ public class FmissionController extends BaseController
 	@ResponseBody
 	public AjaxResult fmissionagree(String id) {
 		Fmission fmission = fmissionService.selectFmissionById(Integer.parseInt(id));
-		fmission.setFmissionState(2);
+		fmission.setFmissionState(ServerConst.FMISSIONSTATE_SUCCESS);
 		Gas gas = gasService.selectGasById(zmissionService.selectZmissionById(fmission.getZmissionId()).getGasId());
-		gas.setGasstatusId(1);
+		gas.setGasstatusId(ServerConst.GASSTATE_NORMAL);
 		gasService.updateGas(gas);
 		return toAjax(fmissionService.updateFmission(fmission));
 	}
@@ -169,10 +167,10 @@ public class FmissionController extends BaseController
 	@ResponseBody
 	public AjaxResult noticeSave(Rectification rectification) {
 		Fmission fmission = fmissionService.selectFmissionById(rectification.getFmissionId());
-		fmission.setFmissionState(2);
+		fmission.setFmissionState(ServerConst.FMISSIONSTATE_SUCCESS);
 		fmissionService.updateFmission(fmission);
 		Gas gas = gasService.selectGasById(rectification.getGasId());
-		gas.setGasstatusId(2);
+		gas.setGasstatusId(ServerConst.GASSTATE_RECTIFICATION);
 		gasService.updateGas(gas);
 		return toAjax(rectificationService.insertRectification(rectification));
 	}
@@ -196,29 +194,26 @@ public class FmissionController extends BaseController
 	@ResponseBody
 	public AjaxResult gasregisterSave(Gas gas, @Param("fmissionId") Integer fmissionId) {
 		Fmission fmission = fmissionService.selectFmissionById(fmissionId);
-		fmission.setFmissionState(2);
+		fmission.setFmissionState(ServerConst.FMISSIONSTATE_SUCCESS);
 		fmissionService.updateFmission(fmission);
 		Gas oldgas = gasService.selectGasById(gas.getGasId());
 		gas.setGasLongitude(oldgas.getGasLongitude());
 		gas.setGasLatitude(oldgas.getGasLatitude());
-		gas.setGasstatusId(1);
+		gas.setGasstatusId(ServerConst.GASSTATE_NORMAL);
 		gasService.updateGas(gas);
-
 		User user=new User();
-		//加油站
-		user.setDeptId(110L);
-		user.setParentId(100L);
+		user.setDeptId(ServerConst.USER_DEPTID_GAS);
+		user.setParentId(ServerConst.USER_DEPTID_PARENT);
 		user.setLoginName(gas.getPrincipalUsername());
 		user.setUserName(gas.getPrincipalName());
-		user.setEmail("957945717@qq.com");
+		user.setEmail(ServerConst.USER_EMAIL);
 		user.setPhonenumber(gas.getPrincipalPhone());
-		user.setSex("0");
+		user.setSex(ServerConst.USER_SEX_MAN);
 		user.setPassword(gas.getPrincipalPassword());
-		user.setStatus("0");
-		user.setPostIds(new Long[]{4L});
-		user.setRoleIds(new Long[]{4L});
+		user.setStatus(ServerConst.USER_STATUS);
+		user.setPostIds(ServerConst.USER_POSTIDS);
+		user.setRoleIds(ServerConst.USER_ROLEIDS_GAS);
 		user.setGasId(gas.getGasId());
-		int user1 = userService.insertUser(user);
-		return toAjax(user1);
+		return toAjax(userService.insertUser(user));
 	}
 }

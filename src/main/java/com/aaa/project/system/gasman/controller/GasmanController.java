@@ -6,6 +6,7 @@ import com.aaa.framework.aspectj.lang.enums.BusinessType;
 import com.aaa.framework.web.controller.BaseController;
 import com.aaa.framework.web.domain.AjaxResult;
 import com.aaa.framework.web.page.TableDataInfo;
+import com.aaa.project.myconst.ServerConst;
 import com.aaa.project.system.area.domain.Area;
 import com.aaa.project.system.area.service.IAreaService;
 import com.aaa.project.system.gas.domain.Gas;
@@ -98,7 +99,7 @@ public class GasmanController extends BaseController {
     @ResponseBody
     public AjaxResult addSave(Gasman gasman, HttpSession session) {
         if (gasman.getGasId()==null){
-            gasman.setGasId((Integer)session.getAttribute("gasid"));
+            gasman.setGasId((Integer)session.getAttribute(ServerConst.GAS_ID));
         }
         Gas gas = gasService.selectGasById(gasman.getGasId());
         gas.setStaffNumber(gas.getStaffNumber()+1);

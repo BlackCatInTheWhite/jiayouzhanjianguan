@@ -3,6 +3,7 @@ package com.aaa.project.system.register.controller;
 import com.aaa.framework.web.controller.BaseController;
 import com.aaa.framework.web.domain.AjaxResult;
 import com.aaa.framework.web.page.TableDataInfo;
+import com.aaa.project.myconst.ServerConst;
 import com.aaa.project.system.gas.domain.Gas;
 import com.aaa.project.system.gas.service.IGasService;
 import com.aaa.project.system.policeman.domain.Policeman;
@@ -49,8 +50,8 @@ public class RegisterController extends BaseController {
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(Gas gas, HttpSession session) {
-        gas.setLpoliceId(policemanService.selectPolicemanById((Integer) session.getAttribute("policemanid")).getLpoliceId());
-        gas.setGasstatusId(3);
+        gas.setLpoliceId(policemanService.selectPolicemanById((Integer) session.getAttribute(ServerConst.POLICEMAN_ID)).getLpoliceId());
+        gas.setGasstatusId(ServerConst.GASSTATE_NOREGISTER);
         startPage();
         List<Gas> list = gasService.selectGasList(gas);
         return getDataTable(list);
@@ -74,10 +75,10 @@ public class RegisterController extends BaseController {
     @ResponseBody
     public AjaxResult agreeSave(Zmission zmission) {
         Gas gas = gasService.selectGasById(zmission.getGasId());
-        gas.setGasstatusId(5);
+        gas.setGasstatusId(ServerConst.GASSTATE_AGREE);
         gasService.updateGas(gas);
-        zmission.setMissionTimes(1);
-        zmission.setMissionLeft(1);
+        zmission.setMissionTimes(ServerConst.ZMISSION_INTERVAL);
+        zmission.setMissionLeft(ServerConst.ZMISSION_INTERVAL);
         return toAjax(zmissionService.insertZmission(zmission));
     }
 

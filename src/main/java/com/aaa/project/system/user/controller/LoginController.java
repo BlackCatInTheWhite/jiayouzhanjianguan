@@ -52,7 +52,6 @@ public class LoginController extends BaseController
         try
         {
             subject.login(token);
-
             User user=new User();
             user.setLoginName(username);
             user.setPassword(password);
