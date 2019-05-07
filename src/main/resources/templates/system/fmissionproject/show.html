@@ -4,7 +4,7 @@
 <title>不合格图片</title>
 <link th:href="@{/ajax/libs/cropbox/cropbox.css}" rel="stylesheet"/>
 <body class="white-bg">
-	<label>不合格描述: </label><label th:value="${fmissionproject.projectDescribe}"></label>
+	<label>不合格描述: </label><span th:text="${fmissionproject.projectDescribe}"></span>
     <div class="container"> 
         <div class="imageBox"> 
 	        <div class="thumbBox"></div> 

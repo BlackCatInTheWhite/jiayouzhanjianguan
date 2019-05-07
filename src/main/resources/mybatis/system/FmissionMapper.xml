@@ -39,6 +39,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="fmissionCommit != null "> and fmission_commit = #{fmissionCommit}</if>
             <if test="fmissionState != null "> and fmission_state = #{fmissionState}</if>
             <if test="point != null "> and point = #{point}</if>
+            and point > 0
         </where>
     </select>
     
