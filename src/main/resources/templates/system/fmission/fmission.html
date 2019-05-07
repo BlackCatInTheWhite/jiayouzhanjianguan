@@ -90,7 +90,7 @@
 		            formatter: function(value, row, index) {
 		            	var actions = [];
                         actions.push('<a class="btn btn-primary btn-xs ' + detailFlag + '" href="#" onclick="$.operate.fmissiondetail(\'' + row.fmissionId + '\')"><i class="fa fa-edit"></i>查看详情</a>');
-						if (row.fmissionState == 1 && row.zmissiongasName.gasName.gasstatusId != 5)
+						if (row.fmissionState == 1 && row.zmissiongasName.gasName.gasstatusId != 5 && row.point >= 60)
 						actions.push('<a class="btn btn-info btn-xs ' + agreeFlag + '" href="#" onclick="$.operate.fmissionagree(\'' + row.fmissionId + '\')"><i class="fa fa-edit"></i>确认审核</a>');
 						if (row.point < 60 && row.fmissionState == 1 && row.zmissiongasName.gasName.gasstatusId != 5)
 						actions.push('<a class="btn btn-warning btn-xs ' + noticeFlag + '" href="#" onclick="$.operate.fmissionnotice(\'' + row.fmissionId + '\')"><i class="fa fa-edit"></i>发送整改</a>');

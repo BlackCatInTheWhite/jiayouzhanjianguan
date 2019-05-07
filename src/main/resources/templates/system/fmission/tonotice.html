@@ -9,7 +9,7 @@
 			<div class="form-group">	
 				<label class="col-sm-3 control-label">整改负责人：</label>
 				<div class="col-sm-8">
-					<select id="rectificationPolicemanid" name="rectificationPolicemanid" class="form-control" disabled="disabled">
+					<select id="rectificationPolicemanid" name="rectificationPolicemanid" class="form-control">
 						<option th:each="policeman:${policemanList}" th:value="${policeman.policemanId}" th:text="${policeman.policemanName}"></option>
 					</select>
 				</div>
