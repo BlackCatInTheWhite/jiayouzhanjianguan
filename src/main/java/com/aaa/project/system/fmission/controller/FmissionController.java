@@ -140,8 +140,13 @@ public class FmissionController extends BaseController
 	public AjaxResult fmissionagree(String id) {
 		Fmission fmission = fmissionService.selectFmissionById(Integer.parseInt(id));
 		fmission.setFmissionState(ServerConst.FMISSIONSTATE_SUCCESS);
-		Gas gas = gasService.selectGasById(zmissionService.selectZmissionById(fmission.getZmissionId()).getGasId());
-		gas.setGasstatusId(ServerConst.GASSTATE_NORMAL);
+		Zmission zmission =zmissionService.selectZmissionById(fmission.getZmissionId());
+		Gas gas = gasService.selectGasById(zmission.getGasId());
+		if(zmission.getMissionLeft()==0){
+			gas.setGasstatusId(ServerConst.GASSTATE_NORMAL);
+		}else{
+			gas.setGasstatusId(ServerConst.GASSTATE_INMISIION);
+		}
 		gasService.updateGas(gas);
 		return toAjax(fmissionService.updateFmission(fmission));
 	}
