@@ -57,20 +57,27 @@ public class GasController extends BaseController {
     private IBuyoilformService buyoilformService;
     @Autowired
     private IPolicemanService policemanService;
-
+    /**
+     * 查询所有派出所信息
+     */
     @RequestMapping("/sign")
     public String sign(HttpServletRequest req,Lpolice lpolice){
         List<Lpolice> lpoliceList = lpoliceService.selectLpoliceList(lpolice);
         req.setAttribute("lpoliceList",lpoliceList);
         return "system/sign/sign";
     }
+    /**
+     * 新增注册用户
+     */
     @RequestMapping("/signsave")
     public String signSave(HttpServletResponse resp, Gas gas) throws IOException {
         gasService.insertGas(gas);
         resp.sendRedirect("/login");
         return "login";
     }
-
+    /**
+     * 返回到登录页
+     */
     @RequiresPermissions("system:gas:view")
     @GetMapping()
     public String gas() {
