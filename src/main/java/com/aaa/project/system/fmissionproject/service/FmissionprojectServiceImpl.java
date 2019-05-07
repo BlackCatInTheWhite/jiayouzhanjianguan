@@ -101,5 +101,15 @@ public class FmissionprojectServiceImpl implements IFmissionprojectService
 	{
 		return fmissionprojectMapper.deleteFmissionprojectByIds(Convert.toStrArray(ids));
 	}
+
+	@Override
+	public int selectCount(int aa) {
+		return fmissionprojectMapper.selectCount(aa);
+	}
+
+	@Override
+	public Fmissionproject selectProject(Fmissionproject fmissionproject) {
+		return fmissionprojectMapper.selectProject(fmissionproject);
+	}
 	
 }

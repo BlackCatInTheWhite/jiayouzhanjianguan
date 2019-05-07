@@ -1,7 +1,9 @@
 package com.aaa.project.system.policeproject.mapper;
 
 import com.aaa.project.system.policeproject.domain.Policeproject;
-import java.util.List;	
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 项目 数据层
@@ -66,5 +68,20 @@ public interface PoliceprojectMapper
      * @return 结果
      */
 	public int deletePoliceprojectByIds(String[] projectIds);
+
+	/**
+	 * 审查规范
+	 *
+	 * */
+	public List<Policeproject> selectProjectGuiFan();
+
+	/***
+	 * 返回某个任务不及格的项目
+	 * */
+	public List<Integer> getPoint(@Param("fmissionid") Integer fmissionid);
+	/**
+	 * 项目条数
+	 */
+	public Integer selectProjectCount();
 	
 }

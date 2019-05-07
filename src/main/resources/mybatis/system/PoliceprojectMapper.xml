@@ -11,8 +11,40 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="point"    column="point"    />
         <association property="projectkindName" column="project_kindid" select="com.aaa.project.system.projectkind.mapper.ProjectkindMapper.selectProjectkindById"></association>
     </resultMap>
-	
-	<sql id="selectPoliceprojectVo">
+
+    <resultMap type="Policeproject" id="PoliceprojectGuiFanResult">
+        <result property="projectId"    column="project_id"    />
+        <result property="projectKindid"    column="project_kindid"    />
+        <result property="projectName"    column="project_name"    />
+        <result property="point"    column="point"    />
+        <result property="projectKind" column="project_kind"></result>
+        <result property="point" column="point"></result>
+    </resultMap>
+
+    <sql id="selectGuiFan">
+     SELECT jyz_projectkind.project_kind,jyz_policeproject.project_name,jyz_policeproject.point
+     FROM jyz_policeproject,jyz_projectkind
+</sql>
+    <sql id="selectPoint">
+    SELECT jyz_policeproject.point from jyz_fmission,jyz_policeproject,jyz_fmissionproject
+</sql>
+    <select id="selectProjectGuiFan" resultMap="PoliceprojectGuiFanResult">
+        <include refid="selectGuiFan"/>
+        WHERE jyz_projectkind.project_kindid=jyz_policeproject.project_kindid
+    </select>
+
+    <select id="selectProjectCount" resultType="integer">
+    SELECT COUNT(*) FROM jyz_policeproject
+</select>
+
+    <select id="getPoint" resultType="integer">
+        <include refid="selectPoint"/> WHERE jyz_fmissionproject.fmission_id=jyz_fmission.fmission_id
+        AND jyz_fmissionproject.project_id=jyz_policeproject.project_id AND project_state=1 AND jyz_fmission.fmission_id=#{fmissionid}
+    </select>
+
+
+
+    <sql id="selectPoliceprojectVo">
         select project_id, project_kindid, project_name, point from jyz_policeproject
     </sql>
 
@@ -77,5 +109,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{projectId}
         </foreach>
     </delete>
+
+
     
 </mapper>

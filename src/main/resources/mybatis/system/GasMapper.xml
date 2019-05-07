@@ -28,6 +28,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<sql id="selectGasVo">
         select gas_id, gas_name, gas_address, gas_longitude, gas_latitude, lpolice_id, staff_number, machine_number, gas_type, principal_name, principal_card, principal_phone, principal_username, principal_password, gasstatus_id from jyz_gas
     </sql>
+
+    <sql id="selectGasArray">
+    select jyz_gas.gas_id, gas_name, gas_address, gas_longitude, gas_latitude, lpolice_id, staff_number, machine_number, gas_type, principal_name, principal_card, principal_phone, principal_username, principal_password, gasstatus_id FROM jyz_gas,jyz_zmission
+</sql>
 	
     <select id="selectGasList" parameterType="Gas" resultMap="GasResult">
         <include refid="selectGasVo"/>
@@ -124,5 +128,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{gasId}
         </foreach>
     </delete>
-    
+
+    <select id="selectArrayGas" parameterType="Integer" resultMap="GasResult">
+        <include refid="selectGasArray"/>
+        WHERE jyz_zmission.gas_id=jyz_gas.gas_id AND jyz_zmission.police_manid=#{policemanid}
+
+    </select>
+
 </mapper>

@@ -67,5 +67,14 @@ public interface IFmissionprojectService
      * @return 结果
      */
 	public int deleteFmissionprojectByIds(String ids);
-	
+
+	/**
+	 * 查询工作人员添加的项目条数
+	 */
+	public int selectCount(int aa);
+
+	/**
+	 * 查询项目信息
+	 */
+	public Fmissionproject selectProject(Fmissionproject fmissionproject);
 }

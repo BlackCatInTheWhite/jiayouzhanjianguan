@@ -67,6 +67,17 @@
         where project_missionid = #{projectMissionid}
     </select>
 
+
+    <select id="selectCount" parameterType="integer" resultType="integer">
+    SELECT COUNT(*) FROM jyz_fmissionproject
+    where fmission_id = #{projectMissionid}
+</select>
+
+    <select id="selectProject" parameterType="Fmissionproject" resultMap="FmissionprojectNew">
+        <include refid="selectFmissionprojectVo"/>
+        WHERE fmission_id = #{fmissionId} and project_id = #{projectId}
+    </select>
+
     <insert id="insertFmissionproject" parameterType="Fmissionproject">
         insert into jyz_fmissionproject
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -111,5 +122,8 @@
             #{projectMissionid}
         </foreach>
     </delete>
+
+
+
 
 </mapper>

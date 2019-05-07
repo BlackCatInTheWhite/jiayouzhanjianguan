@@ -50,5 +50,10 @@ public interface IGasService
      * @return 结果
      */
 	public int deleteGasByIds(String ids);
+
+	/**
+	 * 查询巡查人员的加油站列表
+	 */
+	public List<Gas> selectArrayGas(int a);
 	
 }

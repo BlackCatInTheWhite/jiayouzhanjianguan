@@ -19,6 +19,11 @@ public class Policeproject extends BaseEntity
 	private Integer projectId;
 	/** 项目分类序号 */
 	private Integer projectKindid;
+
+	private String projectKind;
+
+
+
 	/** 项目名称 */
 	private String projectName;
 	/** 分数 */
@@ -69,6 +74,13 @@ public class Policeproject extends BaseEntity
 	public Integer getPoint() 
 	{
 		return point;
+	}
+	public String getProjectKind() {
+		return projectKind;
+	}
+
+	public void setProjectKind(String projectKind) {
+		this.projectKind = projectKind;
 	}
 
     public String toString() {

@@ -58,5 +58,17 @@ public interface IPoliceprojectService
      * @return 结果
      */
 	public int deletePoliceprojectByIds(String ids);
-	
+
+	/**
+	 * 查询所有规范
+	 */
+	public List<Policeproject> selectProjectGuiFan();
+	/**
+	 * 查询不及格的项目
+	 */
+	public List<Integer> getPoint(Integer fmissionid);
+	/**
+	 * 项目条数
+	 */
+	public Integer selectProjectCount();
 }

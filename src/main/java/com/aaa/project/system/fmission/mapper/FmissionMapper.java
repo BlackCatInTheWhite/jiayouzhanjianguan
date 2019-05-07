@@ -1,7 +1,11 @@
 package com.aaa.project.system.fmission.mapper;
 
 import com.aaa.project.system.fmission.domain.Fmission;
-import java.util.List;	
+import com.aaa.project.system.weixin.domain.HistoryList;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * 分任务记录 数据层
@@ -11,6 +15,11 @@ import java.util.List;
  */
 public interface FmissionMapper 
 {
+	/**
+	 * 根据总任务id查询上次任务是否完成
+	 */
+	public Integer selectLast(@Param("zmissionid") int aa);
+
 	/**
      * 查询分任务记录信息
      * 
@@ -58,6 +67,32 @@ public interface FmissionMapper
      * @return 结果
      */
 	public int deleteFmissionByIds(String[] fmissionIds);
+
+	/**
+	 * 查询上一次任务提交时间
+	 */
+	public Date selectLastTime(@Param("zmissionid") int missionid);
+	/**
+	 * 查询开始时间
+	 */
+	public Date selectStartTime(@Param("zmissionid") int missionid);
+	/**
+	 * 查询结束时间
+	 */
+	public Date selectEndTime(@Param("zmissionid") int missionid);
+	/**
+	 * 查询频次
+	 */
+	public Integer selectPinCi(@Param("zmissionid") int missionid);
+	/**
+	 * 查询历史
+	 */
+	public List<HistoryList> selectHistory(@Param("policemanid") int aa);
+	/**
+	 * 根据条件查询
+	 */
+	public List<HistoryList> HistoryList(@Param("policemanid") int aa,@Param("gasname") String name,@Param("committime") String time);
+
 
 	public List<Fmission> selectFmissionByZmissionlist(Fmission fmission);
 	

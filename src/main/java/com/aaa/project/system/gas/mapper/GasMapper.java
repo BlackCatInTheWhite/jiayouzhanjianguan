@@ -1,7 +1,9 @@
 package com.aaa.project.system.gas.mapper;
 
 import com.aaa.project.system.gas.domain.Gas;
-import java.util.List;	
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 加油站 数据层
@@ -20,13 +22,13 @@ public interface GasMapper
 	public Gas selectGasById(Integer gasId);
 
 	
-	/**
-     * 查询加油站列表对用户
-     * 
-     * @param gas 加油站信息
-     * @return 加油站集合
-     */
-	public List<Gas> selectGasListForUser(Gas gas);
+//	/**
+//     * 查询加油站列表对用户
+//     *
+//     * @param gas 加油站信息
+//     * @return 加油站集合
+//     */
+//	public List<Gas> selectGasListForUser(Gas gas);
 
 	/**
 	 * 查询加油站列表
@@ -67,5 +69,9 @@ public interface GasMapper
      * @return 结果
      */
 	public int deleteGasByIds(String[] gasIds);
-	
+
+	/**
+	 * 巡查人员的历史加油站
+	 */
+	public List<Gas> selectArrayGas(@Param("policemanid") int aa);
 }

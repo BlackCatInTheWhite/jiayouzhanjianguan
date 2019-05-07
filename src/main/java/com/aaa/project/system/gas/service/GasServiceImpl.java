@@ -79,5 +79,13 @@ public class GasServiceImpl implements IGasService
 	{
 		return gasMapper.deleteGasByIds(Convert.toStrArray(ids));
 	}
-	
+
+	/**
+	 *
+	 * 加油站人员的列表
+	 */
+	@Override
+	public List<Gas> selectArrayGas(int a) {
+		return gasMapper.selectArrayGas(a);
+	}
 }

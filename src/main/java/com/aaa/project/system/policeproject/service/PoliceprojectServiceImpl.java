@@ -89,5 +89,20 @@ public class PoliceprojectServiceImpl implements IPoliceprojectService
 	{
 		return policeprojectMapper.deletePoliceprojectByIds(Convert.toStrArray(ids));
 	}
-	
+
+	@Override
+	public List<Policeproject> selectProjectGuiFan() {
+		return policeprojectMapper.selectProjectGuiFan();
+	}
+	@Override
+	public List<Integer> getPoint(Integer fmissionid){
+		return policeprojectMapper.getPoint(fmissionid);
+	}
+
+	@Override
+	public Integer selectProjectCount() {
+		return policeprojectMapper.selectProjectCount();
+	}
+
+
 }

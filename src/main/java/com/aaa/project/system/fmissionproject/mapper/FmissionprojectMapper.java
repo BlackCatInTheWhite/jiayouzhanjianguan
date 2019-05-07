@@ -2,6 +2,7 @@ package com.aaa.project.system.fmissionproject.mapper;
 
 import com.aaa.project.system.fmissionproject.domain.Fmissionproject;
 import com.aaa.project.system.projectkind.domain.Projectkind;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -75,5 +76,15 @@ public interface FmissionprojectMapper
      * @return 结果
      */
 	public int deleteFmissionprojectByIds(String[] projectMissionids);
-	
+
+	/**
+	 * 查询巡查人员添加过得项目
+	 */
+	public int selectCount(@Param("projectMissionid") int aa);
+	/**
+	 * 查询项目信息
+	 */
+	public Fmissionproject selectProject(Fmissionproject fmissionproject);
+
+
 }

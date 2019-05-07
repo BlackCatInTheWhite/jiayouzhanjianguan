@@ -13,11 +13,46 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <association property="missionstateName" column="fmission_state" select="com.aaa.project.system.missionstate.mapper.MissionstateMapper.selectMissionstateById"></association>
         <association property="zmissiongasName" column="zmission_id" select="com.aaa.project.system.zmission.mapper.ZmissionMapper.selectZmissionById"></association>
     </resultMap>
-	
+    <resultMap type="com.aaa.project.system.weixin.domain.HistoryList" id="history">
+        <result property="fmissionid"    column="fmission_id"    />
+        <result property="gasName"    column="gas_name"    />
+        <result property="commitTime"    column="fmission_commit"    />
+        <result property="point"    column="point"    />
+        <result property="gasAddress" column="gas_address"/>
+    </resultMap>
+
+    <sql id="selectHistory">
+        SELECT jyz_fmission.fmission_id,jyz_fmission.fmission_commit,jyz_fmission.point,jyz_gas.gas_name,gas_address
+        FROM jyz_policeman,jyz_fmission,jyz_zmission,jyz_gas
+    </sql>
+    <select id="HistoryList" resultMap="history">
+        <include refid="selectHistory"/>  WHERE jyz_policeman.policeman_id=jyz_zmission.police_manid
+        AND jyz_gas.gas_id=jyz_zmission.gas_id AND jyz_zmission.mission_id=jyz_fmission.zmission_id
+        AND jyz_policeman.policeman_id=#{policemanid} AND jyz_gas.gas_name=#{gasname}
+        and jyz_fmission.fmission_commit like "${committime}%"
+    </select>
+    <select id="selectHistory" resultMap="history">
+        <include refid="selectHistory"/>
+        WHERE jyz_policeman.policeman_id=jyz_zmission.police_manid
+        AND jyz_fmission.zmission_id=jyz_zmission.mission_id
+        AND jyz_gas.gas_id=jyz_zmission.gas_id AND jyz_policeman.policeman_id=#{policemanid}
+        AND jyz_fmission.point is not NUll
+    </select>
 	<sql id="selectFmissionVo">
         select fmission_id, zmission_id, fmission_commit, fmission_state, point from jyz_fmission
     </sql>
-	
+    <select id="selectPinCi" parameterType="Integer" resultType="integer">
+    SELECT mission_times FROM jyz_zmission WHERE mission_id=#{zmissionid}
+</select>
+    <select id="selectLastTime" resultType="date">
+    SELECT mission_lastcommit FROM jyz_zmission WHERE mission_id=#{zmissionid}
+</select>
+    <select id="selectStartTime" resultType="date">
+    SELECT mission_begin FROM jyz_zmission WHERE mission_id=#{zmissionid}
+</select>
+    <select id="selectEndTime" resultType="date">
+    SELECT mission_end FROM jyz_zmission WHERE mission_id=#{zmissionid}
+</select>
     <select id="selectFmissionList" parameterType="Fmission" resultMap="FmissionResult">
         <include refid="selectFmissionVo"/>
         <where>  
@@ -48,7 +83,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where fmission_id = #{fmissionId}
     </select>
         
-    <insert id="insertFmission" parameterType="Fmission">
+    <insert id="insertFmission" parameterType="Fmission" keyProperty="fmissionId" useGeneratedKeys="true">
         insert into jyz_fmission
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="fmissionId != null  ">fmission_id,</if>
@@ -87,5 +122,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{fmissionId}
         </foreach>
     </delete>
+
+    <select id="selectLast" resultType="Integer">
+    SELECT jyz_fmission.fmission_id FROM jyz_fmission
+    where jyz_fmission.zmission_id=#{zmissionid}
+    and jyz_fmission.fmission_state is NULL
+    AND jyz_fmission.point is NULL
+</select>
+
     
 </mapper>
