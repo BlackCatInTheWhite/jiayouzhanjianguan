@@ -546,7 +546,7 @@
 				var url = $.table._option.showUrl.replace("{id}", id);
 				$.modal.open("确认" + $.table._option.modalName, url);
 			},
-			// 整改图片关闭
+			// 整改关闭
 			noshow: function() {
 				$.modal.closeLoading();
 			},
@@ -560,6 +560,11 @@
 				var url = $.table._option.failUrl;
 				var data = { "gasid": id };
 				location.href=url+'?gasid='+id;
+			},
+			// 整改描述查看
+			showfail: function(id) {
+				var url = $.table._option.showfailUrl.replace("{id}", id);
+				$.modal.open("确认" + $.table._option.modalName, url);
 			},
             // 工具栏表格树修改
             editTree: function() {

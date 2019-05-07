@@ -41,6 +41,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="point != null "> and point = #{point}</if>
             and point > 0
         </where>
+        order by fmission_id desc
     </select>
     
     <select id="selectFmissionById" parameterType="Integer" resultMap="FmissionResult">

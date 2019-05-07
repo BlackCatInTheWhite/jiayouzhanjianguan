@@ -50,6 +50,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </where>
     </select>
 
+    <select id="selectGasMission" parameterType="Gas" resultMap="GasResult">
+        <include refid="selectGasVo"/>
+        <where>
+            <if test="gasId != null "> and gas_id = #{gasId}</if>
+            <if test="gasName != null  and gasName != '' "> and gas_name = #{gasName}</if>
+            <if test="gasAddress != null  and gasAddress != '' "> and gas_address = #{gasAddress}</if>
+            <if test="gasLongitude != null "> and gas_longitude = #{gasLongitude}</if>
+            <if test="gasLatitude != null "> and gas_latitude = #{gasLatitude}</if>
+            <if test="lpoliceId != null "> and lpolice_id = #{lpoliceId}</if>
+            <if test="staffNumber != null "> and staff_number = #{staffNumber}</if>
+            <if test="machineNumber != null "> and machine_number = #{machineNumber}</if>
+            <if test="gasType != null "> and gas_type = #{gasType}</if>
+            <if test="principalName != null  and principalName != '' "> and principal_name = #{principalName}</if>
+            <if test="principalCard != null  and principalCard != '' "> and principal_card = #{principalCard}</if>
+            <if test="principalPhone != null  and principalPhone != '' "> and principal_phone = #{principalPhone}</if>
+            <if test="principalUsername != null  and principalUsername != '' "> and principal_username = #{principalUsername}</if>
+            <if test="principalPassword != null  and principalPassword != '' "> and principal_password = #{principalPassword}</if>
+            <if test="gasList != null "> and gasstatus_id in
+                <foreach collection="gasList" index="index" item="item" open="(" separator="," close=")">#{item}</foreach>
+             </if>
+        </where>
+    </select>
+
     <select id="selectGasById" parameterType="Integer" resultMap="GasResult">
         <include refid="selectGasVo"/>
         where gas_id = #{gasId}

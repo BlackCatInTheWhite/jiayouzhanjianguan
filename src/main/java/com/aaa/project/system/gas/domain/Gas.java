@@ -1,11 +1,11 @@
 package com.aaa.project.system.gas.domain;
 
+import com.aaa.framework.web.domain.BaseEntity;
 import com.aaa.project.system.gasstatus.domain.Gasstatus;
 import com.aaa.project.system.gastype.domain.Gastype;
 import com.aaa.project.system.lpolice.domain.Lpolice;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-import com.aaa.framework.web.domain.BaseEntity;
+
+import java.util.List;
 
 /**
  * 加油站表 jyz_gas
@@ -90,6 +90,18 @@ public class Gas extends BaseEntity {
     private Gasstatus gasstatusName;
     /**加油站对应的任务*/
     private Integer missionId;
+    /**
+     * 加油站集合
+     */
+    private List<Integer> gasList;
+
+    public List<Integer> getGasList() {
+        return gasList;
+    }
+
+    public void setGasList(List<Integer> gasList) {
+        this.gasList = gasList;
+    }
 
     public Integer getMissionId() {
         return missionId;
@@ -265,6 +277,7 @@ public class Gas extends BaseEntity {
                 ", gastypeName=" + gastypeName +
                 ", gasstatusName=" + gasstatusName +
                 ", missionId=" + missionId +
+                ", gasList=" + gasList +
                 '}';
     }
 }

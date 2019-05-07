@@ -77,7 +77,7 @@ public class RegisterController extends BaseController {
     @ResponseBody
     public AjaxResult agreeSave(Zmission zmission) {
         Gas gas = gasService.selectGasById(zmission.getGasId());
-        gas.setGasstatusId(ServerConst.GASSTATE_AGREE);
+        gas.setGasstatusId(ServerConst.GASSTATE_MISSION);
         gasService.updateGas(gas);
         Date missionBegin = zmission.getMissionBegin();
         Calendar no = Calendar.getInstance();

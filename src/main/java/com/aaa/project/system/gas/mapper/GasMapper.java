@@ -21,12 +21,12 @@ public interface GasMapper
 
 	
 	/**
-     * 查询加油站列表对用户
+     * 查询加油站列表对巡检
      * 
      * @param gas 加油站信息
      * @return 加油站集合
      */
-	public List<Gas> selectGasListForUser(Gas gas);
+	public List<Gas> selectGasMission(Gas gas);
 
 	/**
 	 * 查询加油站列表

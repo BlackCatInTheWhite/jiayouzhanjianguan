@@ -166,4 +166,14 @@ public class RectificationController extends BaseController
 		List<Rectification> list = rectificationService.selectRectificationList(rectification);
 		return getDataTable(list);
 	}
+
+	/**
+	 * 查看整改描述
+	 */
+	@GetMapping("/showfail/{id}")
+	public String showfail(@PathVariable("id") Integer rectificationId, ModelMap mmap) {
+		Rectification rectification = rectificationService.selectRectificationById(rectificationId);
+		mmap.put("rectification",rectification);
+		return prefix + "/showfail";
+	}
 }

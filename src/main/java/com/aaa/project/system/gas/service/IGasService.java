@@ -26,6 +26,14 @@ public interface IGasService
      * @return 加油站集合
      */
 	public List<Gas> selectGasList(Gas gas);
+
+	/**
+	 * 查询加油站列表对巡检
+	 *
+	 * @param gas 加油站信息
+	 * @return 加油站集合
+	 */
+	public List<Gas> selectGasMission(Gas gas);
 	
 	/**
      * 新增加油站
