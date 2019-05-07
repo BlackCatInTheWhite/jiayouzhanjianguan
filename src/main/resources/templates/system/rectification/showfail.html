@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<meta charset="utf-8">
+<title>不合格描述</title>
+<link th:href="@{/ajax/libs/cropbox/cropbox.css}" rel="stylesheet"/>
+<body class="white-bg">
+	<label>不合格描述: </label>
+    <div class="container"> 
+        <textarea th:text="${rectification.rectificationDes}" readonly="readonly" style="width: 500px;height: 200px" >
+
+		</textarea>
+    </div>
+<div th:include="include::footer"></div>
+<script th:src="@{/ajax/libs/cropbox/cropbox.js}"></script>
+<script type="text/javascript">
+function submitHandler() {
+	$.operate.noshow();
+}
+</script>
+</body>
+</html>

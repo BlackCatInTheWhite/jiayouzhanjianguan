@@ -23,12 +23,12 @@ public interface GasMapper
 
 	
 //	/**
-//     * 查询加油站列表对用户
+//     * 查询加油站列表对巡检
 //     *
 //     * @param gas 加油站信息
 //     * @return 加油站集合
 //     */
-//	public List<Gas> selectGasListForUser(Gas gas);
+//	public List<Gas> selectGasMission(Gas gas);
 
 	/**
 	 * 查询加油站列表
@@ -70,8 +70,8 @@ public interface GasMapper
      */
 	public int deleteGasByIds(String[] gasIds);
 
-	/**
-	 * 巡查人员的历史加油站
-	 */
-	public List<Gas> selectArrayGas(@Param("policemanid") int aa);
+    /**
+     * 巡查人员的历史加油站
+     */
+    public List<Gas> selectArrayGas(@Param("policemanid") int aa);
 }

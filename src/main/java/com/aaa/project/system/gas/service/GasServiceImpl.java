@@ -43,8 +43,13 @@ public class GasServiceImpl implements IGasService
 	{
 	    return gasMapper.selectGasList(gas);
 	}
-	
-    /**
+
+	@Override
+	public List<Gas> selectGasMission(Gas gas) {
+		return gasMapper.selectGasMission(gas);
+	}
+
+	/**
      * 新增加油站
      * 
      * @param gas 加油站信息

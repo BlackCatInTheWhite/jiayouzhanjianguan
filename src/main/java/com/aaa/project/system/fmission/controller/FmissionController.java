@@ -172,6 +172,8 @@ public class FmissionController extends BaseController
 	@ResponseBody
 	public AjaxResult noticeSave(Rectification rectification) {
 		Fmission fmission = fmissionService.selectFmissionById(rectification.getFmissionId());
+		Zmission zmission = zmissionService.selectZmissionById(fmission.getZmissionId());
+		zmission.setMissionLeft(ServerConst.ZERO);
 		fmission.setFmissionState(ServerConst.FMISSIONSTATE_SUCCESS);
 		fmissionService.updateFmission(fmission);
 		Gas gas = gasService.selectGasById(rectification.getGasId());

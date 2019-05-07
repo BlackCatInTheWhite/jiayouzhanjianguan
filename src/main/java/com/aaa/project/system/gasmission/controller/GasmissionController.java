@@ -17,6 +17,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -51,9 +52,12 @@ public class GasmissionController extends BaseController {
     @ResponseBody
     public TableDataInfo list(Gas gas, HttpSession session) {
         gas.setLpoliceId(policemanService.selectPolicemanById((Integer) session.getAttribute(ServerConst.POLICEMAN_ID)).getLpoliceId());
-        gas.setGasstatusId(ServerConst.GASSTATE_NORMAL);
+        List<Integer> gasList=new ArrayList<>();
+        gasList.add(ServerConst.GASSTATE_NORMAL);
+        gasList.add(ServerConst.GASSTATE_RECTIFICATION);
+        gas.setGasList(gasList);
         startPage();
-        List<Gas> list = gasService.selectGasList(gas);
+        List<Gas> list = gasService.selectGasMission(gas);
         return getDataTable(list);
     }
 

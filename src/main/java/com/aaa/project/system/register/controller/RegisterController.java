@@ -17,6 +17,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -75,8 +77,13 @@ public class RegisterController extends BaseController {
     @ResponseBody
     public AjaxResult agreeSave(Zmission zmission) {
         Gas gas = gasService.selectGasById(zmission.getGasId());
-        gas.setGasstatusId(ServerConst.GASSTATE_AGREE);
+        gas.setGasstatusId(ServerConst.GASSTATE_MISSION);
         gasService.updateGas(gas);
+        Date missionBegin = zmission.getMissionBegin();
+        Calendar no = Calendar.getInstance();
+        no.setTime(missionBegin);
+        no.set(Calendar.DATE, no.get(Calendar.DATE) + 7);
+        zmission.setMissionEnd(no.getTime());
         zmission.setMissionTimes(ServerConst.ZMISSION_INTERVAL);
         zmission.setMissionLeft(ServerConst.ZMISSION_INTERVAL);
         return toAjax(zmissionService.insertZmission(zmission));

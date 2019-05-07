@@ -52,10 +52,18 @@
 			}
 		});
 		var date = new Date();
-		$(".input-group.date").datepicker({
+		$(".input-group.date:first").datepicker({
 			todayBtn: "linked",
 			keyboardNavigation: !1,
 			startDate: date,
+			forceParse: !1,
+			calendarWeeks: !0,
+			autoclose: !0
+		});
+		$(".input-group.date:last").datepicker({
+			todayBtn: "linked",
+			keyboardNavigation: !1,
+			startDate: $(".input-group.date:first").val(),
 			forceParse: !1,
 			calendarWeeks: !0,
 			autoclose: !0

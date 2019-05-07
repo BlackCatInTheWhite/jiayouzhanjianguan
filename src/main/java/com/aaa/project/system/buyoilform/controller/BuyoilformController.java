@@ -166,6 +166,10 @@ public class BuyoilformController extends BaseController
 			gas.setLpoliceId(policemanService.selectPolicemanById((Integer) session.getAttribute(ServerConst.POLICEMAN_ID)).getLpoliceId());
 			List<Gas> gasList = gasService.selectGasList(gas);
 			for (Gas gasitem: gasList){
+				Buyoilform buyoilform = new Buyoilform();
+				buyoilform.setGasId(gasitem.getGasId());
+				List<Buyoilform> buyoilforms = buyoilformService.selectBuyoilformList(buyoilform);
+				if (!buyoilforms.isEmpty())
 				gasidList.add(gasitem.getGasId());
 			}
 		}else if (session.getAttribute(ServerConst.GAS_ID) != null){

@@ -14,9 +14,11 @@
 	</div>
     <div th:include="include :: footer"></div>
     <script th:inline="javascript">
+		var showfailFlag = [[${@permission.hasPermi('system:rectification:showfail')}]];
         $(function() {
             var options = {
                 url:ctx + "system/rectification/rectification/list/"+$("#thisgasid").val(),
+				showfailUrl: ctx + "system/rectification/showfail/{id}",
                 modalName: "整改",
 				search: false,
 		        showExport: true,
@@ -39,11 +41,6 @@
 					sortable: true
 				},
 				{
-					field : 'rectificationDes', 
-					title : '整改描述',
-					sortable: true
-				},
-				{
 					field : 'policemanName.policemanName',
 					title : '整改负责人',
 					sortable: true
@@ -57,6 +54,15 @@
 					field : 'rectificationBegin', 
 					title : '整改开始时间',
 					sortable: true
+				},
+				{
+					title: '操作',
+					align: 'center',
+					formatter: function(value, row, index) {
+						var actions = [];
+							actions.push('<a class="btn btn-info btn-xs ' + showfailFlag + '" href="#" onclick="$.operate.showfail(\'' + row.rectificationId + '\')"><i class="fa fa-edit"></i>整改描述</a>');
+						return actions.join('');
+					}
 				}]
             };
             $.table.init(options);
