@@ -16,8 +16,8 @@ public class ServerConst {
     public static Integer GASSTATE_RECTIFICATION=2;
     //加油站状态,即未注册
     public static Integer GASSTATE_NOREGISTER=3;
-    //加油站状态,即未审核
-    public static Integer GASSTATE_NOAGREE=4;
+    //加油站状态,即巡检中
+    public static Integer GASSTATE_INMISIION=4;
     //加油站状态,即已审核
     public static Integer GASSTATE_AGREE=5;
     //加油站状态,即待巡检
